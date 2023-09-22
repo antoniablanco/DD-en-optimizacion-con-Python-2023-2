@@ -1,4 +1,5 @@
 from Class.Problem import Problem
+from Class.MDD import MDD
 
 # Creo una instancia de Problem
 initialState = [0]
@@ -25,8 +26,11 @@ problem_instance.Equals = Equals()
 problem_instance.TransitionFunction = TransitionFunction()
 problem_instance.FactibilityFunction = FactibilityFunction()
 
+# Crear una instancia de MDD
+mdd_instance = MDD(problem_instance)
+
 # Llamar a los metodos personalisados
-print(problem_instance.GetDecisionDiagram())
-print(problem_instance.GetReduceDecisionDiagram())
-print(problem_instance.PrintDecisionDiagram())
-print(problem_instance.PrintReduceDecisionDiagram())   
+print(mdd_instance.GetDecisionDiagram())
+print(mdd_instance.GetReduceDecisionDiagram())
+print(mdd_instance.PrintDecisionDiagram())
+print(mdd_instance.PrintReduceDecisionDiagram())   
