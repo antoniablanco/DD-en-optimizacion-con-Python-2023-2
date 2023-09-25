@@ -1,32 +1,30 @@
 from Class.Problem import Problem
 from Class.MDD import MDD
 
-initialState = [0]
-orderedVariables = ['x_1','x_2','x_3','x_4']
-variableNature = [0, 1]
+initial_state = [0]
+ordered_variables = ['x_1','x_2','x_3','x_4']
+variable_nature = [0, 1]
 
-problem_instance = Problem(initialState, orderedVariables, variableNature)
+problem_instance = Problem(initial_state, ordered_variables, variable_nature)
 
-def CustomEquals(stateOne, stateTwo):
-    return stateOne == stateTwo
+def custom_equals(state_one, state_two):
+    return state_one == state_two
 
-def CustomTransitionFunction():
+def custom_transition_function():
     input_state = input("Ingrese el estado del nodo: ")
     return input_state
 
-def CustomFactibilityFunction(state):
+def custom_factibility_function(state):
     return int(state[0]) <= 6
 
 
-problem_instance.DefineEqualsFunction(CustomEquals)
-problem_instance.DefineTransitionFunction(CustomTransitionFunction)
-problem_instance.DefineFactibilityFunction(CustomFactibilityFunction)
+problem_instance.define_equals_function(custom_equals)
+problem_instance.define_transition_function(custom_transition_function)
+problem_instance.define_factibility_function(custom_factibility_function)
 
 mdd_instance = MDD(problem_instance)
 
-print(mdd_instance.GetDecisionDiagram())
-print(mdd_instance.GetReduceDecisionDiagram())
-print(mdd_instance.PrintDecisionDiagram())
-print(mdd_instance.PrintReduceDecisionDiagram())   
-
-# Hay que sacar que problem guarde el valor del arco, eso solo estara cuando haya función objetivo 
+print(mdd_instance.get_decision_diagram())
+print(mdd_instance.get_reduce_decision_diagram())
+print(mdd_instance.print_decision_diagram())
+print(mdd_instance.print_reduce_decision_diagram())   

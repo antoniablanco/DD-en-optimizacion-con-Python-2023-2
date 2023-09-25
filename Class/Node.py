@@ -1,23 +1,23 @@
 class Node():
 
-    def __init__(self, idNode, state):
-        self.idNode = idNode
+    def __init__(self, id_node, state):
+        self.id_node = id_node
         self.state = state
-        self.inArcs = []
-        self.outArcs = []
+        self.in_arcs = []
+        self.out_arcs = []
     
     def add_in_arc(self, arc):
-        if arc not in self.inArcs:
-            self.inArcs.append(arc)
+        if arc not in self.in_arcs:
+            self.in_arcs.append(arc)
     
     def add_out_arc(self, arc):
-        if arc not in self.outArcs:
-            self.outArcs.append(arc)
+        if arc not in self.out_arcs:
+            self.out_arcs.append(arc)
     
     def remove_in_arc(self, arc):
-        if arc in self.inArcs:
-            self.inArcs.remove(arc)
+        if arc in self.in_arcs:
+            self.in_arcs.remove(arc)
 
     def remove_out_arc(self, arc):
-        if arc in self.outArcs:
-            self.outArcs.remove(arc)
+        if arc in self.out_arcs:
+            self.out_arcs.remove(arc)

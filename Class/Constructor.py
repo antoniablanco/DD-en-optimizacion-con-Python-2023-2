@@ -9,120 +9,117 @@ from Class.Graph import Graph
 class Constructor():
 
     def __init__(self, problem):
-        self.numero_nodo = 1
-        self.Graph = None
+        self.node_number = 1
+        self.graph = None
 
-        # Despues todas estas las obtengo directo del problem
         self.problem = problem
-        self.dominio = problem.VariableNature
-        self.variables = problem.orderedVariables
-        self.initial_state = problem.initialState
+        self.initial_state = problem.initial_state
+        self.domain = problem.variables_nature
+        self.variables = problem.ordered_variables
 
-        self.inicializar_grafo()
+        self.initialize_graph()
 
-    def inicializar_grafo(self):
-        node_r = Node("r", self.initial_state)
-        self.Graph = Graph(node_r)
+    def initialize_graph(self):
+        node_root = Node("r", self.initial_state)
+        self.graph = Graph(node_root)
     
-    def verificando_si_dos_nodos_tienen_mismo_estado(self, nodeOne, nodeTwo):
-        return self.problem.Equals(nodeOne.state, nodeTwo.state)
+    def checking_if_two_nodes_have_same_state(self, node_one, node_two):
+        return self.problem.equals(node_one.state, node_two.state)
 
-    def checking_nodes_state(self):
-        lastLayer = self.Graph.structure[-1][:]
-        for i, nodeOne in enumerate(lastLayer):
-            for j, nodeTwo in enumerate(lastLayer):
-                # Check if the indexes are different and nodeOne.state == nodeTwo.state
-                if i < j and nodeOne.idNode != nodeTwo.idNode and self.verificando_si_dos_nodos_tienen_mismo_estado(nodeOne, nodeTwo):
-                    self.merge_nodes(nodeOne, nodeTwo)
+    def merge_nodes_with_same_state(self):
+        last_layer = self.graph.structure[-1][:]
+        for i, node_one in enumerate(last_layer):
+            for j, node_two in enumerate(last_layer):
+                if i < j and node_one.id_node != node_two.id_node and self.checking_if_two_nodes_have_same_state(node_one, node_two):
+                    self.merge_nodes(node_one, node_two)
 
     def print_layer(self):
         print("------------------------------------------------------")
         print("")
-        for layer in self.Graph.structure:
+        for layer in self.graph.structure:
             for node in layer:
-                in_arcs_str = ", ".join(str(arc.idArc) for arc in node.inArcs)  # Convert each Arc to a string
-                print(node.idNode + "(" + in_arcs_str + ")", end=" ")
+                in_arcs_str = ", ".join(str(arc.id_arc) for arc in node.in_arcs) 
+                print(node.id_node + "(" + in_arcs_str + ")", end=" ")
             print("")
 
-    def verificar_factbilidad_layer(self):
-        for node in self.Graph.structure[-1][:]:
-            self.verificar_factibilidad_estado_un_nodo(node)
+    def check_feasibility_layer(self):
+        for node in self.graph.structure[-1][:]:
+            self.check_feasibility_of_node_state(node)
 
-    def verificar_factibilidad_estado_un_nodo(self, node):
-        if  not self.FactibilityFunction(node):
-            for arc in node.inArcs:
-                node.inArcs.remove(arc)
+    def check_feasibility_of_node_state(self, node):
+        if not self.is_node_feasible(node):
+            for arc in node.in_arcs:
+                node.in_arcs.remove(arc)
                 del arc
-            self.Graph.remove_node(node) # Eliminar el no factible
+            self.graph.remove_node(node) 
             del node
 
-    def FactibilityFunction(self, node):
-        return (self.problem.FactibilityFunction(node.state))
+    def is_node_feasible(self, node):
+        return (self.problem.factibility_function(node.state))
 
     def get_state_node(self):
-        return (self.problem.TransitionFunction())
+        return (self.problem.transition_function())
 
-    def get_node_changing(self, nodeOne, nodeTwo):
-        current_layer = self.Graph.structure[self.Graph.actualLayer]
-        if nodeOne in current_layer and nodeTwo in current_layer:
-            if current_layer.index(nodeOne) > current_layer.index(nodeTwo):
-                return (nodeOne, nodeTwo)  
+    def get_order_of_changin_nodes(self, node_one, node_two):
+        current_layer = self.graph.structure[self.graph.actual_layer]
+        if node_one in current_layer and node_two in current_layer:
+            if current_layer.index(node_one) > current_layer.index(node_two):
+                return (node_one, node_two)  
             else:
-                return (nodeTwo, nodeOne)
+                return (node_two, node_one)
         
-    def merge_nodes(self, nodeOne, nodeTwo):
-        nodes = list(self.get_node_changing(nodeOne, nodeTwo))
-        changinNodes = [nodes[0], nodes[1]]
+    def merge_nodes(self, node_one, node_two):
+        nodes = list(self.get_order_of_changin_nodes(node_one, node_two))
+        changin_nodes_ordered = [nodes[0], nodes[1]]
         
-        for arc in changinNodes[0].inArcs:
-            arc.inNode = changinNodes[1]
-            arc.idArc = "arc_" + arc.outNode.idNode + "_" + changinNodes[1].idNode
-            changinNodes[1].add_in_arc(arc)
+        for arc in changin_nodes_ordered[0].in_arcs:
+            arc.in_node = changin_nodes_ordered[1]
+            arc.id_arc = "arc_" + arc.out_node.id_node + "_" + changin_nodes_ordered[1].id_node
+            changin_nodes_ordered[1].add_in_arc(arc)
 
-        indexNode, indexLayer = self.Graph.get_index_node(changinNodes[0])
+        index_node, index_layer = self.graph.get_index_node(changin_nodes_ordered[0])
 
-        self.Graph.remove_node(changinNodes[0])
-        del changinNodes[0]
+        self.graph.remove_node(changin_nodes_ordered[0])
+        del changin_nodes_ordered[0]
 
-        self.numero_nodo -= 1
-        self.actualizar_nombre_nodos(indexNode, indexLayer)
+        self.node_number -= 1
+        self.update_node_names(index_node, index_layer)
 
-    def actualizar_nombre_nodos(self, indexNode, indexLayer):
-        # Actualizar nombres de nodos a partir del nodo_se_queda
-        for i, node in enumerate(self.Graph.structure[indexLayer]):
-            if i > indexNode:
-                node.idNode = "u" + str(int(node.idNode[1:]) - 1)
-                for arc in node.inArcs:
-                    nuevo_id_arc = "arc_" + arc.outNode.idNode + "_" + arc.inNode.idNode
-                    if arc.idArc != nuevo_id_arc:
-                        arc.idArc = nuevo_id_arc
+    def update_node_names(self, index_node, index_layer):
+        for i, node in enumerate(self.graph.structure[index_layer]):
+            if i > index_node:
+                node.id_node = "u" + str(int(node.id_node[1:]) - 1)
+                for arc in node.in_arcs:
+                    nuevo_id_arc = "arc_" + arc.out_node.id_node + "_" + arc.in_node.id_node
+                    if arc.id_arc != nuevo_id_arc:
+                        arc.id_arc = nuevo_id_arc
     
     def merge_terminal_node(self):
-        lastLayer = self.Graph.structure[-1][:]
+        last_layer = self.graph.structure[-1][:]
         final_node = Node("t", [])
-        self.Graph.add_final_node(final_node)
+        self.graph.add_final_node(final_node)
 
-        for nodeOne in lastLayer:
-            self.merge_nodes(nodeOne, final_node)
+        for node_one in last_layer:
+            self.merge_nodes(node_one, final_node)
     
     def get_decision_diagram(self):
-        for variableId in range(len(self.variables)):
-            self.Graph.new_layer()
-            for existedNode in self.Graph.structure[-2][:]:
-                for path in self.dominio:
-                    estado = self.get_state_node()
-                    path_nodo = [estado]
-                    nodeCreated = Node("u" + str(self.numero_nodo), path_nodo)
-                    if self.FactibilityFunction(nodeCreated):
-                        self.numero_nodo += 1    
-                        arc = Arc("arc_" + str(existedNode.idNode) + "_" + str(nodeCreated.idNode), existedNode, nodeCreated, path, variableId)
-                        existedNode.add_out_arc(arc)
-                        nodeCreated.add_in_arc(arc)
-                        self.Graph.add_node(nodeCreated)
-            self.checking_nodes_state()
+        for variable_id in range(len(self.variables)):
+            self.graph.new_layer()
+            for existed_node in self.graph.structure[-2][:]:
+                for path in self.domain:
+                    node_state = self.get_state_node()
+                    path_node = [node_state]
+                    node_created = Node("u" + str(self.node_number), path_node)
+                    if self.is_node_feasible(node_created):
+                        self.node_number += 1    
+                        arc = Arc("arc_" + str(existed_node.id_node) + "_" + str(node_created.id_node), existed_node, node_created, path, variable_id)
+                        existed_node.add_out_arc(arc)
+                        node_created.add_in_arc(arc)
+                        self.graph.add_node(node_created)
+            self.merge_nodes_with_same_state()
             self.print_layer() # Hay que sacar
         
         self.merge_terminal_node()
         self.print_layer() # Hay que sacar 
 
-        return self.Graph
+        return self.graph
