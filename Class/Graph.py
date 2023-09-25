@@ -1,29 +1,35 @@
-
-
 class Graph():
 
     def __init__(self, initialNode):
         self.nodes = []
-        self.arcs = []
-        self.initialNode = initialNode
-        self.finalNode = None
+        self.structure = [[initialNode]]
+        self.actualLayer = 0
     
     def add_node(self, node):
         if node not in self.nodes:
+            self.structure[self.actualLayer].append(node)
             self.nodes.append(node)
+    
+    def new_layer(self):
+        self.structure.append([])
+        self.actualLayer += 1
 
     def remove_node(self, node):
         if node in self.nodes:
             self.nodes.remove(node)
-            self.arcs = [arc for arc in self.arcs if arc.outNode != node and arc.inNode != node]
 
-    def add_arc(self, arc):
-        if arc not in self.arcs:
-            self.arcs.append(arc)
-            self.add_node(arc.outNode)
-            self.add_node(arc.inNode)
+            for layer in self.structure:
+                if node in layer:
+                    layer.remove(node)
+                    break
 
-    def remove_arc(self, arc):
-        if arc in self.arcs:
-            self.arcs.remove(arc)
-            self.remove_node(self.arc.inNode)
+    def get_index_node(self, nodeBuscado):
+        index_node = None
+        index_layer = None
+        for layer in self.structure:
+            for node in layer:
+                if node is nodeBuscado:
+                    index_node = layer.index(nodeBuscado)
+                    index_layer = self.structure.index(layer)
+                    break
+        return (index_node, index_layer)

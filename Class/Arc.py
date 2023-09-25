@@ -1,7 +1,8 @@
 
-class Arcs():
+class Arc():
 
-    def __init__(self, outNode, inNode, transicionValue, variableValue):
+    def __init__(self, idArc,outNode, inNode, transicionValue, variableValue):
+        self.idArc = idArc
         self.outNode = outNode
         self.inNode = inNode
         self.transicionValue = transicionValue
