@@ -11,7 +11,7 @@ class Problem(AbstractProblem):
         self.orderedVariables = orderedVariables
         self.VariableNature = VariableNature
 
-    def Equals(self):
+    def Equals(self, stateOne, stateTwo):
         # Implementación del método Equals
         pass
 
@@ -19,8 +19,17 @@ class Problem(AbstractProblem):
         # Implementación del método TransitionFunction
         pass
 
-    def FactibilityFunction(self):
+    def FactibilityFunction(self, state):
         # Implementación del método FactibilityFunction
         pass
+
+    def DefineEqualsFunction(self, Equals):
+        setattr(self, 'Equals', Equals)
+
+    def DefineTransitionFunction(self, TransitionFunction):
+        setattr(self, 'TransitionFunction', TransitionFunction)
+
+    def DefineFactibilityFunction(self, FactibilityFunction):
+        setattr(self, 'FactibilityFunction', FactibilityFunction)
     
 

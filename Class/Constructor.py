@@ -24,12 +24,15 @@ class Constructor():
         node_r = Node("r", self.initial_state)
         self.Graph = Graph(node_r)
     
+    def verificando_si_dos_nodos_tienen_mismo_estado(self, nodeOne, nodeTwo):
+        return self.problem.Equals(nodeOne.state, nodeTwo.state)
+
     def checking_nodes_state(self):
         lastLayer = self.Graph.structure[-1][:]
         for i, nodeOne in enumerate(lastLayer):
             for j, nodeTwo in enumerate(lastLayer):
                 # Check if the indexes are different and nodeOne.state == nodeTwo.state
-                if i < j and nodeOne.idNode != nodeTwo.idNode and nodeOne.state == nodeTwo.state:
+                if i < j and nodeOne.idNode != nodeTwo.idNode and self.verificando_si_dos_nodos_tienen_mismo_estado(nodeOne, nodeTwo):
                     self.merge_nodes(nodeOne, nodeTwo)
 
     def print_layer(self):
@@ -54,8 +57,7 @@ class Constructor():
             del node
 
     def FactibilityFunction(self, node):
-        #return verificar_factibilidad_estado(node)
-        return (int(node.state[0]) <= 6)
+        return (self.problem.FactibilityFunction(node.state))
 
     def get_state_node(self):
         # Aqui se deberia ocupar la que entrega el usuario

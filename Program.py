@@ -8,23 +8,23 @@ variableNature = [0, 1]
 
 problem_instance = Problem(initialState, orderedVariables, variableNature)
 
-# Definir un método personalizado para Equals
-def Equals():
-    return "Este es mi método personalizado para Equals"
+def CustomEquals(stateOne, stateTwo):
+    return stateOne == stateTwo
 
-# Definir un método personalizado para Equals
-def TransitionFunction():
+def CustomTransitionFunction():
     return "Este es mi método personalizado para TransitionFunction"
 
-# Definir un método personalizado para TransitionFunction
-def FactibilityFunction():
-    return "Este es mi método personalizado para FactibilityFunction"
+def CustomFactibilityFunction(state):
+    return int(state[0]) <= 6
 
 
 # Asociar las funciones a la instancia
-problem_instance.Equals = Equals()
-problem_instance.TransitionFunction = TransitionFunction()
-problem_instance.FactibilityFunction = FactibilityFunction()
+#setattr(problem_instance, 'Equals', CustomEquals)
+#setattr(problem_instance, 'TransitionFunction', CustomTransitionFunction)
+#setattr(problem_instance, 'FactibilityFunction', CustomFactibilityFunction)
+problem_instance.DefineEqualsFunction(CustomEquals)
+problem_instance.DefineTransitionFunction(CustomTransitionFunction)
+problem_instance.DefineFactibilityFunction(CustomFactibilityFunction)
 
 # Crear una instancia de MDD
 mdd_instance = MDD(problem_instance)
