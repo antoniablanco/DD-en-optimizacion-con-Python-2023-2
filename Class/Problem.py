@@ -22,4 +22,5 @@ class Problem(AbstractProblem):
     def FactibilityFunction(self):
         # Implementación del método FactibilityFunction
         pass
+    
 

@@ -1,6 +1,6 @@
-from Node import Node
-from Arc import Arc
-from Graph import Graph
+from Class.Node import Node
+from Class.Arc import Arc
+from Class.Graph import Graph
 
 # This class represents a path in a graph.
 # A path is a list of nodes and arcs.
@@ -8,18 +8,20 @@ from Graph import Graph
 
 class Constructor():
 
-    def __init__(self):
+    def __init__(self, problem):
         self.numero_nodo = 1
         self.Graph = None
-        self.inicializar_grafo()
 
         # Despues todas estas las obtengo directo del problem
-        #self.problem = Problem()
-        self.dominio = [0,1]
-        self.variables = ["x_1","x_2","x_3","x_4"]
-    
+        self.problem = problem
+        self.dominio = problem.VariableNature
+        self.variables = problem.orderedVariables
+        self.initial_state = problem.initialState
+
+        self.inicializar_grafo()
+
     def inicializar_grafo(self):
-        node_r = Node("r", [0])
+        node_r = Node("r", self.initial_state)
         self.Graph = Graph(node_r)
     
     def checking_nodes_state(self):
@@ -28,7 +30,7 @@ class Constructor():
             for j, nodeTwo in enumerate(lastLayer):
                 # Check if the indexes are different and nodeOne.state == nodeTwo.state
                 if i < j and nodeOne.idNode != nodeTwo.idNode and nodeOne.state == nodeTwo.state:
-                    self.Graph.merge_nodes(nodeOne, nodeTwo)
+                    self.merge_nodes(nodeOne, nodeTwo)
 
     def print_layer(self):
         print("------------------------------------------------------")
@@ -74,7 +76,7 @@ class Constructor():
                 return (nodeTwo, nodeOne)
         
     def merge_nodes(self, nodeOne, nodeTwo):
-        nodes = list(self.Graph.get_node_changing(nodeOne, nodeTwo))
+        nodes = list(self.get_node_changing(nodeOne, nodeTwo))
         changinNodes = [nodes[0], nodes[1]]
         
         for arc in changinNodes[0].inArcs:
@@ -82,7 +84,7 @@ class Constructor():
             arc.idArc = "arc_" + arc.outNode.idNode + "_" + changinNodes[1].idNode
             changinNodes[1].add_in_arc(arc)
 
-        indexNode, indexLayer = self.Graph.get_index_node(changinNodes[1])
+        indexNode, indexLayer = self.Graph.get_index_node(changinNodes[0])
 
         self.Graph.remove_node(changinNodes[0])
         del changinNodes[0]
@@ -99,6 +101,14 @@ class Constructor():
                     nuevo_id_arc = "arc_" + arc.outNode.idNode + "_" + arc.inNode.idNode
                     if arc.idArc != nuevo_id_arc:
                         arc.idArc = nuevo_id_arc
+    
+    def merge_terminal_node(self):
+        lastLayer = self.Graph.structure[-1][:]
+        final_node = Node("t", [])
+        self.Graph.add_final_node(final_node)
+
+        for nodeOne in lastLayer:
+            self.merge_nodes(nodeOne, final_node)
     
     def get_decision_diagram(self):
         for variable in range(len(self.variables)):
@@ -117,12 +127,8 @@ class Constructor():
                         self.Graph.add_node(nodeCreated)
             self.checking_nodes_state()
             self.print_layer()
+        
+        self.merge_terminal_node()
+        self.print_layer()
+
         return self.Graph
-
-
-# Tengo que probar creando en problem al constructor y luego llamar a get_decision_diagram
-# También obtener los valores desde problem
-# Corregir la funcion que cambia los nombres de los nodos, no siempre funciona
-
-constructor_instance = Constructor()
-constructor_instance.get_decision_diagram()

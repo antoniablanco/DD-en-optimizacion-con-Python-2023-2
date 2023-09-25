@@ -4,7 +4,7 @@ from Class.MDD import MDD
 # Creo una instancia de Problem
 initialState = [0]
 orderedVariables = ['x_1','x_2','x_3','x_4']
-variableNature = [0,1]
+variableNature = [0, 1]
 
 problem_instance = Problem(initialState, orderedVariables, variableNature)
 

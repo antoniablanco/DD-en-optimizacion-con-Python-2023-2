@@ -10,6 +10,11 @@ class Graph():
             self.structure[self.actualLayer].append(node)
             self.nodes.append(node)
     
+    def add_final_node(self, node):
+        if node not in self.nodes:
+            self.structure[-1].insert(0, node)
+            self.nodes.append(node)
+    
     def new_layer(self):
         self.structure.append([])
         self.actualLayer += 1
