@@ -9,8 +9,8 @@ class Arc():
         self.variable_id = variable_id
     
     def __str__(self) -> str:
-        #return "arc_" + str(self.out_node.id_node) + "_" + str(self.in_node.id_node)
-        return "arc_" + str(self.out_node.id_node) + "_" + str(self.in_node.id_node) + " - Variable value: " + str(self.variable_value) + " - Variable id: " + str(self.variable_id)
+        return "arc_" + str(self.out_node.id_node) + "_" + str(self.in_node.id_node)
+        #return "arc_" + str(self.out_node.id_node) + "_" + str(self.in_node.id_node) + " - Variable value: " + str(self.variable_value) + " - Variable id: " + str(self.variable_id)
     
     @property
     def out_node(self):
