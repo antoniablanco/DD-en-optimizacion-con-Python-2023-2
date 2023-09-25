@@ -34,12 +34,12 @@ class Constructor():
                     self.merge_nodes(node_one, node_two)
 
     def print_layer(self):
-        print("------------------------------------------------------")
         print("")
         for layer in self.graph.structure:
+            print("------------------------------------------------------")
             for node in layer:
-                in_arcs_str = ", ".join(str(arc.id_arc) for arc in node.in_arcs) 
-                print(node.id_node + "(" + in_arcs_str + ")", end=" ")
+                in_arcs_str = ", ".join(str(arc) for arc in node.in_arcs) 
+                print(str(node) + "(" + in_arcs_str + ")", end=" ")
             print("")
 
     def check_feasibility_layer(self):
@@ -72,27 +72,28 @@ class Constructor():
         nodes = list(self.get_order_of_changin_nodes(node_one, node_two))
         changin_nodes_ordered = [nodes[0], nodes[1]]
         
+        self.redirect_arcs(changin_nodes_ordered)
+        self.delete_node(changin_nodes_ordered)
+        self.update_self_informacion(changin_nodes_ordered)
+    
+    def redirect_arcs(self, changin_nodes_ordered):
         for arc in changin_nodes_ordered[0].in_arcs:
             arc.in_node = changin_nodes_ordered[1]
-            arc.id_arc = "arc_" + arc.out_node.id_node + "_" + changin_nodes_ordered[1].id_node
             changin_nodes_ordered[1].add_in_arc(arc)
-
-        index_node, index_layer = self.graph.get_index_node(changin_nodes_ordered[0])
-
+    
+    def delete_node(self, changin_nodes_ordered):
         self.graph.remove_node(changin_nodes_ordered[0])
         del changin_nodes_ordered[0]
-
+    
+    def update_self_informacion(self, changin_nodes_ordered):
         self.node_number -= 1
+        index_node, index_layer = self.graph.get_index_node(changin_nodes_ordered[0])
         self.update_node_names(index_node, index_layer)
 
     def update_node_names(self, index_node, index_layer):
         for i, node in enumerate(self.graph.structure[index_layer]):
             if i > index_node:
-                node.id_node = "u" + str(int(node.id_node[1:]) - 1)
-                for arc in node.in_arcs:
-                    nuevo_id_arc = "arc_" + arc.out_node.id_node + "_" + arc.in_node.id_node
-                    if arc.id_arc != nuevo_id_arc:
-                        arc.id_arc = nuevo_id_arc
+                node.id_node = str(int(node.id_node) - 1)
     
     def merge_terminal_node(self):
         last_layer = self.graph.structure[-1][:]
@@ -104,22 +105,34 @@ class Constructor():
     
     def get_decision_diagram(self):
         for variable_id in range(len(self.variables)):
-            self.graph.new_layer()
-            for existed_node in self.graph.structure[-2][:]:
-                for path in self.domain:
-                    node_state = self.get_state_node()
-                    path_node = [node_state]
-                    node_created = Node("u" + str(self.node_number), path_node)
-                    if self.is_node_feasible(node_created):
-                        self.node_number += 1    
-                        arc = Arc("arc_" + str(existed_node.id_node) + "_" + str(node_created.id_node), existed_node, node_created, path, variable_id)
-                        existed_node.add_out_arc(arc)
-                        node_created.add_in_arc(arc)
-                        self.graph.add_node(node_created)
-            self.merge_nodes_with_same_state()
-            self.print_layer() # Hay que sacar
+            self.create_new_layer(variable_id)
         
         self.merge_terminal_node()
         self.print_layer() # Hay que sacar 
 
         return self.graph
+
+    def create_new_layer(self, variable_id):
+        self.graph.new_layer()
+        self.create_new_nodes_in_the_new_layer(variable_id)
+        self.merge_nodes_with_same_state()
+        self.print_layer() # Hay que sacar
+
+    def create_new_nodes_in_the_new_layer(self, variable_id):
+        for existed_node in self.graph.structure[-2][:]:
+            for path in self.domain:
+                self.create_the_new_node(path, existed_node, variable_id)
+    
+    def create_the_new_node(self, path, existed_node, variable_id):
+        node_state = self.get_state_node()
+        path_node = [node_state]
+        node_created = Node(str(self.node_number), path_node)
+        if self.is_node_feasible(node_created):
+            self.node_number += 1    
+            self.create_arc_for_the_new_node(existed_node, node_created, path, variable_id)
+            self.graph.add_node(node_created)
+    
+    def create_arc_for_the_new_node(self, existed_node, node_created, path, variable_id):   
+        arc = Arc(existed_node, node_created, path, self.variables[variable_id])
+        existed_node.add_out_arc(arc)
+        node_created.add_in_arc(arc)

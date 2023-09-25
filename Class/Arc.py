@@ -1,13 +1,16 @@
 
 class Arc():
 
-    def __init__(self, id_arc,out_node, in_node, variable_value, variable_id):
-        self.id_arc = id_arc
+    def __init__(self,out_node, in_node, variable_value, variable_id):
         self.out_node = out_node
         self.in_node = in_node
         self.transicion_value = None
         self.variable_value = variable_value
         self.variable_id = variable_id
+    
+    def __str__(self) -> str:
+        #return "arc_" + str(self.out_node.id_node) + "_" + str(self.in_node.id_node)
+        return "arc_" + str(self.out_node.id_node) + "_" + str(self.in_node.id_node) + " - Variable value: " + str(self.variable_value) + " - Variable id: " + str(self.variable_id)
     
     @property
     def out_node(self):

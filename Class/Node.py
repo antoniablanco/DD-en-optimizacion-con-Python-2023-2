@@ -6,6 +6,9 @@ class Node():
         self.in_arcs = []
         self.out_arcs = []
     
+    def __str__(self):
+        return "u_"+str(self.id_node)+" "+str(self.state)+""
+    
     def add_in_arc(self, arc):
         if arc not in self.in_arcs:
             self.in_arcs.append(arc)
