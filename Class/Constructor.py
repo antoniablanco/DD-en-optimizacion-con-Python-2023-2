@@ -60,14 +60,7 @@ class Constructor():
         return (self.problem.FactibilityFunction(node.state))
 
     def get_state_node(self):
-        # Aqui se deberia ocupar la que entrega el usuario
-        input_state = input("Ingrese el estado del nodo: ")
-        return input_state
-
-    def get_transicion_value_arc(self):
-        # Aqui se deberia ocupar la que entrega el usuario
-        input_transicion_value = input("Ingrese el valor de la transicion: ")
-        return input_transicion_value
+        return (self.problem.TransitionFunction())
 
     def get_node_changing(self, nodeOne, nodeTwo):
         current_layer = self.Graph.structure[self.Graph.actualLayer]
@@ -113,7 +106,7 @@ class Constructor():
             self.merge_nodes(nodeOne, final_node)
     
     def get_decision_diagram(self):
-        for variable in range(len(self.variables)):
+        for variableId in range(len(self.variables)):
             self.Graph.new_layer()
             for existedNode in self.Graph.structure[-2][:]:
                 for path in self.dominio:
@@ -122,15 +115,14 @@ class Constructor():
                     nodeCreated = Node("u" + str(self.numero_nodo), path_nodo)
                     if self.FactibilityFunction(nodeCreated):
                         self.numero_nodo += 1    
-                        valor_transicion = self.get_transicion_value_arc()
-                        arc = Arc("arc_" + str(existedNode.idNode) + "_" + str(nodeCreated.idNode), existedNode, nodeCreated, valor_transicion, path)
+                        arc = Arc("arc_" + str(existedNode.idNode) + "_" + str(nodeCreated.idNode), existedNode, nodeCreated, path, variableId)
                         existedNode.add_out_arc(arc)
                         nodeCreated.add_in_arc(arc)
                         self.Graph.add_node(nodeCreated)
             self.checking_nodes_state()
-            self.print_layer()
+            self.print_layer() # Hay que sacar
         
         self.merge_terminal_node()
-        self.print_layer()
+        self.print_layer() # Hay que sacar 
 
         return self.Graph

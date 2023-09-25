@@ -1,12 +1,13 @@
 
 class Arc():
 
-    def __init__(self, idArc,outNode, inNode, transicionValue, variableValue):
+    def __init__(self, idArc,outNode, inNode, variableValue, variableId):
         self.idArc = idArc
         self.outNode = outNode
         self.inNode = inNode
-        self.transicionValue = transicionValue
+        self.transicionValue = None
         self.variableValue = variableValue
+        self.variableId = variableId
     
     @property
     def outNode(self):
@@ -39,3 +40,11 @@ class Arc():
     @variableValue.setter
     def variableValue(self, value):
         self._variableValue = value
+
+    @property
+    def variableId(self):
+        return self._variableId
+
+    @variableId.setter
+    def variableId(self, value):
+        self._variableId = value
