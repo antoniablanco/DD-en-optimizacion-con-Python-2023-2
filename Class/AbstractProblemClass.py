@@ -2,21 +2,21 @@ from abc import ABC, abstractmethod
 
 class AbstractProblem(ABC):
 
-    def __init__(self, inicialState, orderedVariables, VariableNature):
+    def __init__(self, inicial_state, ordered_variables, variable_nature):
         pass
 
     @abstractmethod
-    def Equals(self):
+    def equals(self):
         pass
 
     @abstractmethod
-    def TransitionFunction(self):
+    def transition_function(self):
         pass
 
     @abstractmethod
-    def FactibilityFunction(self):
+    def factibility_function(self):
         pass
     
     @abstractmethod
-    def TransitionFunction(self):
+    def transition_function(self):
         pass

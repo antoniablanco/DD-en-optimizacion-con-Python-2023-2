@@ -3,33 +3,32 @@ from abc import ABC, abstractmethod
 
 class Problem(AbstractProblem):
 
-    def __init__(self, initialState, orderedVariables, VariableNature):
-        # Llamar al constructor de la clase base
-        super().__init__(initialState, orderedVariables, VariableNature)
+    def __init__(self, initial_state, ordered_variables, variables_nature):
+        super().__init__(initial_state, ordered_variables, variables_nature)
 
-        self.initialState = initialState
-        self.orderedVariables = orderedVariables
-        self.VariableNature = VariableNature
+        self.initial_state = initial_state
+        self.ordered_variables = ordered_variables
+        self.variables_nature = variables_nature
 
-    def Equals(self, stateOne, stateTwo):
+    def equals(self, stateOne, stateTwo):
         # Implementación del método Equals
         pass
 
-    def TransitionFunction(self):
+    def transition_function(self):
         # Implementación del método TransitionFunction
         pass
 
-    def FactibilityFunction(self, state):
+    def factibility_function(self, state):
         # Implementación del método FactibilityFunction
         pass
 
-    def DefineEqualsFunction(self, Equals):
-        setattr(self, 'Equals', Equals)
+    def define_equals_function(self, costume_equals):
+        setattr(self, 'equals', costume_equals)
 
-    def DefineTransitionFunction(self, TransitionFunction):
-        setattr(self, 'TransitionFunction', TransitionFunction)
+    def define_transition_function(self, costume_transition_function):
+        setattr(self, 'transition_function', costume_transition_function)
 
-    def DefineFactibilityFunction(self, FactibilityFunction):
-        setattr(self, 'FactibilityFunction', FactibilityFunction)
+    def define_factibility_function(self, costume_factibility_function):
+        setattr(self, 'factibility_function', costume_factibility_function)
     
 
