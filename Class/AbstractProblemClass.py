@@ -6,7 +6,7 @@ class AbstractProblem(ABC):
         pass
 
     @abstractmethod
-    def equals(self):
+    def are_these_states_equal(self, states) -> bool:
         pass
 
     @abstractmethod
@@ -14,9 +14,10 @@ class AbstractProblem(ABC):
         pass
 
     @abstractmethod
-    def factibility_function(self):
+    def is_this_state_factible(self, state) -> bool:
         pass
-    
+
     @abstractmethod
-    def transition_function(self):
+    def get_next_state(self, state):
         pass
+
