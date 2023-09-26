@@ -14,7 +14,7 @@ class Problem(AbstractProblem):
         # Implementación del método Equals
         pass
 
-    def transition_function(self):
+    def transition_function(self, previus_state, variable, value):
         # Implementación del método TransitionFunction
         pass
 

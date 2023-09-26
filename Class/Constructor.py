@@ -57,8 +57,8 @@ class Constructor():
     def is_node_feasible(self, node):
         return (self.problem.factibility_function(node.state))
 
-    def get_state_node(self):
-        return (self.problem.transition_function())
+    def get_state_node(self, node, variable_id, variable_value):
+        return (self.problem.transition_function(node.state,variable_id, variable_value ))
 
     def get_order_of_changin_nodes(self, node_one, node_two):
         current_layer = self.graph.structure[self.graph.actual_layer]
@@ -120,19 +120,19 @@ class Constructor():
 
     def create_new_nodes_in_the_new_layer(self, variable_id):
         for existed_node in self.graph.structure[-2][:]:
-            for path in self.domain:
-                self.create_the_new_node(path, existed_node, variable_id)
+            for variable_value in self.domain:
+                self.create_the_new_node(variable_value, existed_node, variable_id)
     
-    def create_the_new_node(self, path, existed_node, variable_id):
-        node_state = self.get_state_node()
-        path_node = [node_state]
-        node_created = Node(str(self.node_number), path_node)
+    def create_the_new_node(self, variable_value, existed_node, variable_id):
+        node_state = self.get_state_node(existed_node, self.variables[variable_id], variable_value)
+        node_state_format = [node_state]
+        node_created = Node(str(self.node_number), node_state_format)
         if self.is_node_feasible(node_created):
             self.node_number += 1    
-            self.create_arc_for_the_new_node(existed_node, node_created, path, variable_id)
+            self.create_arc_for_the_new_node(existed_node, node_created, variable_value, variable_id)
             self.graph.add_node(node_created)
     
-    def create_arc_for_the_new_node(self, existed_node, node_created, path, variable_id):   
-        arc = Arc(existed_node, node_created, path, self.variables[variable_id])
+    def create_arc_for_the_new_node(self, existed_node, node_created, variable_value, variable_id):   
+        arc = Arc(existed_node, node_created, variable_value, self.variables[variable_id])
         existed_node.add_out_arc(arc)
         node_created.add_in_arc(arc)

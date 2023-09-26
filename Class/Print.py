@@ -13,7 +13,6 @@ class Print():
 
         self.add_edges_to_graph(pos)
         self.add_nodes_to_graph(pos)
-
         
         plt.axis('off')
         plt.show()
@@ -26,10 +25,10 @@ class Print():
         nx.draw_networkx_nodes(self.G, pos, node_size=500, node_color='lightblue')
     
     def add_edges_to_graph(self, pos):
-         for u, v, data in self.G.edges(data=True):
+        for u, v, data in self.G.edges(data=True):
             style = data.get("style", "solid")
             nx.draw_networkx_edges(self.G, pos, edgelist=[(u, v)], style=style)
-    
+        
     def define_labels(self):
         labels = {}
 
@@ -52,7 +51,7 @@ class Print():
                 self.domain.append(arc.variable_value)
 
             style = self.add_edge_style_to_graph(arc.variable_value)
-            self.G.add_edge(arc.out_node.id_node, arc.in_node.id_node, style=style, label=arc.variable_value)         
+            self.G.add_edge(arc.out_node.id_node, arc.in_node.id_node, style=style, label=arc.variable_value)
     
     def get_pos_for_nodes(self):
         pos = {}
