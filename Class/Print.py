@@ -1,35 +1,46 @@
-from Class.Node import Node
-from Class.Arc import Arc
-from Class.Graph import Graph
 import networkx as nx
 import matplotlib.pyplot as plt
-from pyvis.network import Network
 
 class Print():
     def __init__(self, graph):
         self.graph = graph
-        self.G = nx.Graph()
-        self.net = Network()
+        self.G = nx.MultiGraph()
         self.domain = []
 
     def print_graph_G(self):
         self.add_nodes_and_arcs_G()
         pos = self.get_pos_for_nodes()
-        #self.add_edge_style_to_graph()
-        edge_color = self.add_edge_colors_to_graph()
-        nx.draw(self.G, pos=pos, with_labels=True, node_size=500, node_color='lightblue', font_size=12, font_color='black', edge_color=edge_color)
+        labels = {}
 
+        for layer in self.graph.structure:
+            for node in layer:
+                node_id = node.id_node
+                labels[node_id] = "    "+str(node.state)
+
+        for u, v, data in self.G.edges(data=True):
+            style = data.get("style", "solid")
+            nx.draw_networkx_edges(self.G, pos, edgelist=[(u, v)], style=style)
+
+
+        nx.draw_networkx_labels(self.G, pos=pos, labels=None, font_size=12, font_color='black', verticalalignment='center')
+        nx.draw_networkx_labels(self.G, pos=pos, labels=labels, font_size=12, font_color='black', horizontalalignment='left', verticalalignment='center')
+        
+        nx.draw_networkx_nodes(self.G, pos, node_size=500, node_color='lightblue')
+        
+        plt.axis('off')
         plt.show()
-    
 
     def add_nodes_and_arcs_G(self):
         for self.graph.layer in self.graph.structure:
             for node in self.graph.layer:
                 self.G.add_node(node.id_node)
                 for arc in node.in_arcs:
-                    self.G.add_edge(arc.out_node.id_node, arc.in_node.id_node, style='dashed', label=arc.variable_value)
                     if arc.variable_value not in self.domain:
                         self.domain.append(arc.variable_value)
+
+                    style = self.add_edge_style_to_graph(arc.variable_value)
+                    
+                    self.G.add_edge(arc.out_node.id_node, arc.in_node.id_node, style=style, label=arc.variable_value)             
     
     def get_pos_for_nodes(self):
         pos = {}
@@ -38,31 +49,24 @@ class Print():
         for layer_index, layer in enumerate(self.graph.structure):
             x = (-len(layer) * constante)/2
             for node_index, node in enumerate(layer):
-                pos[node.id_node] = (x, -layer_index * 100)  # Ajusta las coordenadas x e y según tus necesidades
-                x += constante  # Aumenta la coordenada x para separar los nodos en el mismo nivel
+                pos[node.id_node] = (x, -layer_index * 100)  
+                x += constante  
 
         return pos
     
-    def add_edge_colors_to_graph(self):  # Cambiar el nombre de la función
-        edge_colors = []  # Lista de colores para las aristas
-        unique_edge_types = list(set(self.domain))  # Obtener los tipos de aristas únicos
+    def add_edge_style_to_graph(self, arc_variable_value):
+        lines_types = ['dotted', 'solid', 'dashed', 'dashdot', 'DashedDotDot', 'Dashed Thick', 'Dotted Thick', 'DashedDotted Thick', 'DashedDottedDotted Thick']
 
-        # Asignar un color a cada tipo de arista
-        color_map = plt.cm.get_cmap('viridis', len(unique_edge_types))
+        if arc_variable_value in self.domain:
+            index = self.domain.index(arc_variable_value)
+            style = lines_types[index % len(lines_types)]
+        else:
+            style = 'solid'  
 
-        for edge_type in self.domain:
-            color_index = unique_edge_types.index(edge_type)
-            color = color_map(color_index)
-            edge_colors.append(color)
-        
-        return edge_colors
-    
-    def add_edge_style_to_graph(self):
-        lines_types = ['solid', 'dotted', 'dashed', 'dashdot', 'DashedDotDot', 'Dashed Thick', 'Dotted Thick', 'DashedDotted Thick', 'DashedDottedDotted Thick']
+        return style
 
-        for u, v, data in self.G.edges(data=True):
-            edge_type = data.get("edge_type")
-            if edge_type in self.domain:
-                index = self.domain.index(edge_type)
-                style = lines_types[index % len(lines_types)]
-                self.G[u][v]["style"] = style
+
+
+
+
+
