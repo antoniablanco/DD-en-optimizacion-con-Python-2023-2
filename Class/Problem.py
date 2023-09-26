@@ -13,7 +13,8 @@ class Problem(AbstractProblem):
     def are_these_states_equal(self, states) -> bool:
         pass
 
-    def transition_function(self):
+    def transition_function(self, previus_state, variable, value):
+        # Implementación del método TransitionFunction
         pass
 
     def is_this_state_factible(self, state) -> bool:
