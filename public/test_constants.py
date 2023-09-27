@@ -1,6 +1,7 @@
 TEST_ONE = {
     "initial_value": [0, 0, 0],
-    "next_node_Value": [0, 0, 1]
+    "next_node_Value": [0, 0, 1],
+    "variable" : 1,
 }
 
 TEST_TWO = {

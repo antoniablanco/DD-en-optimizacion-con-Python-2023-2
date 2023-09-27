@@ -54,14 +54,11 @@ class TestKnapsackMethods(unittest.TestCase):
         state2 = State(CONSTANTS.TEST_THREE["initial_value"])
         self.assertFalse(self.problem.are_these_states_equal(state1, state2))
 
-    # def test_get_next_state(self):
-    #     state = State([0, 0, 0])
-    #     self.assertEqual(self.problem.get_next_state(state), State([0, 0, 1]))
-
-    # def test_get_next_state2(self):
-    #     present_state = State([0, 0, 1])
-    #     next_state = State([0, 1, 0])
-    #     self.assertEqual(self.problem.get_next_state(present_state), next_state))
+    def test_transiction_function(self):
+        state = State(CONSTANTS.TEST_ONE["initial_value"])
+        variable = CONSTANTS.TEST_ONE["variable"]
+        value = CONSTANTS.TEST_ONE["value"]
+        self.assertEqual(self.problem.transition_function(state, variable, value), CONSTANTS.TEST_ONE["result"])
 
     def test_is_this_state_factible(self):
         state = State(CONSTANTS.TEST_ONE["initial_value"])
