@@ -5,9 +5,6 @@ initial_state = [0]
 ordered_variables = ['x_1','x_2','x_3','x_4']
 variable_nature = [0, 1]
 
-global indice_input
-indice_input = 0
-
 problem_instance = Problem(initial_state, ordered_variables, variable_nature)
 
 def custom_equals(state_one, state_two):
@@ -16,10 +13,10 @@ def custom_equals(state_one, state_two):
 def custom_transition_function(previus_state, variable, value):
     lista_suma_variables = [3,3,4,6]
     new_state = int(previus_state[0])+lista_suma_variables[int(variable[2:])-1]*value
-    return new_state
+    return [new_state]
 
-def custom_factibility_function(state):
-    return int(state[0]) <= 6
+def custom_factibility_function(newState, existedState, variable_id, variable_value):
+    return int(newState[0]) <= 5
 
 
 problem_instance.define_equals_function(custom_equals)

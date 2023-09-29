@@ -31,6 +31,7 @@ class Constructor():
         for i, node_one in enumerate(last_layer):
             for j, node_two in enumerate(last_layer):
                 if i < j and node_one.id_node != node_two.id_node and self.checking_if_two_nodes_have_same_state(node_one, node_two):
+                    print("Se quiere hacer merge del nodo "+ str(node_one) + " con el nodo " + str(node_two))
                     self.merge_nodes(node_one, node_two)
 
     def print_layer(self):
@@ -54,8 +55,8 @@ class Constructor():
             self.graph.remove_node(node) 
             del node
 
-    def is_node_feasible(self, node):
-        return (self.problem.factibility_function(node.state))
+    def is_node_feasible(self, newState, existedState, variable_id, variable_value):
+        return (self.problem.factibility_function(newState, existedState, variable_id, variable_value))
 
     def get_state_node(self, node, variable_id, variable_value):
         return (self.problem.transition_function(node.state,variable_id, variable_value ))
@@ -91,9 +92,13 @@ class Constructor():
         self.update_node_names(index_node, index_layer)
 
     def update_node_names(self, index_node, index_layer):
+        valor_actual = int(self.graph.structure[index_layer-1][-1].id_node)
         for i, node in enumerate(self.graph.structure[index_layer]):
-            if i > index_node:
-                node.id_node = str(int(node.id_node) - 1)
+            if i == index_node and node.id_node!='t':
+                valor_actual = int(node.id_node) + 1
+            elif i > index_node and node.id_node!='t':
+                node.id_node = str(valor_actual)
+                valor_actual += 1
     
     def merge_terminal_node(self):
         last_layer = self.graph.structure[-1][:]
@@ -125,9 +130,8 @@ class Constructor():
     
     def create_the_new_node(self, variable_value, existed_node, variable_id):
         node_state = self.get_state_node(existed_node, self.variables[variable_id], variable_value)
-        node_state_format = [node_state]
-        node_created = Node(str(self.node_number), node_state_format)
-        if self.is_node_feasible(node_created):
+        if self.is_node_feasible(node_state, existed_node.state, self.variables[variable_id], variable_value):
+            node_created = Node(str(self.node_number), node_state)
             self.node_number += 1    
             self.create_arc_for_the_new_node(existed_node, node_created, variable_value, variable_id)
             self.graph.add_node(node_created)

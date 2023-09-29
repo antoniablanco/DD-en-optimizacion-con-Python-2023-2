@@ -18,7 +18,7 @@ class Problem(AbstractProblem):
         # Implementación del método TransitionFunction
         pass
 
-    def factibility_function(self, state):
+    def factibility_function(self, newState, existedState, variable_id, variable_value):
         # Implementación del método FactibilityFunction
         pass
 
