@@ -20,4 +20,4 @@ class MDD():
         return print_instance.print_graph_G()
 
     def print_reduce_decision_diagram(self):
-        return "Imprimiendo diagrama de decision reducido"
+        return "Imprimiendo diagrama de decision reducidoo"

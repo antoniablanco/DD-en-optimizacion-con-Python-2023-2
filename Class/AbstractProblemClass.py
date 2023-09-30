@@ -6,17 +6,14 @@ class AbstractProblem(ABC):
         pass
 
     @abstractmethod
-    def equals(self):
+    def equals(self, state_one, state_two):
         pass
 
     @abstractmethod
-    def transition_function(self):
+    def transition_function(self, previus_state, variable_id, variable_value):
         pass
 
     @abstractmethod
-    def factibility_function(self):
+    def factibility_function(self, new_state, existed_state, variable_id, variable_value):
         pass
     
-    @abstractmethod
-    def transition_function(self):
-        pass

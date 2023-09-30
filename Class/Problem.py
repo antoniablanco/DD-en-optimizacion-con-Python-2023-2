@@ -10,25 +10,17 @@ class Problem(AbstractProblem):
         self.ordered_variables = ordered_variables
         self.variables_nature = variables_nature
 
-    def equals(self, stateOne, stateTwo):
+    def equals(self, state_one, state_two):
         # Implementación del método Equals
         pass
 
-    def transition_function(self, previus_state, variable, value):
+    def transition_function(self, previus_state, variable_id, variable_value):
         # Implementación del método TransitionFunction
         pass
 
-    def factibility_function(self, newState, existedState, variable_id, variable_value):
+    def factibility_function(self, new_state, existed_state, variable_id, variable_value):
         # Implementación del método FactibilityFunction
         pass
 
-    def define_equals_function(self, costume_equals):
-        setattr(self, 'equals', costume_equals)
-
-    def define_transition_function(self, costume_transition_function):
-        setattr(self, 'transition_function', costume_transition_function)
-
-    def define_factibility_function(self, costume_factibility_function):
-        setattr(self, 'factibility_function', costume_factibility_function)
     
 
