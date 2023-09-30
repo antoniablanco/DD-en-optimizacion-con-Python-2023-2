@@ -26,6 +26,8 @@ class ReduceConstructor():
             self.layerWorking -= 1 
             self.reviewing_layer(layer)
         self.update_node_names()
+        self.eliminate_edge_from_nodes_that_node_exist(self.graph.structure[-1][0])
+        self.print_layer() #Sacar
                 
         return self.graph
     
@@ -36,8 +38,6 @@ class ReduceConstructor():
 
             while len(nodes) > 0:
                 node_two = nodes.pop(0)
-                print("")
-                print("Comparando nodos: ", node_one, node_two)
                 if self.checking_if_two_nodes_should_merge(node_one, node_two):
                     self.merge_nodes(node_one, node_two)
     
@@ -57,7 +57,8 @@ class ReduceConstructor():
         nodes = list(self.get_order_of_changin_nodes(node_one, node_two))
         changin_nodes_ordered = [nodes[0], nodes[1]]
         
-        self.redirect_arcs(changin_nodes_ordered)
+        self.redirect_in_arcs(changin_nodes_ordered)
+        self.redirect_out_arcs(changin_nodes_ordered)
         self.delete_node(changin_nodes_ordered)
     
     def get_order_of_changin_nodes(self, node_one, node_two):
@@ -70,12 +71,20 @@ class ReduceConstructor():
         else:
             print("Error: No se encuentran los nodos en la capa actual")
     
-    def redirect_arcs(self, changin_nodes_ordered):
+    def redirect_in_arcs(self, changin_nodes_ordered):
         for arc in changin_nodes_ordered[0].in_arcs:
             arc.in_node = changin_nodes_ordered[1]
-            changin_nodes_ordered[1].add_in_arc(arc)
+            if arc not in changin_nodes_ordered[1].in_arcs:
+                changin_nodes_ordered[1].add_in_arc(arc)
+
+    def redirect_out_arcs(self, changin_nodes_ordered):
+        for arc in changin_nodes_ordered[0].out_arcs:
+            arc.out_node = changin_nodes_ordered[1]
+            if arc not in changin_nodes_ordered[1].out_arcs:
+                changin_nodes_ordered[1].add_out_arc(arc)
     
     def delete_node(self, changin_nodes_ordered):
+        
         self.graph.remove_node(changin_nodes_ordered[0])
         del changin_nodes_ordered[0]
     
@@ -88,4 +97,8 @@ class ReduceConstructor():
                     node.id_node = str(valor_actual)
                     valor_actual += 1
     
+    def eliminate_edge_from_nodes_that_node_exist(self, node):
+        for arc in node.in_arcs:
+            if arc.out_node not in self.graph.nodes:
+                node.in_arcs.remove(arc)
     

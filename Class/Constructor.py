@@ -73,14 +73,22 @@ class Constructor():
         nodes = list(self.get_order_of_changin_nodes(node_one, node_two))
         changin_nodes_ordered = [nodes[0], nodes[1]]
         
-        self.redirect_arcs(changin_nodes_ordered)
+        self.redirect_in_arcs(changin_nodes_ordered)
+        self.redirect_out_arcs(changin_nodes_ordered)
         self.delete_node(changin_nodes_ordered)
         self.update_self_informacion(changin_nodes_ordered)
     
-    def redirect_arcs(self, changin_nodes_ordered):
+    def redirect_in_arcs(self, changin_nodes_ordered):
         for arc in changin_nodes_ordered[0].in_arcs:
             arc.in_node = changin_nodes_ordered[1]
-            changin_nodes_ordered[1].add_in_arc(arc)
+            if arc not in changin_nodes_ordered[1].in_arcs:
+                changin_nodes_ordered[1].add_in_arc(arc)
+
+    def redirect_out_arcs(self, changin_nodes_ordered):
+        for arc in changin_nodes_ordered[0].out_arcs:
+            arc.out_node = changin_nodes_ordered[1]
+            if arc not in changin_nodes_ordered[1].out_arcs:
+                changin_nodes_ordered[1].add_out_arc(arc)
     
     def delete_node(self, changin_nodes_ordered):
         self.graph.remove_node(changin_nodes_ordered[0])

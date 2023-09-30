@@ -51,6 +51,7 @@ class Print():
                 self.domain.append(arc.variable_value)
 
             style = self.add_edge_style_to_graph(arc.variable_value)
+            #print("Se agrega el arco " + str(arc.out_node.id_node) + " -> " + str(arc.in_node.id_node))
             self.G.add_edge(arc.out_node.id_node, arc.in_node.id_node, style=style, label=arc.variable_value)
     
     def get_pos_for_nodes(self):
