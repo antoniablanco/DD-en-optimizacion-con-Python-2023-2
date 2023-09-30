@@ -30,7 +30,7 @@ problem_instance = ProblemKnapsack(initial_state, ordered_variables, variable_na
 
 mdd_instance = MDD(problem_instance)
 
-print(mdd_instance.get_decision_diagram())
-print(mdd_instance.get_reduce_decision_diagram())
-print(mdd_instance.print_decision_diagram())
-print(mdd_instance.print_reduce_decision_diagram()) 
+mdd_instance.get_decision_diagram()
+mdd_instance.get_reduce_decision_diagram()
+#mdd_instance.print_decision_diagram()
+#mdd_instance.print_reduce_decision_diagram()

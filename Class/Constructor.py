@@ -2,10 +2,6 @@ from Class.Node import Node
 from Class.Arc import Arc
 from Class.Graph import Graph
 
-# This class represents a path in a graph.
-# A path is a list of nodes and arcs.
-# The first element of the list is the initial node.
-
 class Constructor():
 
     def __init__(self, problem):
@@ -18,6 +14,17 @@ class Constructor():
         self.variables = problem.ordered_variables
 
         self.initialize_graph()
+    
+    def print_layer(self):
+        '''
+        print("")
+        for layer in self.graph.structure:
+            print("------------------------------------------------------")
+            for node in layer:
+                in_arcs_str = ", ".join(str(arc) for arc in node.in_arcs) 
+                print(str(node) + "(" + in_arcs_str + ")", end=" ")
+            print("")
+        '''
 
     def initialize_graph(self):
         node_root = Node("r", self.initial_state)
@@ -30,18 +37,11 @@ class Constructor():
         last_layer = self.graph.structure[-1][:]
         for i, node_one in enumerate(last_layer):
             for j, node_two in enumerate(last_layer):
-                if i < j and node_one.id_node != node_two.id_node and self.checking_if_two_nodes_have_same_state(node_one, node_two):
-                    print("Se quiere hacer merge del nodo "+ str(node_one) + " con el nodo " + str(node_two))
+                self.search_node_to_merge(node_one, node_two, i, j)
+    
+    def search_node_to_merge(self, node_one, node_two, i, j):
+        if i < j and node_one.id_node != node_two.id_node and self.checking_if_two_nodes_have_same_state(node_one, node_two):
                     self.merge_nodes(node_one, node_two)
-
-    def print_layer(self):
-        print("")
-        for layer in self.graph.structure:
-            print("------------------------------------------------------")
-            for node in layer:
-                in_arcs_str = ", ".join(str(arc) for arc in node.in_arcs) 
-                print(str(node) + "(" + in_arcs_str + ")", end=" ")
-            print("")
 
     def check_feasibility_layer(self):
         for node in self.graph.structure[-1][:]:

@@ -41,9 +41,9 @@ problem_instance = ProblemIndependentSet(initial_state, ordered_variables, varia
 
 mdd_instance = MDD(problem_instance)
 
-print(mdd_instance.get_decision_diagram())
-print(mdd_instance.get_reduce_decision_diagram())
-mdd_instance.print_decision_diagram()
+mdd_instance.get_decision_diagram()
+mdd_instance.get_reduce_decision_diagram()
+#mdd_instance.print_decision_diagram()
 mdd_instance.print_reduce_decision_diagram()
 
 
