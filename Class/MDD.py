@@ -1,6 +1,7 @@
 from Class.Constructor import Constructor
 from Class.ReduceConstructor import ReduceConstructor
 from Class.Print import Print
+from Class.MinMaxObjective import MinMaxFunction
 
 class MDD():
 
@@ -26,3 +27,7 @@ class MDD():
     def print_reduce_decision_diagram(self):
         print_instance = Print(self.reduceDD)
         return print_instance.print_graph_G()
+    
+    def solve_dd(self, objective):
+        minmax = MinMaxFunction(objective)
+        minmax.anti_dijkstra(self.reduceDD.structure[0][0])
