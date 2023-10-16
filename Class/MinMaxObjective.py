@@ -30,7 +30,7 @@ class MinMaxFunction:
 
 
     def assing_value_to_arc(self, arc, level):
-        arc.transicion_value = self.weights[level - 1] * arc.variable_value
+        arc.transicion_value = self.weights[level] * arc.variable_value
 
 
     
