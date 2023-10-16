@@ -2,12 +2,10 @@ from collections import deque
 
 class MinMaxFunction:
 
-    # def __init__(self, n_variables, variable_ranges, function_operations, weights, graph):
-    def __init__(self, objective):
-        # self.n_variables = n_variables
-        # self.variable_ranges = variable_ranges
-        # self.function_operations = function_operations
-        # self.weights = weights
+    def __init__(self, variable_ranges, function_operations, weights, objective):
+        self.variable_ranges = variable_ranges
+        self.function_operations = function_operations
+        self.weights = weights
 
         self.visited_nodes = []
         self.unvisited_nodes = []
@@ -23,13 +21,17 @@ class MinMaxFunction:
             return self.find_maximum_node
         else:
             raise Exception("Objective function not defined")
+        
+    def assign_transition_values(self, graph):
+        for level in range(0, len(graph.structure) - 1):
+            for node in graph.structure[level]:
+                for arc in node.out_arcs:
+                    self.assing_value_to_arc(arc, level)
 
-    def create_variables(self):
-        self.variables = []
-        for i in range(self.n_variables):
-            variable = Variable()
-            variable.set_range(self.variable_ranges[i], "binary")
-            self.variables.append(variable)
+
+    def assing_value_to_arc(self, arc, level):
+        arc.transicion_value = self.weights[level - 1] * arc.variable_value
+
 
     
     def obtain_current_value(self):
@@ -57,7 +59,6 @@ class MinMaxFunction:
             self.update_lists(next_node)
             next_node = self.objective_function()
 
-        print("Mejor camino", next_node.weight)
         self.print_inverse_route(next_node)
 
 
@@ -66,7 +67,7 @@ class MinMaxFunction:
     def print_inverse_route(self, terminal_node):
         current_node = terminal_node
         route = deque()
-        while current_node.parent != None:
+        while current_node != None:
             route.appendleft(current_node.node.id_node)
             current_node = current_node.parent
         print(" -> ".join(route))
@@ -102,27 +103,8 @@ class MinMaxFunction:
         for arc in next_node.node.out_arcs:
             if arc.in_node not in self.visited_nodes_or():
 
-                self.unvisited_nodes.append(DijkstraNode(arc.in_node, next_node.weight + arc.variable_value, next_node))
-        
-
-
-class Variable:
-
-    def __init__(self):
-        self.value = None
-        self.range = None
-
-    def set_value(self, value):
-        self.value = value
-
-    def set_range(self, range, type):
-        self.range = Range(range, type)
-
-    def is_value_in_range(self, value):
-        return self.range.in_range(value)
+                self.unvisited_nodes.append(DijkstraNode(arc.in_node, next_node.weight + arc.transicion_value, next_node))
     
-    def is_variable_set(self):
-        return self.value != None
     
 class DijkstraNode:
 
@@ -130,26 +112,3 @@ class DijkstraNode:
         self.node = node
         self.weight = weight
         self.parent = parent
-
-class Range:
-
-    def __init__(self, range, type):
-        self.range = range
-        self.define_type(type)
-
-    def define_type(self, type):
-        if type == "between_two_values":
-            self.in_range = self.between_two_values
-        elif type == "binary":
-            self.in_range = self.binary
-        elif type == "in_list":
-            self.in_range = self.in_list
-
-    def between_two_values(self, value):
-        return value >= self.range[0] and value <= self.range[1]
-    
-    def binary(self, value):
-        return value == 0 or value == 1
-    
-    def in_list(self, value):
-        return value in self.range

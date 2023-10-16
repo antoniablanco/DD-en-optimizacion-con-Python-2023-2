@@ -28,6 +28,19 @@ class MDD():
         print_instance = Print(self.reduceDD)
         return print_instance.print_graph_G()
     
-    def solve_dd(self, objective):
-        minmax = MinMaxFunction(objective)
-        minmax.anti_dijkstra(self.reduceDD.structure[0][0])
+    def develop_solver(self, variable_ranges, function_operations, weights, objective):
+        try:
+
+            self.minmax = MinMaxFunction(variable_ranges, function_operations, weights, objective)
+            self.minmax.assign_transition_values(self.reduceDD)
+        except Exception as e:
+            print(e)
+            raise Exception("Solver not defined")
+
+    
+    def solve_dd(self):
+        try:
+            self.minmax.anti_dijkstra(self.reduceDD.structure[0][0])
+        except Exception as e:
+            print(e)
+            raise Exception("Solver not defined")
