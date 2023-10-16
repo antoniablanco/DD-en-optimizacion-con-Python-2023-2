@@ -1,5 +1,6 @@
 from Class.AbstractProblemClass import AbstractProblem
 from Class.MDD import MDD
+from Class.MinMaxObjective import MinMaxFunction
 
 class ProblemKnapsack(AbstractProblem):
 
@@ -32,6 +33,8 @@ mdd_instance = MDD(problem_instance)
 
 mdd_instance.get_decision_diagram()
 mdd_instance.get_reduce_decision_diagram()
+mdd_instance.develop_solver(['binary', 'binary', 'binary', 'binary'], ['+', '+', '+', '+'], [5, 1, 1, 1], 'max')
+mdd_instance.solve_dd()
 file_name = mdd_instance.get_margarita_file("test")
 mdd_instance.print_decision_diagram()
 mdd_instance.print_reduce_decision_diagram()
