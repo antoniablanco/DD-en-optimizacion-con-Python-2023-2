@@ -1,6 +1,7 @@
 from Class.Constructor import Constructor
 from Class.ReduceConstructor import ReduceConstructor
 from Class.Print import Print
+from Class.MargaritaFile import MargaritaFile
 
 class MDD():
 
@@ -26,3 +27,7 @@ class MDD():
     def print_reduce_decision_diagram(self):
         print_instance = Print(self.reduceDD)
         return print_instance.print_graph_G()
+
+    def get_margarita_file(self, file_name):
+        margarita_file = MargaritaFile(file_name, self.reduceDD)
+        return margarita_file.file_name
