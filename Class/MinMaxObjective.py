@@ -16,9 +16,9 @@ class MinMaxFunction:
 
     def choose_objective_function(self, objective):
         if objective == "min":
-            return self.find_minimum_node
+            return self.anti_dijkstra
         elif objective == "max":
-            return self.find_maximum_node
+            return self.dfs_start
         else:
             raise Exception("Objective function not defined")
         
@@ -53,13 +53,45 @@ class MinMaxFunction:
             return None
         
     def anti_dijkstra(self, root_node):
-        next_node = DijkstraNode(root_node, 0)
+        next_node = root_node
+        next_node.update_weight(0)
         self.unvisited_nodes.append(next_node)
-        while next_node.node.id_node != 't':
+        while next_node.id_node != 't':
             self.update_lists(next_node)
-            next_node = self.objective_function()
+            next_node = self.find_minimum_node()
 
         self.print_inverse_route(next_node)
+
+    def dfs_start(self, root_node):
+        weight, route = self.dfs_for_max_distance(root_node, 0)
+
+        self.print_best_weight_route(weight, route)
+
+    def print_best_weight_route(self, weight, route):
+        # print("Best Route:"," -> ".join(route))
+
+        print("Best Route:"," -> ".join(map(str, route)))
+        print("Weight: " + str(weight))
+
+    def dfs_for_max_distance(self, node, weight, route=[]):
+        route.append((node.id_node, weight))
+        if node.id_node == 't':
+            return weight, route  # Return the weight and route list
+            
+        max_weight = 0
+        best_route = route.copy()  # Create a new list with the updated route
+        for arc in node.out_arcs:
+            new_weight, new_route = self.dfs_for_max_distance(arc.in_node,
+                                                            weight + arc.transicion_value,
+                                                            route.copy())
+            
+            if new_weight > max_weight:
+                max_weight = new_weight
+                best_route = new_route
+
+        return max_weight, best_route
+
+        
 
 
 
@@ -68,9 +100,11 @@ class MinMaxFunction:
         current_node = terminal_node
         route = deque()
         while current_node != None:
-            route.appendleft(current_node.node.id_node)
+            route.appendleft(current_node.id_node)
             current_node = current_node.parent
-        print(" -> ".join(route))
+        
+        
+        self.print_best_weight_route(terminal_node.weight, route)
 
 
     def find_maximum_node(self):
@@ -92,23 +126,38 @@ class MinMaxFunction:
         self.unvisited_nodes.remove(next_node)
         self.update_unvisited_nodes(next_node)
 
-    def visited_nodes_or(self):
-        visited_nodes = []
-        for node in self.visited_nodes:
-            visited_nodes.append(node.node)
-        return visited_nodes
+    # def visited_nodes_or(self):
+    #     visited_nodes = []
+    #     for node in self.visited_nodes:
+    #         visited_nodes.append(node.node)
+    #     return visited_nodes
 
 
     def update_unvisited_nodes(self, next_node):
-        for arc in next_node.node.out_arcs:
-            if arc.in_node not in self.visited_nodes_or():
+        for arc in next_node.out_arcs:
+            if arc.in_node not in self.visited_nodes:
+                node = arc.in_node
+                node.update_weight(next_node.weight + arc.transicion_value)
+                node.update_parent(next_node)
+                self.unvisited_nodes.append(node)
 
-                self.unvisited_nodes.append(DijkstraNode(arc.in_node, next_node.weight + arc.transicion_value, next_node))
-    
-    
-class DijkstraNode:
+            else:
+                node = arc.in_node
+                if self.compare_max_values(self.get_node_weight(node), next_node.weight + arc.transicion_value):
+                    node.update_weight(next_node.weight + arc.transicion_value)
+                    node.update_parent(next_node)
+                    self.unvisited_nodes.append(node)
+                    self.visited_nodes.remove(node, 1)
 
-    def __init__(self, node, weight, parent=None):
-        self.node = node
-        self.weight = weight
-        self.parent = parent
+    def get_node_weight(self, node):
+        return node.get_weight()
+
+    def update_node_weight(self, node, weight):
+        node.update_weight(weight)
+
+
+    def compare_max_values(self, value_one, value_two):
+        return value_one > value_two
+    
+    def compare_min_values(self, value_one, value_two):
+        return value_one < value_two

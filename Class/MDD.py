@@ -45,7 +45,7 @@ class MDD():
     
     def solve_dd(self):
         try:
-            self.minmax.anti_dijkstra(self.reduceDD.structure[0][0])
+            self.minmax.objective_function(self.reduceDD.structure[0][0])
         except Exception as e:
             print(e)
             raise Exception("Solver not defined")
