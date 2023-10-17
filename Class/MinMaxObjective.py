@@ -126,16 +126,10 @@ class MinMaxFunction:
         self.unvisited_nodes.remove(next_node)
         self.update_unvisited_nodes(next_node)
 
-    # def visited_nodes_or(self):
-    #     visited_nodes = []
-    #     for node in self.visited_nodes:
-    #         visited_nodes.append(node.node)
-    #     return visited_nodes
-
 
     def update_unvisited_nodes(self, next_node):
         for arc in next_node.out_arcs:
-            if arc.in_node not in self.visited_nodes:
+            if arc.in_node not in self.visited_nodes and arc.in_node not in self.unvisited_nodes:
                 node = arc.in_node
                 node.update_weight(next_node.weight + arc.transicion_value)
                 node.update_parent(next_node)
@@ -143,7 +137,7 @@ class MinMaxFunction:
 
             else:
                 node = arc.in_node
-                if self.compare_max_values(self.get_node_weight(node), next_node.weight + arc.transicion_value):
+                if self.get_node_weight(node) > next_node.weight + arc.transicion_value:
                     node.update_weight(next_node.weight + arc.transicion_value)
                     node.update_parent(next_node)
                     self.unvisited_nodes.append(node)
