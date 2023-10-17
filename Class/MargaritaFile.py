@@ -60,7 +60,7 @@ class MargaritaFile:
             self.file.write(f"\ttarget 500\n")
         else:
             self.file.write(f"\ttarget {arc.in_node.id_node}\n")
-        self.file.write(f"\tlabel \"{arc.variable_id}\"\n")
+        self.file.write(f"\tlabel \"{arc.transicion_value}\"\n")
         self.file.write("\tgraphics [\n")
         if arc.variable_value == 0:
             self.file.write(f"\tfill \"#808080\" 		targetArrow \"standard\"	 style	\"dashed\"	 ]\n")
