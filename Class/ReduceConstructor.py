@@ -28,13 +28,15 @@ class ReduceConstructor():
         self.update_node_names()
         self.eliminate_edge_from_nodes_that_node_exist(self.graph.structure[-1][0])
         self.print_layer() #Sacar
+        self.eliminate_duplicate_edge()
+        self.print_layer() #Sacar
                 
         return self.graph
     
     def reviewing_layer(self, layer):
 
         for i, node_one in enumerate(layer):
-            nodes = layer[i+1:]  # Copia de la lista original de nodos para evitar problemas con la iteración
+            nodes = layer[i+1:]  
 
             while len(nodes) > 0:
                 node_two = nodes.pop(0)
@@ -101,4 +103,21 @@ class ReduceConstructor():
         for arc in node.in_arcs:
             if arc.out_node not in self.graph.nodes:
                 node.in_arcs.remove(arc)
+
+    def eliminate_duplicate_edge(self):
+        for node in self.graph.nodes:
+            #print("Viendo el nodo " + node.id_node)
+            unique_arcs = set()
+            for i, arc1 in enumerate(node.in_arcs[:-1]):
+                if arc1 in unique_arcs:
+                    continue  # Si el arco ya está en unique_arcs, lo ignoramos.
+                for arc2 in node.in_arcs[i+1:]:
+                    if arc1.variable_value == arc2.variable_value and arc1.out_node == arc2.out_node:
+                        node.in_arcs.remove(arc2)
+                        arc2.out_node.out_arcs.remove(arc2)
+                        #print("Arco " + str(arc1) + " y " + str(arc2) + " duplicados. Valor de sus id: " + str(arc1.variable_value) + " " + str(arc2.variable_value))
+                    else:
+                        unique_arcs.add(arc1)  # Agregamos arc1 a unique_arcs
+
+                
     
