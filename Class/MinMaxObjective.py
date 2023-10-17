@@ -30,8 +30,13 @@ class MinMaxFunction:
 
 
     def assing_value_to_arc(self, arc, level):
-        arc.transicion_value = self.weights[level] * arc.variable_value
+        arc.transicion_value = self.set_weight_value(level, self.weights[level]) * arc.variable_value
 
+    def set_weight_value(self, level, value):
+        if self.function_operations[level] == '-':
+            return -value
+    
+        return value
 
     
     def obtain_current_value(self):
@@ -100,7 +105,7 @@ class MinMaxFunction:
         current_node = terminal_node
         route = deque()
         while current_node != None:
-            route.appendleft(current_node.id_node)
+            route.appendleft((current_node.id_node, current_node.weight))
             current_node = current_node.parent
         
         
