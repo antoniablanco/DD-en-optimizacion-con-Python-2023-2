@@ -5,6 +5,9 @@ class Node():
         self.state = state
         self.in_arcs = []
         self.out_arcs = []
+
+        self.parent = None
+        self.weight = None
     
     def __str__(self):
         return "u_"+str(self.id_node)+" "+str(self.state)+""
@@ -24,3 +27,15 @@ class Node():
     def remove_out_arc(self, arc):
         if arc in self.out_arcs:
             self.out_arcs.remove(arc)
+
+    def update_weight(self, weight):
+        self.weight = weight
+
+    def get_weight(self):
+        return self.weight
+
+    def update_parent(self, parent):
+        self.parent = parent
+
+    def get_parent(self):
+        return self.parent
