@@ -12,6 +12,7 @@ class ReduceConstructor():
         self.layerWorking = self.graph.actual_layer 
     
     def print_layer(self):
+        '''
         print("")
         for layer in self.graph.structure:
             print("------------------------------------------------------")
@@ -19,6 +20,7 @@ class ReduceConstructor():
                 in_arcs_str = ", ".join(str(arc) for arc in node.in_arcs) 
                 print(str(node) + "(" + in_arcs_str + ")", end=" ")
             print("")
+        '''
     
     def get_reduce_decision_diagram(self):
         for layer in reversed(self.graph.structure[:-1]): 
@@ -114,7 +116,7 @@ class ReduceConstructor():
                         node.in_arcs.remove(arc2)
                         arc2.out_node.out_arcs.remove(arc2)
                     else:
-                        unique_arcs.add(arc1)  # Agregamos arc1 a unique_arcs
+                        unique_arcs.add(arc1)  
 
                 
     
