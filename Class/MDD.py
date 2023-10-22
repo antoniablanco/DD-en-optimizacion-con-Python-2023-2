@@ -29,9 +29,8 @@ class MDD():
         print_instance = Print(self.reduceDD)
         return print_instance.print_graph_G()
 
-    def get_margarita_file(self, file_name):
-        margarita_file = MargaritaFile(file_name, self.reduceDD)
-        return margarita_file.file_name
+    def export_margarita_file(self, file_name):
+        MargaritaFile(file_name, self.reduceDD)
     
     def develop_solver(self, variable_ranges, weights, objective = 'min'):
         try:

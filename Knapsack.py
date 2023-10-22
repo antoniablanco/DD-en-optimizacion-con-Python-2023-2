@@ -38,5 +38,5 @@ mdd_instance.get_reduce_decision_diagram()
 
 mdd_instance.develop_solver(['binary', 'binary', 'binary', 'binary'],[-5, 1, 1, 17], 'min')
 mdd_instance.solve_dd()
-file_name = mdd_instance.get_margarita_file("test")
+mdd_instance.export_margarita_file("test")
 
