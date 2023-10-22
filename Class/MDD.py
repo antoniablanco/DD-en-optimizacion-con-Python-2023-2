@@ -33,10 +33,10 @@ class MDD():
         margarita_file = MargaritaFile(file_name, self.reduceDD)
         return margarita_file.file_name
     
-    def develop_solver(self, variable_ranges, function_operations, weights, objective):
+    def develop_solver(self, variable_ranges, weights, objective = 'min'):
         try:
 
-            self.minmax = MinMaxFunction(variable_ranges, function_operations, weights, objective)
+            self.minmax = MinMaxFunction(variable_ranges, weights, objective)
             self.minmax.assign_transition_values(self.reduceDD)
         except Exception as e:
             print(e)
@@ -45,7 +45,7 @@ class MDD():
     
     def solve_dd(self):
         try:
-            self.minmax.objective_function(self.reduceDD.structure[0][0])
+            self.minmax.anti_dijkstra(self.reduceDD.structure[0][0])
         except Exception as e:
             print(e)
             raise Exception("Solver not defined")

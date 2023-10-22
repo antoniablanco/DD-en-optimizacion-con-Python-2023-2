@@ -2,25 +2,21 @@ from collections import deque
 
 class MinMaxFunction:
 
-    def __init__(self, variable_ranges, function_operations, weights, objective):
+    def __init__(self, variable_ranges, weights, objective):
         self.variable_ranges = variable_ranges
-        self.function_operations = function_operations
         self.weights = weights
 
         self.visited_nodes = []
         self.unvisited_nodes = []
-        self.objective_function = self.choose_objective_function(objective)
+        self.objective = objective
+        self.choose_transform_weights()
 
 
         # self.create_variables()
 
-    def choose_objective_function(self, objective):
-        if objective == "min":
-            return self.anti_dijkstra
-        elif objective == "max":
-            return self.dfs_start
-        else:
-            raise Exception("Objective function not defined")
+    def choose_transform_weights(self):
+        if self.objective == "max":
+            self.weights = [-weight for weight in self.weights]
         
     def assign_transition_values(self, graph):
         for level in range(0, len(graph.structure) - 1):
@@ -30,13 +26,7 @@ class MinMaxFunction:
 
 
     def assing_value_to_arc(self, arc, level):
-        arc.transicion_value = self.set_weight_value(level, self.weights[level]) * arc.variable_value
-
-    def set_weight_value(self, level, value):
-        if self.function_operations[level] == '-':
-            return -value
-    
-        return value
+        arc.transicion_value = self.weights[level] * arc.variable_value
 
     
     def obtain_current_value(self):
@@ -45,7 +35,7 @@ class MinMaxFunction:
             if not self.variables[i].is_variable_set():
                 raise Exception("Variable " + str(i) + " is not set")
             
-            current_value = self.math_operation(self.function_operations[i], current_value,
+            current_value = self.math_operation(current_value,
                                                 self.weights[i] * self.variables[i].value)
         return current_value
         
@@ -110,20 +100,15 @@ class MinMaxFunction:
         
         
         self.print_best_weight_route(terminal_node.weight, route)
-
-
-    def find_maximum_node(self):
-        next_node = self.unvisited_nodes[0]
-        for node in self.unvisited_nodes:
-            if node.weight > next_node.weight:
-                next_node = node
-        return next_node
     
     def find_minimum_node(self):
         next_node = self.unvisited_nodes[0]
+        best_value = float('inf')
         for node in self.unvisited_nodes:
-            if node.weight < next_node.weight:
-                next_node = node
+            for arc in node.out_arcs:
+                if arc.transicion_value < best_value:
+                    best_value = arc.transicion_value
+                    next_node = node
         return next_node
     
     def update_lists(self, next_node):
@@ -146,7 +131,7 @@ class MinMaxFunction:
                     node.update_weight(next_node.weight + arc.transicion_value)
                     node.update_parent(next_node)
                     self.unvisited_nodes.append(node)
-                    self.visited_nodes.remove(node, 1)
+                    # self.visited_nodes.remove(node)
 
     def get_node_weight(self, node):
         return node.get_weight()
