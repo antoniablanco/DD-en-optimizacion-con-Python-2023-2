@@ -26,11 +26,11 @@ problem_instance = ProblemKnapsack(initial_state, variables)
 
 mdd_instance = MDD(problem_instance)
 
-mdd_instance.print_decision_diagram()
+# mdd_instance.print_decision_diagram()
 mdd_instance.create_reduce_decision_diagram()
-mdd_instance.print_decision_diagram()
+# mdd_instance.print_decision_diagram()
 
-#mdd_instance.develop_solver(['binary', 'binary', 'binary', 'binary'], ['+', '+', '+', '+'], [5, 1, 1, 17], 'max')
-#mdd_instance.solve_dd()
-file_name = mdd_instance.get_margarita_file("test")
+mdd_instance.develop_solver([-5, 1, 18, 17], 'max')
+mdd_instance.solve_dd()
+mdd_instance.export_margarita_file("test", "max")
 

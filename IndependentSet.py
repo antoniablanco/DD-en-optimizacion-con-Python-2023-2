@@ -39,9 +39,9 @@ mdd_instance.print_decision_diagram()
 mdd_instance.create_reduce_decision_diagram()
 mdd_instance.print_decision_diagram()
 
-#mdd_instance.develop_solver(['binary', 'binary', 'binary', 'binary', 'binary'], ['+', '+', '+', '+', '+'], [1, 1, 1, 1, 1], 'max')
-#mdd_instance.solve_dd()
-file_name = mdd_instance.get_margarita_file("test2")
+mdd_instance.develop_solver([1, 1, 1, 1, 1], 'max')
+mdd_instance.solve_dd()
+mdd_instance.export_margarita_file("test2")
 
 
 
