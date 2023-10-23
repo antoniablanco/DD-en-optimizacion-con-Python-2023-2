@@ -19,9 +19,11 @@ class MDD():
         Atributos:
         - problem: Una instancia de la clase problem, que se utilizará para crear el diagrama de decisión.
         - DD: El diagrama de decisión creado, que se actualiza al generar el diagrama reducido o relajado.
+        - objective: El tipo de objetivo (por ejemplo, "min" o "max"). Por defecto es "min".
         '''
         self.problem = problem
         self.DD = None
+        self.objective = 'min'
         self.create_decision_diagram()
 
     def create_decision_diagram(self):
@@ -48,19 +50,17 @@ class MDD():
         print_instance = Print(self.DD)
         return print_instance.print_graph_G()
 
-    def export_margarita_file(self, file_name, objective="min"):
+    def export_margarita_file(self, file_name):
         '''
         Genera un archivo Margarita con el diagrama de decisión actual.
 
         Parámetros:
         file_name (str): El nombre del archivo Margarita.
-        objective (str): El tipo de objetivo (por ejemplo, "min" o "max").Por defecto es "min".
-        Invierte el valor de los pesos de los arcos si es "max".
 
         Retorna:
         None
         '''
-        MargaritaFile(file_name, self.DD, objective)
+        MargaritaFile(file_name, self.DD, self.objective)
     
     def develop_solver(self, weights, objective="min"):
         '''
@@ -70,6 +70,7 @@ class MDD():
         weights (list): Pesos para las variables del problema.
         objective (str): Tipo de objetivo (por ejemplo, "min" o "max").
         '''
+        self.objective = objective
         try:
             self.minmax = MinMaxFunction(weights, objective)
             self.minmax.assign_graph(self.DD)

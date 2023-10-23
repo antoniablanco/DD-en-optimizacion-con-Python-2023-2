@@ -28,10 +28,10 @@ class AbstractProblem(ABC):
         self.variables_domain = self.get_variables_domain(variables)
     
     def get_variables(self, variablesAndDomain):
-        variables_ordenadas = []
+        ordered_variables = []
         for var in variablesAndDomain:
-            variables_ordenadas.append(var[0])
-        return variables_ordenadas
+            ordered_variables.append(var[0])
+        return ordered_variables
     
     def get_variables_domain(self, variablesAndDomain):
         variables_domain = {}

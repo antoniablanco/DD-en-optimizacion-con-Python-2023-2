@@ -32,4 +32,4 @@ mdd_instance.print_decision_diagram()
 
 mdd_instance.develop_solver([-5, 1, 18, 17], 'max')
 mdd_instance.solve_dd()
-mdd_instance.export_margarita_file("test", "max")
+mdd_instance.export_margarita_file("test")

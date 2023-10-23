@@ -99,7 +99,7 @@ edge [
 edge [
 	source 0
 	target 2
-	label "-1"
+	label "1"
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
@@ -113,7 +113,7 @@ edge [
 edge [
 	source 1
 	target 4
-	label "-1"
+	label "1"
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
@@ -134,7 +134,7 @@ edge [
 edge [
 	source 3
 	target 7
-	label "-1"
+	label "1"
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
@@ -162,7 +162,7 @@ edge [
 edge [
 	source 6
 	target 9
-	label "-1"
+	label "1"
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
@@ -183,7 +183,7 @@ edge [
 edge [
 	source 8
 	target 10
-	label "-1"
+	label "1"
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
