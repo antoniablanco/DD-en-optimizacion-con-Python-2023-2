@@ -49,32 +49,31 @@ class MDD():
         return print_instance.print_graph_G()
 
 
-    def get_margarita_file(self, file_name):
+    def export_margarita_file(self, file_name, objective = "min"):
         '''
-        Obtiene un archivo Margarita para el diagrama de decisión.
+        Genera un archivo Margarita con el diagrama de decisión actual.
 
         Parámetros:
         file_name (str): El nombre del archivo Margarita.
+        objective (str): El tipo de objetivo (por ejemplo, "min" o "max").Por defecto es "min".
+        Invierte el valor de los pesos de los arcos si es "max".
 
         Retorna:
-        str: El nombre del archivo Margarita generado.
+        None
         '''
-        margarita_file = MargaritaFile(file_name, self.DD)
-        return margarita_file.file_name
+        MargaritaFile(file_name, self.DD, objective)
     
-    def develop_solver(self, variable_ranges, function_operations, weights, objective):
+    def develop_solver(self, weights, objective = "min"):
         '''
         Guarda la información necesaria para tener una función objetivo.
 
         Parámetros:
-        variable_ranges (list): Rangos de las variables del problema.
-        function_operations (list): Operaciones a aplicar en la función objetivo.
         weights (list): Pesos para las variables del problema.
         objective (str): Tipo de objetivo (por ejemplo, "min" o "max").
         '''
         try:
-            self.minmax = MinMaxFunction(variable_ranges, function_operations, weights, objective)
-            self.minmax.assign_transition_values(self.reduceDD)
+            self.minmax = MinMaxFunction(weights, objective)
+            self.minmax.assign_graph(self.DD)
         except Exception as e:
             print(e)
             raise Exception("Solver not defined")
@@ -85,7 +84,7 @@ class MDD():
         entregada en develop_solver.
         '''
         try:
-            self.minmax.anti_dijkstra(self.reduceDD.structure[0][0])
+            self.minmax.anti_dijkstra(self.DD.structure[0][0])
         except Exception as e:
             print(e)
             raise Exception("Solver not defined")
