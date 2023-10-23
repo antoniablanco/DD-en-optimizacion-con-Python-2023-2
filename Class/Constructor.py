@@ -51,24 +51,18 @@ class Constructor():
                 self.create_the_new_node(variable_value, existed_node, variable_id)
     
     def create_the_new_node(self, variable_value, existed_node, variable_id):
-        node_state, flag = self.get_state_node(existed_node, self.variables[variable_id], variable_value)
+        node_state, flag = self.problem.transition_function(existed_node.state, self.variables[variable_id], variable_value)
         if flag:
             node_created = Node(str(self.node_number), node_state)
             self.node_number += 1    
             self.create_arc_for_the_new_node(existed_node, node_created, variable_value, variable_id)
             self.graph.add_node(node_created)
  
-    def get_state_node(self, node, variable_id, variable_value):
-        return (self.problem.transition_function(node.state, variable_id, variable_value ))
-
     def create_arc_for_the_new_node(self, existed_node, node_created, variable_value, variable_id):  
         arc = Arc(existed_node, node_created, variable_value, self.variables[variable_id])
         existed_node.add_out_arc(arc)
         node_created.add_in_arc(arc)
     
-    def checking_if_two_nodes_have_same_state(self, node_one, node_two):
-        return self.problem.equals(node_one.state, node_two.state)
-
     def merge_nodes_with_same_state(self):
         last_layer = self.graph.structure[-1][:]
         for i, node_one in enumerate(last_layer):
@@ -77,28 +71,11 @@ class Constructor():
     
     def search_node_to_merge(self, node_one, node_two, i, j):
         if i < j and node_one.id_node != node_two.id_node and self.checking_if_two_nodes_have_same_state(node_one, node_two):
-                    self.merge_nodes(node_one, node_two)
+            self.merge_nodes(node_one, node_two)
 
-    def check_feasibility_layer(self):
-        for node in self.graph.structure[-1][:]:
-            self.check_feasibility_of_node_state(node)
+    def checking_if_two_nodes_have_same_state(self, node_one, node_two):
+        return self.problem.equals(node_one.state, node_two.state)
 
-    def check_feasibility_of_node_state(self, node):
-        if not self.is_node_feasible(node):
-            for arc in node.in_arcs:
-                node.in_arcs.remove(arc)
-                del arc
-            self.graph.remove_node(node) 
-            del node
-
-    def get_order_of_changin_nodes(self, node_one, node_two):
-        current_layer = self.graph.structure[self.graph.actual_layer]
-        if node_one in current_layer and node_two in current_layer:
-            if current_layer.index(node_one) > current_layer.index(node_two):
-                return (node_one, node_two)  
-            else:
-                return (node_two, node_one)
-        
     def merge_nodes(self, node_one, node_two):
         nodes = list(self.get_order_of_changin_nodes(node_one, node_two))
         changin_nodes_ordered = [nodes[0], nodes[1]]
@@ -108,6 +85,14 @@ class Constructor():
         self.delete_node(changin_nodes_ordered)
         self.update_self_informacion(changin_nodes_ordered)
     
+    def get_order_of_changin_nodes(self, node_one, node_two):
+        current_layer = self.graph.structure[self.graph.actual_layer]
+        if node_one in current_layer and node_two in current_layer:
+            if current_layer.index(node_one) > current_layer.index(node_two):
+                return (node_one, node_two)  
+            else:
+                return (node_two, node_one)
+
     def redirect_in_arcs(self, changin_nodes_ordered):
         for arc in changin_nodes_ordered[0].in_arcs:
             arc.in_node = changin_nodes_ordered[1]
@@ -128,7 +113,7 @@ class Constructor():
         self.node_number -= 1
         index_node, index_layer = self.graph.get_index_node(changin_nodes_ordered[0])
         self.update_node_names(index_node, index_layer)
-
+    
     def update_node_names(self, index_node, index_layer):
         valor_actual = int(self.graph.structure[index_layer-1][-1].id_node)
         for i, node in enumerate(self.graph.structure[index_layer]):
@@ -137,7 +122,7 @@ class Constructor():
             elif i > index_node and node.id_node!='t':
                 node.id_node = str(valor_actual)
                 valor_actual += 1
-    
+
     def merge_terminal_node(self):
         last_layer = self.graph.structure[-1][:]
         final_node = Node(len(self.graph.nodes), [])

@@ -23,7 +23,7 @@ class ReduceConstructor():
         '''
     
     def get_reduce_decision_diagram(self):
-        for layer in reversed(self.graph.structure[:-1]): 
+        for layer in reversed(self.graph.structure[:-1]):
             self.print_layer() #Sacar
             self.layerWorking -= 1 
             self.reviewing_layer(layer)
@@ -87,7 +87,6 @@ class ReduceConstructor():
                 changin_nodes_ordered[1].add_out_arc(arc)
     
     def delete_node(self, changin_nodes_ordered):
-        
         self.graph.remove_node(changin_nodes_ordered[0])
         del changin_nodes_ordered[0]
     
@@ -117,6 +116,3 @@ class ReduceConstructor():
                         arc2.out_node.out_arcs.remove(arc2)
                     else:
                         unique_arcs.add(arc1)  
-
-                
-    

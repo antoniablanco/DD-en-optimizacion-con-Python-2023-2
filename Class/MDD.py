@@ -48,8 +48,7 @@ class MDD():
         print_instance = Print(self.DD)
         return print_instance.print_graph_G()
 
-
-    def export_margarita_file(self, file_name, objective = "min"):
+    def export_margarita_file(self, file_name, objective="min"):
         '''
         Genera un archivo Margarita con el diagrama de decisión actual.
 
@@ -63,7 +62,7 @@ class MDD():
         '''
         MargaritaFile(file_name, self.DD, objective)
     
-    def develop_solver(self, weights, objective = "min"):
+    def develop_solver(self, weights, objective="min"):
         '''
         Guarda la información necesaria para tener una función objetivo.
 
