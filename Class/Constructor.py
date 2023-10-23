@@ -10,8 +10,8 @@ class Constructor():
 
         self.problem = problem
         self.initial_state = problem.initial_state
-        self.domain = problem.variables_nature
         self.variables = problem.ordered_variables
+        self.variables_domain = problem.variables_domain
 
         self.initialize_graph()
     
@@ -25,10 +25,46 @@ class Constructor():
                 print(str(node) + "(" + in_arcs_str + ")", end=" ")
             print("")
         '''
-
+        
     def initialize_graph(self):
-        node_root = Node("r", self.initial_state)
+        node_root = Node(0, self.initial_state)
         self.graph = Graph(node_root)
+    
+    def get_decision_diagram(self):
+        for variable_id in range(len(self.variables)):
+            self.create_new_layer(variable_id)
+        
+        self.merge_terminal_node()
+        self.print_layer() 
+
+        return self.graph
+    
+    def create_new_layer(self, variable_id):
+        self.graph.new_layer()
+        self.create_new_nodes_in_the_new_layer(variable_id)
+        self.merge_nodes_with_same_state()
+        self.print_layer()
+
+    def create_new_nodes_in_the_new_layer(self, variable_id):
+        for existed_node in self.graph.structure[-2][:]:
+            for variable_value in self.variables_domain[self.variables[variable_id]]:
+                self.create_the_new_node(variable_value, existed_node, variable_id)
+    
+    def create_the_new_node(self, variable_value, existed_node, variable_id):
+        node_state, flag = self.get_state_node(existed_node, self.variables[variable_id], variable_value)
+        if flag:
+            node_created = Node(str(self.node_number), node_state)
+            self.node_number += 1    
+            self.create_arc_for_the_new_node(existed_node, node_created, variable_value, variable_id)
+            self.graph.add_node(node_created)
+ 
+    def get_state_node(self, node, variable_id, variable_value):
+        return (self.problem.transition_function(node.state, variable_id, variable_value ))
+
+    def create_arc_for_the_new_node(self, existed_node, node_created, variable_value, variable_id):  
+        arc = Arc(existed_node, node_created, variable_value, self.variables[variable_id])
+        existed_node.add_out_arc(arc)
+        node_created.add_in_arc(arc)
     
     def checking_if_two_nodes_have_same_state(self, node_one, node_two):
         return self.problem.equals(node_one.state, node_two.state)
@@ -54,12 +90,6 @@ class Constructor():
                 del arc
             self.graph.remove_node(node) 
             del node
-
-    def is_node_feasible(self, newState, existedState, variable_id, variable_value):
-        return (self.problem.factibility_function(newState, existedState, variable_id, variable_value))
-
-    def get_state_node(self, node, variable_id, variable_value):
-        return (self.problem.transition_function(node.state,variable_id, variable_value ))
 
     def get_order_of_changin_nodes(self, node_one, node_two):
         current_layer = self.graph.structure[self.graph.actual_layer]
@@ -110,41 +140,10 @@ class Constructor():
     
     def merge_terminal_node(self):
         last_layer = self.graph.structure[-1][:]
-        final_node = Node("t", [])
+        final_node = Node(len(self.graph.nodes), [])
         self.graph.add_final_node(final_node)
 
         for node_one in last_layer:
             self.merge_nodes(node_one, final_node)
-    
-    def get_decision_diagram(self):
-        for variable_id in range(len(self.variables)):
-            self.create_new_layer(variable_id)
-        
-        self.merge_terminal_node()
-        self.print_layer() # Hay que sacar 
+        final_node.id_node = len(self.graph.nodes)
 
-        return self.graph
-
-    def create_new_layer(self, variable_id):
-        self.graph.new_layer()
-        self.create_new_nodes_in_the_new_layer(variable_id)
-        self.merge_nodes_with_same_state()
-        self.print_layer() # Hay que sacar
-
-    def create_new_nodes_in_the_new_layer(self, variable_id):
-        for existed_node in self.graph.structure[-2][:]:
-            for variable_value in self.domain:
-                self.create_the_new_node(variable_value, existed_node, variable_id)
-    
-    def create_the_new_node(self, variable_value, existed_node, variable_id):
-        node_state = self.get_state_node(existed_node, self.variables[variable_id], variable_value)
-        if self.is_node_feasible(node_state, existed_node.state, self.variables[variable_id], variable_value):
-            node_created = Node(str(self.node_number), node_state)
-            self.node_number += 1    
-            self.create_arc_for_the_new_node(existed_node, node_created, variable_value, variable_id)
-            self.graph.add_node(node_created)
-    
-    def create_arc_for_the_new_node(self, existed_node, node_created, variable_value, variable_id):   
-        arc = Arc(existed_node, node_created, variable_value, self.variables[variable_id])
-        existed_node.add_out_arc(arc)
-        node_created.add_in_arc(arc)
