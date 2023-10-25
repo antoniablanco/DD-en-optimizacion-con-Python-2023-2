@@ -4,8 +4,11 @@ from abc import ABC, abstractmethod
 class AbstractProblem(ABC):
     '''
     Esta clase ofrece una interfaz para que los usuarios puedan implementar sus 
-    propias clases Problem. Las cuales pueden utilizar con la clase proporcionada MDD 
+    propias clases Problem. Las cuales pueden utilizar con la clase proporcionada DD 
     para resolver diagramas de decisión.
+
+    *IMPORTANTE: Siempre que se hable de state tiene que seguir el mismo tipo que el entregado
+    en initial_state.
     '''
 
     def __init__(self, initial_state, variables):
@@ -19,7 +22,7 @@ class AbstractProblem(ABC):
         deben seguir el formato List<List<VARIABLE, DOMINIO>> .
 
         Atributos:
-        - initial_state (NOT DEFINE): El estado inicial del problema. 
+        - initial_state (NOT DEFINE): El estado inicial del problema. *LEER IMPORTANTE.
         - ordered_variables (list): Lista de variables ordenadas.
         - variables_domain (dict): Diccionario que mapea variables a su dominio.
         '''
@@ -45,8 +48,8 @@ class AbstractProblem(ABC):
         Método abstracto que debe ser implementado por las subclases para determinar si dos estados son iguales.
 
         Parámetros:
-        state_one: El primer estado a comparar.
-        state_two: El segundo estado a comparar.
+        state_one: El primer estado a comparar. *LEER IMPORTANTE
+        state_two: El segundo estado a comparar. *LEER IMPORTANTE
 
         Retorna:
         bool: True si los estados son iguales, False en caso contrario.
@@ -59,14 +62,14 @@ class AbstractProblem(ABC):
         Método abstracto que debe ser implementado por las subclases para definir la función de transición.
 
         Parámetros:
-        previus_state: El estado anterior.
+        previus_state: El estado anterior. *LEER IMPORTANTE
         variable_id: El identificador de la variable que se modifica, sigue el mismo type que el entregado en 
         variables.
         variable_value: El valor de la variable que se modifica, es el valor posible de su dominio que se selecciono.
 
         Retorna:
         tuple: Una tupla que contiene el nuevo estado, siguiente el tipo entregado en inicial_state y un 
-        flag, que es True si el estado es factible, y False en caso contrario.
+        isFeasible, que es True si el estado es factible, y False en caso contrario.
         '''
         pass
 

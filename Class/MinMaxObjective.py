@@ -1,5 +1,6 @@
 from collections import deque
 
+
 class MinMaxFunction:
 
     def __init__(self, weights, objective):
@@ -9,9 +10,6 @@ class MinMaxFunction:
         self.unvisited_nodes = []
         self.objective = objective
         self.choose_transform_weights()
-
-
-        # self.create_variables()
 
     def choose_transform_weights(self):
         if self.objective == "max":
@@ -29,7 +27,6 @@ class MinMaxFunction:
 
     def assing_terminal_node_id(self, terminal_node):
         self.terminal_node = terminal_node
-
 
     def assing_value_to_arc(self, arc, level):
         arc.transicion_value = self.weights[level] * arc.variable_value
@@ -76,11 +73,6 @@ class MinMaxFunction:
 
         return max_weight, best_route
 
-        
-
-
-
-
     def print_inverse_route(self, terminal_node):
         current_node = terminal_node
         route = deque()
@@ -90,7 +82,6 @@ class MinMaxFunction:
             else:
                 route.appendleft((current_node.id_node, current_node.weight))
             current_node = current_node.parent
-        
         
         self.print_best_weight_route(terminal_node.weight, route)
     
@@ -108,7 +99,6 @@ class MinMaxFunction:
         self.visited_nodes.append(next_node)
         self.unvisited_nodes.remove(next_node)
         self.update_unvisited_nodes(next_node)
-
 
     def update_unvisited_nodes(self, next_node):
         for arc in next_node.out_arcs:

@@ -92,105 +92,90 @@ graph [
 edge [
 	source 0
 	target 1
-	label "0"
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
 edge [
 	source 0
 	target 2
-	label "1"
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
 edge [
 	source 1
 	target 3
-	label "0"
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
 edge [
 	source 1
 	target 4
-	label "1"
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
 edge [
 	source 2
 	target 5
-	label "0"
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
 edge [
 	source 3
 	target 6
-	label "0"
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
 edge [
 	source 3
 	target 7
-	label "1"
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
 edge [
 	source 4
 	target 7
-	label "0"
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
 edge [
 	source 5
 	target 6
-	label "0"
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
 edge [
 	source 6
 	target 8
-	label "0"
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
 edge [
 	source 6
 	target 9
-	label "1"
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
 edge [
 	source 7
 	target 8
-	label "0"
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
 edge [
 	source 8
 	target 10
-	label "0"
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
 edge [
 	source 8
 	target 10
-	label "1"
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
 edge [
 	source 9
 	target 10
-	label "0"
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]

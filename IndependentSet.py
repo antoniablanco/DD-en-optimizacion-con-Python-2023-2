@@ -1,5 +1,6 @@
 from Class.AbstractProblemClass import AbstractProblem
-from Class.MDD import MDD
+from Class.DD import DD
+from Class.ObjectiveFunction import ObjectiveFunction 
 
 
 class ProblemIndependentSet(AbstractProblem):
@@ -24,8 +25,8 @@ class ProblemIndependentSet(AbstractProblem):
         else:
             new_state = previus_state.copy()
         
-        flag = (int(variable_value) == 1 and int(variable_id[2:]) in previus_state) or (int(variable_value) == 0)
-        return new_state, flag
+        isFeasible = (int(variable_value) == 1 and int(variable_id[2:]) in previus_state) or (int(variable_value) == 0)
+        return new_state, isFeasible
 
     
 initial_state = [1, 2, 3, 4, 5]
@@ -33,15 +34,18 @@ variables = [['x_1', [0, 1]], ['x_2', [0, 1]], ['x_3', [0, 1]], ['x_4', [0, 1]],
 
 problem_instance = ProblemIndependentSet(initial_state, variables)
 
-mdd_instance = MDD(problem_instance)
+dd_instance = DD(problem_instance)
 
-mdd_instance.print_decision_diagram()
-mdd_instance.create_reduce_decision_diagram()
-mdd_instance.print_decision_diagram()
+dd_instance.print_decision_diagram()
+dd_instance.create_reduce_decision_diagram()
+dd_instance.print_decision_diagram()
+dd_instance.export_margarita_file("test2")
 
-mdd_instance.develop_solver([1, 1, 1, 1, 1], 'max')
-mdd_instance.solve_dd()
-mdd_instance.export_margarita_file("test2")
+decision_diagram = dd_instance.get_decision_diagram_graph()
+
+objective_function_instance = ObjectiveFunction(decision_diagram)
+objective_function_instance.develop_solver([1, 1, 1, 1, 1], 'max')
+objective_function_instance.solve_dd()
 
 
 

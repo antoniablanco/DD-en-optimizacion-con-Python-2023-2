@@ -51,8 +51,8 @@ class Constructor():
                 self.create_the_new_node(variable_value, existed_node, variable_id)
     
     def create_the_new_node(self, variable_value, existed_node, variable_id):
-        node_state, flag = self.problem.transition_function(existed_node.state, self.variables[variable_id], variable_value)
-        if flag:
+        node_state, isFeasible = self.problem.transition_function(existed_node.state, self.variables[variable_id], variable_value)
+        if isFeasible:
             node_created = Node(str(self.node_number), node_state)
             self.node_number += 1    
             self.create_arc_for_the_new_node(existed_node, node_created, variable_value, variable_id)

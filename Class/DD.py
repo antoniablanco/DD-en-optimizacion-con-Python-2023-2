@@ -5,13 +5,13 @@ from Class.MargaritaFile import MargaritaFile
 from Class.MinMaxObjective import MinMaxFunction
 
 
-class MDD():
+class DD():
     '''
-    Clase MDD (Multi-Valued Decision Diagram) para la creación y manipulación de diagramas de decisión.
+    Clase DD (Decision Diagram) para la creación y manipulación de diagramas de decisión.
     '''
     def __init__(self, problem):
         '''
-        Constructor de la clase MDD.
+        Constructor de la clase DD.
 
         Parámetros:
         problem: Una instancia de la clase problem, que se utilizará para crear el diagrama de decisión.
@@ -22,24 +22,18 @@ class MDD():
         - objective: El tipo de objetivo (por ejemplo, "min" o "max"). Por defecto es "min".
         '''
         self.problem = problem
-        self.DD = None
+        self.DD = self._create_decision_diagram()
         self.objective = 'min'
-        self.create_decision_diagram()
 
-    def create_decision_diagram(self):
-        '''
-        Crea el diagrama de decisión utilizando el problema proporcionado y lo guarda en self.DD.
-        '''
+    def _create_decision_diagram(self):
         print("")
         print("Iniciando la creación del diagrama de decision ...")
         self.constructor = Constructor(self.problem)
-        self.DD = self.constructor.get_decision_diagram()
         print("Diagrama de decision creado")
+
+        return self.constructor.get_decision_diagram()
     
     def create_reduce_decision_diagram(self):
-        '''
-        Reduce el diagrama de decisión y lo guarda en self.DD.
-        '''
         print("")
         print("Iniciando la reducción del diagrama de decision ...")
         self.reduce_constructor = ReduceConstructor(self.DD)
@@ -61,6 +55,10 @@ class MDD():
         None
         '''
         MargaritaFile(file_name, self.DD, self.objective)
+
+    def get_decision_diagram_graph(self):
+        ''' Entrega el grafo del diagrama de decisión de la clase graph. '''
+        return self.DD
     
     def develop_solver(self, weights, objective="min"):
         '''
@@ -80,7 +78,7 @@ class MDD():
     
     def solve_dd(self):
         '''
-        Resuelve el diagrama de decisión, obteniendo la mejor solución para la función objeitivo
+        Resuelve el diagrama de decisión, obteniendo la mejor solución para la función objetivo
         entregada en develop_solver.
         '''
         try:
