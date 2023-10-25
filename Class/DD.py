@@ -57,32 +57,6 @@ class DD():
         MargaritaFile(file_name, self.DD, self.objective)
 
     def get_decision_diagram_graph(self):
-        ''' Entrega el grafo del diagrama de decisión de la clase graph. '''
+        ''' Retorna un objeto de la clase Graph. '''
         return self.DD
-    
-    def develop_solver(self, weights, objective="min"):
-        '''
-        Guarda la información necesaria para tener una función objetivo.
 
-        Parámetros:
-        weights (list): Pesos para las variables del problema.
-        objective (str): Tipo de objetivo (por ejemplo, "min" o "max").
-        '''
-        self.objective = objective
-        try:
-            self.minmax = MinMaxFunction(weights, objective)
-            self.minmax.assign_graph(self.DD)
-        except Exception as e:
-            print(e)
-            raise Exception("Solver not defined")
-    
-    def solve_dd(self):
-        '''
-        Resuelve el diagrama de decisión, obteniendo la mejor solución para la función objetivo
-        entregada en develop_solver.
-        '''
-        try:
-            self.minmax.anti_dijkstra(self.DD.structure[0][0])
-        except Exception as e:
-            print(e)
-            raise Exception("Solver not defined")

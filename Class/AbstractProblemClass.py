@@ -16,10 +16,10 @@ class AbstractProblem(ABC):
         Constructor de la clase AbstractProblem.
 
         Parámetros:
-        - initial_state (NOT DEFINE): El estado inicial del problema, puede ser una lista, int, 
+        - initial_state (NOT DEFINE): El estado inicial del problema, puede ser una lista, int,
         string, etc. Según lo que se requiera para el problema.
-        - variables (list): Una lista que contiene las variables del problema y su dominio, 
-        deben seguir el formato List<List<VARIABLE, DOMINIO>> .
+        - variables (list<tuple<variable, dominio>>): Una lista de tuplas que contiene las
+        variables del problema y su dominio.
 
         Atributos:
         - initial_state (NOT DEFINE): El estado inicial del problema. *LEER IMPORTANTE.
@@ -27,20 +27,14 @@ class AbstractProblem(ABC):
         - variables_domain (dict): Diccionario que mapea variables a su dominio.
         '''
         self.initial_state = initial_state
-        self.ordered_variables = self.get_variables(variables)
-        self.variables_domain = self.get_variables_domain(variables)
+        self.ordered_variables = self._get_variables(variables)
+        self.variables_domain = dict(variables)
     
-    def get_variables(self, variablesAndDomain):
+    def _get_variables(self, variablesAndDomain):
         ordered_variables = []
         for var in variablesAndDomain:
             ordered_variables.append(var[0])
         return ordered_variables
-    
-    def get_variables_domain(self, variablesAndDomain):
-        variables_domain = {}
-        for var in variablesAndDomain:
-            variables_domain[var[0]] = var[1]
-        return variables_domain
 
     @abstractmethod
     def equals(self, state_one, state_two):

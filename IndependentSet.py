@@ -30,7 +30,7 @@ class ProblemIndependentSet(AbstractProblem):
 
     
 initial_state = [1, 2, 3, 4, 5]
-variables = [['x_1', [0, 1]], ['x_2', [0, 1]], ['x_3', [0, 1]], ['x_4', [0, 1]], ['x_5', [0, 1]]]
+variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1]), ('x_5', [0, 1])]
 
 problem_instance = ProblemIndependentSet(initial_state, variables)
 

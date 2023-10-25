@@ -22,9 +22,9 @@ class Graph():
     def remove_node(self, node):
         if node in self.nodes:
             self.nodes.remove(node)
-            self.remove_node_from_layer(node)
+            self._remove_node_from_layer(node)
     
-    def remove_node_from_layer(self, node):
+    def _remove_node_from_layer(self, node):
         for layer in self.structure:
                 if node in layer:
                     layer.remove(node)
@@ -34,7 +34,7 @@ class Graph():
         index_layer = None
 
         for layer_index, layer in enumerate(self.structure):
-            index_in_layer = self.find_node_in_layer(layer, search_node)
+            index_in_layer = self._find_node_in_layer(layer, search_node)
             if index_in_layer is not None:
                 index_node = index_in_layer
                 index_layer = layer_index
@@ -42,7 +42,7 @@ class Graph():
 
         return (index_node, index_layer)
 
-    def find_node_in_layer(self, layer, search_node):
+    def _find_node_in_layer(self, layer, search_node):
         for node_index, node in enumerate(layer):
             if node is search_node:
                 return node_index

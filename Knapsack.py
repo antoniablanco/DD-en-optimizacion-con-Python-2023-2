@@ -20,7 +20,7 @@ class ProblemKnapsack(AbstractProblem):
 
 
 initial_state = [0]
-variables = [['x_1', [0, 1]], ['x_2', [0, 1]], ['x_3', [0, 1]], ['x_4', [0, 1]]]
+variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1])]
 
 problem_instance = ProblemKnapsack(initial_state, variables)
 
