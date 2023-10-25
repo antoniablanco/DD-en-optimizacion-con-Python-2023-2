@@ -11,20 +11,22 @@ class ReduceConstructor():
         self._graph = copy.deepcopy(graph)
         self._layerWorking = self._graph.actual_layer
     
-    def get_reduce_decision_diagram(self):
+    def get_reduce_decision_diagram(self, should_visualize):
         for layer in reversed(self._graph.structure[:-1]):
-            self._print_layer() #Sacar
+            self._print_graph(should_visualize)
             self._layerWorking -= 1 
             self._reviewing_layer(layer)
-        self._update_node_names()
-        self._eliminate_edge_from_nodes_that_node_exist(self._graph.structure[-1][0])
-        self._eliminate_duplicate_edge()
-        self._print_layer() #Sacar
+
+        self._final_layer_set_up()
+        self._print_graph(should_visualize)
                 
         return self._graph
     
-    def _print_layer(self):
-        '''
+    def _print_graph(self, should_visualize):
+        if should_visualize:
+            self._print()
+
+    def _print(self):
         print("")
         for layer in self._graph.structure:
             print("------------------------------------------------------")
@@ -32,7 +34,6 @@ class ReduceConstructor():
                 in_arcs_str = ", ".join(str(arc) for arc in node.in_arcs) 
                 print(str(node) + "(" + in_arcs_str + ")", end=" ")
             print("")
-        '''
     
     def _reviewing_layer(self, layer):
 
@@ -90,6 +91,11 @@ class ReduceConstructor():
         self._graph.remove_node(changin_nodes_ordered[0])
         del changin_nodes_ordered[0]
     
+    def _final_layer_set_up(self):
+        self._update_node_names()
+        self._eliminate_edge_from_nodes_that_node_exist(self._graph.structure[-1][0])
+        self._eliminate_duplicate_edge()
+
     def _update_node_names(self):
         valor_actual = 1
 

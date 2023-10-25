@@ -19,12 +19,13 @@ class Constructor():
         node_root = Node(0, initial_state)
         self.graph = Graph(node_root)
     
-    def get_decision_diagram(self):
+    def get_decision_diagram(self, should_visualize):
         for variable_id in range(len(self._variables)):
             self._create_new_layer(variable_id)
+            self._print_graph(should_visualize)
         
         self._merge_terminal_node()
-        self._print_layer() 
+        self._print_graph(should_visualize)
 
         return self.graph
     
@@ -32,7 +33,6 @@ class Constructor():
         self.graph.new_layer()
         self._create_new_nodes_in_the_new_layer(variable_id)
         self._merge_nodes_with_same_state()
-        self._print_layer()
 
     def _create_new_nodes_in_the_new_layer(self, variable_id):
         for existed_node in self.graph.structure[-2][:]:
@@ -120,9 +120,12 @@ class Constructor():
         for node_one in last_layer:
             self._merge_nodes(node_one, final_node)
         final_node.id_node = len(self.graph.nodes)
+    
+    def _print_graph(self, should_visualize):
+        if should_visualize:
+            self._print()
 
-    def _print_layer(self):
-        '''
+    def _print(self):
         print("")
         for layer in self.graph.structure:
             print("------------------------------------------------------")
@@ -130,4 +133,4 @@ class Constructor():
                 in_arcs_str = ", ".join(str(arc) for arc in node.in_arcs) 
                 print(str(node) + "(" + in_arcs_str + ")", end=" ")
             print("")
-        '''
+    

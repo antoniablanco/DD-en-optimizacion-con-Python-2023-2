@@ -9,7 +9,7 @@ class DD():
     '''
     Clase DD (Decision Diagram) para la creación y manipulación de diagramas de decisión.
     '''
-    def __init__(self, problem):
+    def __init__(self, problem, v=False):
         '''
         Constructor de la clase DD.
 
@@ -22,22 +22,22 @@ class DD():
         - objective: El tipo de objetivo (por ejemplo, "min" o "max"). Por defecto es "min".
         '''
         self.problem = problem
-        self.DD = self._create_decision_diagram()
+        self.DD = self._create_decision_diagram(v)
         self.objective = 'min'
 
-    def _create_decision_diagram(self):
+    def _create_decision_diagram(self, should_visualize):
         print("")
         print("Iniciando la creación del diagrama de decision ...")
         self.constructor = Constructor(self.problem)
         print("Diagrama de decision creado")
 
-        return self.constructor.get_decision_diagram()
+        return self.constructor.get_decision_diagram(should_visualize)
     
-    def create_reduce_decision_diagram(self):
+    def create_reduce_decision_diagram(self, v=False):
         print("")
         print("Iniciando la reducción del diagrama de decision ...")
         self.reduce_constructor = ReduceConstructor(self.DD)
-        self.DD = self.reduce_constructor.get_reduce_decision_diagram()
+        self.DD = self.reduce_constructor.get_reduce_decision_diagram(v)
         print("Reduccion del diagrama de decision terminada")
 
     def print_decision_diagram(self):
