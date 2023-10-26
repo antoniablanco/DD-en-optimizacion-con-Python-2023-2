@@ -1,4 +1,4 @@
-from Class.MinMaxObjective import MinMaxFunction
+from Class.LinearObjective import LinearObjective
 
 
 class ObjectiveFunction():
@@ -8,7 +8,7 @@ class ObjectiveFunction():
     '''
     
     def __init__(self, graphDD):
-        self.graphDD = graphDD
+        self.graph_DD = graphDD
     
     def develop_solver(self, weights, objective="min"):
         '''
@@ -19,8 +19,8 @@ class ObjectiveFunction():
         objective (str): Tipo de objetivo (por ejemplo, "min" o "max").
         '''
         try:
-            self.minmax = MinMaxFunction(weights, objective)
-            self.minmax.assign_graph(self.graphDD)
+            self.minmax = LinearObjective(weights, objective)
+            self.minmax.assign_graph(self.graph_DD)
         except Exception as e:
             print(e)
             raise Exception("Solver not defined")
@@ -31,7 +31,7 @@ class ObjectiveFunction():
         entregada en develop_solver.
         '''
         try:
-            self.minmax.anti_dijkstra(self.graphDD.structure[0][0])
+            self.minmax.dijkstra(self.graph_DD.structure[0][0])
         except Exception as e:
             print(e)
             raise Exception("Solver not defined")
