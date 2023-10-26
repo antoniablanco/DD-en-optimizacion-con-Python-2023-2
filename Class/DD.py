@@ -3,6 +3,7 @@ from Class.ReduceConstructor import ReduceConstructor
 from Class.Print import Print
 from Class.MargaritaFile import MargaritaFile
 from Class.MinMaxObjective import MinMaxFunction
+import copy
 
 
 class DD():
@@ -59,4 +60,9 @@ class DD():
     def get_decision_diagram_graph(self):
         ''' Retorna un objeto de la clase Graph. '''
         return self.DD
+
+    def get_decision_diagram_graph_copy(self):
+        ''' Retorna una copia del objeto de la clase Graph, que no posee un
+        puntero al mismo objeto. '''
+        return copy.deepcopy(self.DD)
 
