@@ -1,9 +1,9 @@
-class MargaritaFile:
+class GraphFile:
 
-    def __init__(self, file_name, graph, objective = "min"):
+    def __init__(self, file_name, graph):
         self.file_name = file_name
         self.graph = graph
-        self.objective = objective
+        # self.objective = objective
 
         self.create_gml_file()
         self.start_file()
