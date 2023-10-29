@@ -3,9 +3,17 @@ from unittest.mock import patch
 from Class.AbstractProblemClass import AbstractProblem
 from Class.DD import DD
 from Class.ObjectiveFunction import ObjectiveFunction
-import public.prints 
+from contextlib import contextmanager
 import io
 import os
+
+
+@contextmanager
+def assertNoRaise():
+    try:
+        yield
+    except Exception as e:
+        raise AssertionError(f"Se generó una excepción: {e}")
 
 
 class ProblemKnapsackTest(unittest.TestCase):
@@ -45,7 +53,7 @@ class ProblemKnapsackTest(unittest.TestCase):
     def test_V_create_dd(self, mock_stdout):
         dd_knapsack_instance = DD(self.knapsack_instance, v=True)
 
-        file_path = os.path.join('public', 'prints', 'createDDKnapsack.txt')
+        file_path = os.path.join('public', 'Prints', 'createDDKnapsack.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()
@@ -59,7 +67,7 @@ class ProblemKnapsackTest(unittest.TestCase):
         dd_knapsack_instance = DD(self.knapsack_instance, v=False)
         dd_knapsack_instance.create_reduce_decision_diagram(v=True)
 
-        file_path = os.path.join('public', 'prints', 'createReduceDDKnapsack.txt')
+        file_path = os.path.join('public', 'Prints', 'createReduceDDKnapsack.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()
@@ -72,6 +80,14 @@ class ProblemKnapsackTest(unittest.TestCase):
     def test_get_dd_graph(self):
         dd_knapsack_instance = DD(self.knapsack_instance, v=False)
         self.assertIsNotNone(dd_knapsack_instance.get_decision_diagram_graph())
+    
+    @patch('matplotlib.pyplot.show')
+    def test_print_dd_graph(self, mock_show):
+        dd_knapsack_instance = DD(self.knapsack_instance, v=False)
+
+        with assertNoRaise():
+            dd_knapsack_instance.print_decision_diagram()
+            mock_show.assert_called_once()
 
     def test_get_copy(self):
         dd_knapsack_instance = DD(self.knapsack_instance, v=False)
@@ -126,7 +142,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
     def test_V_create_dd(self, mock_stdout):
         dd_independent_instance = DD(self.independent_set_instance, v=True)
 
-        file_path = os.path.join('public', 'prints', 'createDDIndependentSet.txt')
+        file_path = os.path.join('public', 'Prints', 'createDDIndependentSet.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()
@@ -140,7 +156,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
         dd_independent_set_instance = DD(self.independent_set_instance, v=False)
         dd_independent_set_instance.create_reduce_decision_diagram(v=True)
 
-        file_path = os.path.join('public', 'prints', 'createReduceDDIndependentSet.txt')
+        file_path = os.path.join('public', 'Prints', 'createReduceDDIndependentSet.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()
@@ -153,6 +169,14 @@ class ProblemIndependentSetTest(unittest.TestCase):
     def test_get_dd_graph(self):
         dd_independent_set_instance = DD(self.independent_set_instance, v=False)
         self.assertIsNotNone(dd_independent_set_instance.get_decision_diagram_graph())
+    
+    @patch('matplotlib.pyplot.show')
+    def test_print_dd_graph(self, mock_show):
+        dd_independent_set_instance = DD(self.independent_set_instance, v=False)
+
+        with assertNoRaise():
+            dd_independent_set_instance.print_decision_diagram()
+            mock_show.assert_called_once()
     
     def test_get_copy(self):
         dd_independent_set_instance = DD(self.independent_set_instance, v=False)

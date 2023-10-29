@@ -119,7 +119,7 @@ class Constructor():
 
         for node_one in last_layer:
             self._merge_nodes(node_one, final_node)
-        final_node.id_node = len(self.graph.nodes)
+        final_node.id_node = len(self.graph.nodes)-1
     
     def _print_graph(self, should_visualize):
         if should_visualize:

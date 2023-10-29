@@ -15,7 +15,7 @@ class Graph():
         - structure (lista): Una lista 2D que representa la estructura del grafo en capas.
         - actual_layer (int): El índice de la capa actual que se posee en el grafo.
         '''
-        self.nodes = []
+        self.nodes = [initial_node]
         self.structure = [[initial_node]]
         self.actual_layer = 0
     
