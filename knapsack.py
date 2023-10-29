@@ -30,7 +30,7 @@ dd_instance = DD(problem_instance, v=False)
 dd_instance.print_decision_diagram()
 dd_instance.create_reduce_decision_diagram(v=False)
 dd_instance.print_decision_diagram()
-dd_instance.export_graph_file("test")
+dd_instance.export_margarita_file("test")
 
 decision_diagram = dd_instance.get_decision_diagram_graph()
 
