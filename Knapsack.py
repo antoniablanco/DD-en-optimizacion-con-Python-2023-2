@@ -26,13 +26,15 @@ problem_instance = ProblemKnapsack(initial_state, variables)
 
 dd_instance = DD(problem_instance, v=False)
 
+# Construcción del diagrama de decisión
 dd_instance.print_decision_diagram()
 dd_instance.create_reduce_decision_diagram(v=False)
 dd_instance.print_decision_diagram()
-dd_instance.export_margarita_file("test")
+dd_instance.export_graph_file("test")
 
 decision_diagram = dd_instance.get_decision_diagram_graph()
 
+# Resolución del diagrama
 objective_function_instance = ObjectiveFunction(decision_diagram)
 objective_function_instance.develop_solver([-5, 1, 18, 17], 'max')
 objective_function_instance.solve_dd()
