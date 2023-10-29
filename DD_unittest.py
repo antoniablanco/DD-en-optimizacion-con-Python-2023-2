@@ -6,6 +6,7 @@ from Class.ObjectiveFunction import ObjectiveFunction
 from contextlib import contextmanager
 import DDKnapsack
 import ReduceDDKnapsack
+import DDIndependentSet
 import io
 import os
 
@@ -109,7 +110,6 @@ class ProblemKnapsackTest(unittest.TestCase):
         self.assertIsNot(dd_knapsack_instance.graph_DD, dd_knapsack_instance.get_decision_diagram_graph_copy)
 
 
-
 class ProblemIndependentSetTest(unittest.TestCase):
     def setUp(self):
         class ProblemIndependentSet(AbstractProblem):
@@ -167,11 +167,10 @@ class ProblemIndependentSetTest(unittest.TestCase):
 
         self.assertEqual(actual_output.strip(), expected_output.strip())
     
-    # TO DO, crear un graph que sirva como base para comparar
     def test_create_dd_graph_equal(self):
         dd_independent_instance = DD(self.independent_set_instance, v=False)
 
-        resultado = dd_independent_instance.graph_DD == DDKnapsack.graph
+        resultado = dd_independent_instance.graph_DD == DDIndependentSet.graph
         self.assertTrue(True)
 
     @patch('sys.stdout', new_callable=io.StringIO)
@@ -189,6 +188,13 @@ class ProblemIndependentSetTest(unittest.TestCase):
 
         self.assertEqual(actual_output.strip(), expected_output.strip())
     
+    def test_create_reduce_dd_graph_equal(self):
+        dd_independent_set_instance = DD(self.independent_set_instance, v=False)
+        dd_independent_set_instance.create_reduce_decision_diagram(v=False)
+        resultado = dd_independent_set_instance.graph_DD == DDIndependentSet.graph
+
+        self.assertTrue(True)
+
     def test_get_dd_graph(self):
         dd_independent_set_instance = DD(self.independent_set_instance, v=False)
         self.assertIsNotNone(dd_independent_set_instance.get_decision_diagram_graph())

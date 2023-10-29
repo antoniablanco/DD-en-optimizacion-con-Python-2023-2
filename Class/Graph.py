@@ -30,7 +30,6 @@ class Graph():
         - bool: True si los objetos son iguales, False en caso contrario.
         '''
         if not isinstance(other, Graph):
-            print("Se imprime False 1")
             return False
         for i, layer in enumerate(self.structure):
             if len(layer) != len(other.structure[i]):
@@ -42,7 +41,6 @@ class Graph():
 
                 # Compara los atributos de los nodos
                 if str(node1.id_node) != str(node2.id_node) or node1.state != node2.state:
-                    print("False 3")
                     return False
 
                 # Compara los atributos de los arcos
@@ -51,9 +49,7 @@ class Graph():
 
                 for arc1, arc2 in zip(arcs1, arcs2):
                     if arc1.variable_value != arc2.variable_value or arc1.variable_id != arc2.variable_id:
-                        print("Se imprime False 4")
                         return False
-        print("Se imprime True")
         return True
     
     def add_node(self, node):
