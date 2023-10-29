@@ -1,7 +1,11 @@
 import unittest
+from unittest.mock import patch
 from Class.AbstractProblemClass import AbstractProblem
 from Class.DD import DD
 from Class.ObjectiveFunction import ObjectiveFunction
+import public.prints 
+import io
+import os
 
 
 class ProblemKnapsackTest(unittest.TestCase):
@@ -24,7 +28,6 @@ class ProblemKnapsackTest(unittest.TestCase):
         knpasack_initial_state = [0]
         knpasack_variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1])]
         self.knapsack_instance = ProblemKnapsack(knpasack_initial_state, knpasack_variables)
-        self.dd_knapsack_instance = DD(self.knapsack_instance, v=False)
 
     def test_ordered_variables(self):
         ordered_variables_test = ['x_1', 'x_2', 'x_3', 'x_4']
@@ -35,7 +38,44 @@ class ProblemKnapsackTest(unittest.TestCase):
         self.assertEqual(self.knapsack_instance.variables_domain, variables_domain_test)
 
     def test_is_dd_created(self):
-        self.assertIsNotNone(self.dd_knapsack_instance.DD)
+        dd_knapsack_instance = DD(self.knapsack_instance, v=True)
+        self.assertIsNotNone(dd_knapsack_instance.graph_DD)
+    
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_V_create_dd(self, mock_stdout):
+        dd_knapsack_instance = DD(self.knapsack_instance, v=True)
+
+        file_path = os.path.join('public', 'prints', 'createDDKnapsack.txt')
+        
+        with open(file_path, "r") as file:
+            expected_output = file.read()
+
+        actual_output = mock_stdout.getvalue()
+
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_V_create_reduce_dd(self, mock_stdout):
+        dd_knapsack_instance = DD(self.knapsack_instance, v=False)
+        dd_knapsack_instance.create_reduce_decision_diagram(v=True)
+
+        file_path = os.path.join('public', 'prints', 'createReduceDDKnapsack.txt')
+        
+        with open(file_path, "r") as file:
+            expected_output = file.read()
+
+        actual_output = mock_stdout.getvalue()
+        print(actual_output.strip())
+
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    def test_get_dd_graph(self):
+        dd_knapsack_instance = DD(self.knapsack_instance, v=False)
+        self.assertIsNotNone(dd_knapsack_instance.get_decision_diagram_graph())
+
+    def test_get_copy(self):
+        dd_knapsack_instance = DD(self.knapsack_instance, v=False)
+        self.assertIsNot(dd_knapsack_instance.graph_DD, dd_knapsack_instance.get_decision_diagram_graph_copy)
 
 
 class ProblemIndependentSetTest(unittest.TestCase):
@@ -79,7 +119,44 @@ class ProblemIndependentSetTest(unittest.TestCase):
         self.assertEqual(self.independent_set_instance.variables_domain, variables_domain_test)
 
     def test_is_dd_created(self):
-        self.assertIsNotNone(self.dd_independent_instance.DD)
+        dd_independent_instance = DD(self.independent_set_instance, v=True)
+        self.assertIsNotNone(dd_independent_instance.graph_DD)
+    
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_V_create_dd(self, mock_stdout):
+        dd_independent_instance = DD(self.independent_set_instance, v=True)
+
+        file_path = os.path.join('public', 'prints', 'createDDIndependentSet.txt')
+        
+        with open(file_path, "r") as file:
+            expected_output = file.read()
+
+        actual_output = mock_stdout.getvalue()
+
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_V_create_reduce_dd(self, mock_stdout):
+        dd_independent_set_instance = DD(self.independent_set_instance, v=False)
+        dd_independent_set_instance.create_reduce_decision_diagram(v=True)
+
+        file_path = os.path.join('public', 'prints', 'createReduceDDIndependentSet.txt')
+        
+        with open(file_path, "r") as file:
+            expected_output = file.read()
+
+        actual_output = mock_stdout.getvalue()
+        print(actual_output.strip())
+
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    def test_get_dd_graph(self):
+        dd_independent_set_instance = DD(self.independent_set_instance, v=False)
+        self.assertIsNotNone(dd_independent_set_instance.get_decision_diagram_graph())
+    
+    def test_get_copy(self):
+        dd_independent_set_instance = DD(self.independent_set_instance, v=False)
+        self.assertIsNot(dd_independent_set_instance.graph_DD, dd_independent_set_instance.get_decision_diagram_graph_copy)
 
 
 if __name__ == '__main__':
