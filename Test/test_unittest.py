@@ -1,7 +1,6 @@
 import unittest
 from public import test_constants as CONSTANTS
 
-from Class.Problem import Problem
 from public.classes import State
 from public.functions import custom_equals, custom_transition_function, custom_factibility_function
 
@@ -28,6 +27,7 @@ class TestKnapsackMethodsExistance(unittest.TestCase):
 
     def test_are_these_states_equal_defined(self):
         self.assertTrue(hasattr(self.problem, "are_these_states_equal") and callable(self.problem.are_these_states_equal))
+
 
 class TestKnapsackMethods(unittest.TestCase):
     
@@ -67,8 +67,6 @@ class TestKnapsackMethods(unittest.TestCase):
     def test_is_this_state_factible2(self):
         state = State(CONSTANTS.TEST_THREE["initial_value"])
         self.assertFalse(self.problem.is_this_state_factible(state))
-        
-        
 
 
 if __name__ == '__main__':
