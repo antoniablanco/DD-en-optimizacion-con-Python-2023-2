@@ -1,8 +1,8 @@
 from Class.Constructor import Constructor
 from Class.ReduceConstructor import ReduceConstructor
 from Class.Print import Print
-from Class.MargaritaFile import MargaritaFile
-from Class.MinMaxObjective import MinMaxFunction
+from Class.GraphFile import GraphFile
+from Class.LinearObjective import LinearObjective
 
 
 class DD():
@@ -22,7 +22,7 @@ class DD():
         - objective: El tipo de objetivo (por ejemplo, "min" o "max"). Por defecto es "min".
         '''
         self.problem = problem
-        self.DD = self._create_decision_diagram(v)
+        self.graph_DD = self._create_decision_diagram(v)
         self.objective = 'min'
 
     def _create_decision_diagram(self, should_visualize):
@@ -36,15 +36,15 @@ class DD():
     def create_reduce_decision_diagram(self, v=False):
         print("")
         print("Iniciando la reducción del diagrama de decision ...")
-        self.reduce_constructor = ReduceConstructor(self.DD)
-        self.DD = self.reduce_constructor.get_reduce_decision_diagram(v)
+        self.reduce_constructor = ReduceConstructor(self.graph_DD)
+        self.graph_DD = self.reduce_constructor.get_reduce_decision_diagram(v)
         print("Reduccion del diagrama de decision terminada")
 
     def print_decision_diagram(self):
-        print_instance = Print(self.DD)
+        print_instance = Print(self.graph_DD)
         return print_instance.print_graph_G()
 
-    def export_margarita_file(self, file_name):
+    def export_graph_file(self, file_name):
         '''
         Genera un archivo Margarita con el diagrama de decisión actual.
 
@@ -54,9 +54,9 @@ class DD():
         Retorna:
         None
         '''
-        MargaritaFile(file_name, self.DD, self.objective)
+        GraphFile(file_name, self.graph_DD)
 
     def get_decision_diagram_graph(self):
         ''' Retorna un objeto de la clase Graph. '''
-        return self.DD
+        return self.graph_DD
 
