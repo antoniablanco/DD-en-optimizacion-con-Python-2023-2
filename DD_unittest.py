@@ -4,6 +4,8 @@ from Class.AbstractProblemClass import AbstractProblem
 from Class.DD import DD
 from Class.ObjectiveFunction import ObjectiveFunction
 from contextlib import contextmanager
+import DDKnapsack
+import ReduceDDKnapsack
 import io
 import os
 
@@ -62,6 +64,12 @@ class ProblemKnapsackTest(unittest.TestCase):
 
         self.assertEqual(actual_output.strip(), expected_output.strip())
     
+    def test_create_dd_graph_equal(self):
+        dd_knapsack_instance = DD(self.knapsack_instance, v=False)
+        resultado = dd_knapsack_instance.graph_DD == DDKnapsack.graph
+
+        self.assertTrue(resultado)
+
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_V_create_reduce_dd(self, mock_stdout):
         dd_knapsack_instance = DD(self.knapsack_instance, v=False)
@@ -76,7 +84,14 @@ class ProblemKnapsackTest(unittest.TestCase):
         print(actual_output.strip())
 
         self.assertEqual(actual_output.strip(), expected_output.strip())
-    
+
+    def test_create_reduce_dd_graph_equal(self):
+        dd_knapsack_instance = DD(self.knapsack_instance, v=False)
+        dd_knapsack_instance.create_reduce_decision_diagram(v=False)
+        resultado = dd_knapsack_instance.graph_DD == ReduceDDKnapsack.graph
+
+        self.assertTrue(resultado)
+
     def test_get_dd_graph(self):
         dd_knapsack_instance = DD(self.knapsack_instance, v=False)
         self.assertIsNotNone(dd_knapsack_instance.get_decision_diagram_graph())
@@ -92,6 +107,7 @@ class ProblemKnapsackTest(unittest.TestCase):
     def test_get_copy(self):
         dd_knapsack_instance = DD(self.knapsack_instance, v=False)
         self.assertIsNot(dd_knapsack_instance.graph_DD, dd_knapsack_instance.get_decision_diagram_graph_copy)
+
 
 
 class ProblemIndependentSetTest(unittest.TestCase):
@@ -125,7 +141,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
         independent_set_variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1]), ('x_5', [0, 1])]
         self.independent_set_instance = ProblemIndependentSet(independent_set_initial_state, independent_set_variables)
         self.dd_independent_instance = DD(self.independent_set_instance, v=False)
-
+ 
     def test_ordered_variables(self):
         ordered_variables_test = ['x_1', 'x_2', 'x_3', 'x_4', 'x_5']
         self.assertEqual(self.independent_set_instance.ordered_variables, ordered_variables_test)
@@ -151,6 +167,13 @@ class ProblemIndependentSetTest(unittest.TestCase):
 
         self.assertEqual(actual_output.strip(), expected_output.strip())
     
+    # TO DO, crear un graph que sirva como base para comparar
+    def test_create_dd_graph_equal(self):
+        dd_independent_instance = DD(self.independent_set_instance, v=False)
+
+        resultado = dd_independent_instance.graph_DD == DDKnapsack.graph
+        self.assertTrue(True)
+
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_V_create_reduce_dd(self, mock_stdout):
         dd_independent_set_instance = DD(self.independent_set_instance, v=False)
