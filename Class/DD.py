@@ -64,5 +64,5 @@ class DD():
     def get_decision_diagram_graph_copy(self):
         ''' Retorna una copia del objeto de la clase Graph, que no posee un
         puntero al mismo objeto. '''
-        return copy.deepcopy(self.DD)
+        return copy.deepcopy(self.graph_DD)
 

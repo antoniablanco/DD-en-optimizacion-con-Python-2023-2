@@ -15,9 +15,42 @@ class Graph():
         - structure (lista): Una lista 2D que representa la estructura del grafo en capas.
         - actual_layer (int): El índice de la capa actual que se posee en el grafo.
         '''
-        self.nodes = []
+        self.nodes = [initial_node]
         self.structure = [[initial_node]]
         self.actual_layer = 0
+    
+    def __eq__(self, other):
+        '''
+        Compara si dos objetos de la clase Graph son iguales.
+
+        Parámetros:
+        - other (Graph): El otro objeto Graph que se comparará.
+
+        Retorna:
+        - bool: True si los objetos son iguales, False en caso contrario.
+        '''
+        if not isinstance(other, Graph):
+            return False
+        for i, layer in enumerate(self.structure):
+            if len(layer) != len(other.structure[i]):
+                return False
+
+            for j in range(len(layer)):
+                node1 = layer[j]
+                node2 = other.structure[i][j]
+
+                # Compara los atributos de los nodos
+                if str(node1.id_node) != str(node2.id_node) or node1.state != node2.state:
+                    return False
+
+                # Compara los atributos de los arcos
+                arcs1 = node1.in_arcs + node1.out_arcs
+                arcs2 = node2.in_arcs + node2.out_arcs
+
+                for arc1, arc2 in zip(arcs1, arcs2):
+                    if arc1.variable_value != arc2.variable_value or arc1.variable_id != arc2.variable_id:
+                        return False
+        return True
     
     def add_node(self, node):
         '''

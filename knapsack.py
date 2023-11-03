@@ -28,11 +28,12 @@ dd_instance = DD(problem_instance, v=False)
 
 # Construcción del diagrama de decisión
 dd_instance.print_decision_diagram()
-dd_instance.create_reduce_decision_diagram(v=False)
+dd_instance.create_reduce_decision_diagram(v=True)
 dd_instance.print_decision_diagram()
 dd_instance.export_graph_file("test")
 
 decision_diagram = dd_instance.get_decision_diagram_graph()
+
 
 # Resolución del diagrama
 objective_function_instance = ObjectiveFunction(decision_diagram)
