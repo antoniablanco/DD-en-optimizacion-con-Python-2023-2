@@ -24,11 +24,11 @@ variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1])]
 
 problem_instance = ProblemKnapsack(initial_state, variables)
 
-dd_instance = DD(problem_instance, v=True)
+dd_instance = DD(problem_instance, v=False)
 
 # Construcción del diagrama de decisión
 dd_instance.print_decision_diagram()
-dd_instance.create_reduce_decision_diagram(v=False)
+dd_instance.create_reduce_decision_diagram(v=True)
 dd_instance.print_decision_diagram()
 dd_instance.export_graph_file("test")
 

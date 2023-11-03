@@ -55,7 +55,7 @@ node_6.add_in_arc(arc_4_6)
 graph.add_node(node_6)
 
 graph.new_layer()
-node_7 = Node('7', [])
+node_7 = Node('7', [0])
 arc_5_7_op1 = Arc(node_5, node_7, 0, 'x_4')
 node_5.add_out_arc(arc_5_7_op1)
 node_7.add_in_arc(arc_5_7_op1)

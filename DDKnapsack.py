@@ -70,7 +70,7 @@ graph.add_node(node_9)
 
 
 graph.new_layer()
-node_10 = Node('10', [])
+node_10 = Node('10', [0])
 arc_6_10_op1 = Arc(node_6, node_10, 0, 'x_4')
 node_6.add_out_arc(arc_6_10_op1)
 node_10.add_in_arc(arc_6_10_op1)
