@@ -65,6 +65,14 @@ graph [
 	 hasFill 0
 	 w 90.0   h 110.0  ]
 ]
+ node [
+	 id 8
+	 label "8"
+ 	graphics [
+	 type "circle"
+	 hasFill 0
+	 w 90.0   h 110.0  ]
+]
 edge [
 	source 0
 	target 1
@@ -90,19 +98,13 @@ edge [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
 edge [
-	source 2
-	target 4
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 2
-	target 4
+	source 1
+	target 5
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
 edge [
-	source 3
+	source 2
 	target 5
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
@@ -111,29 +113,47 @@ edge [
 	source 3
 	target 6
 	graphics [
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
+]
+edge [
+	source 3
+	target 7
+	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
+]
+edge [
+	source 4
+	target 7
+	graphics [
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
 edge [
 	source 4
-	target 6
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 5
-	target 7
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 5
 	target 7
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
 edge [
-	source 6
+	source 5
 	target 7
+	graphics [
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
+]
+edge [
+	source 6
+	target 8
+	graphics [
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
+]
+edge [
+	source 6
+	target 8
+	graphics [
+	fill "#000000" 		targetArrow "diamond"	 	 ]
+]
+edge [
+	source 7
+	target 8
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
