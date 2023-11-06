@@ -4,9 +4,8 @@ from Class.AbstractProblemClass import AbstractProblem
 from Class.DD import DD
 from Class.ObjectiveFunction import ObjectiveFunction
 from contextlib import contextmanager
-import DDKnapsack
-import ReduceDDKnapsack
-import DDIndependentSet
+from Test.dd_controlled_generators import DDKnapsack
+from Test.dd_controlled_generators import ReduceDDKnapsack
 import io
 import os
 
@@ -56,7 +55,7 @@ class ProblemKnapsackTest(unittest.TestCase):
     def test_V_create_dd(self, mock_stdout):
         dd_knapsack_instance = DD(self.knapsack_instance, v=True)
 
-        file_path = os.path.join('public', 'Prints', 'createDDKnapsack.txt')
+        file_path = os.path.join('Test', 'test_prints', 'createDDKnapsack.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()
@@ -76,7 +75,7 @@ class ProblemKnapsackTest(unittest.TestCase):
         dd_knapsack_instance = DD(self.knapsack_instance, v=False)
         dd_knapsack_instance.create_reduce_decision_diagram(v=True)
 
-        file_path = os.path.join('public', 'Prints', 'createReduceDDKnapsack.txt')
+        file_path = os.path.join('Test', 'test_prints', 'createReduceDDKnapsack.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()

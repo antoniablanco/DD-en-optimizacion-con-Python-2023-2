@@ -4,9 +4,7 @@ from Class.AbstractProblemClass import AbstractProblem
 from Class.DD import DD
 from Class.ObjectiveFunction import ObjectiveFunction
 from contextlib import contextmanager
-import DDKnapsack
-import ReduceDDKnapsack
-import DDIndependentSet
+from Test.dd_controlled_generators import DDIndependentSet
 import io
 import os
 
@@ -67,7 +65,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
     def test_V_create_dd(self, mock_stdout):
         dd_independent_instance = DD(self.independent_set_instance, v=True)
 
-        file_path = os.path.join('public', 'Prints', 'createDDIndependentSet.txt')
+        file_path = os.path.join('Test', 'test_prints', 'createDDIndependentSet.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()
@@ -87,7 +85,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
         dd_independent_set_instance = DD(self.independent_set_instance, v=False)
         dd_independent_set_instance.create_reduce_decision_diagram(v=True)
 
-        file_path = os.path.join('public', 'Prints', 'createReduceDDIndependentSet.txt')
+        file_path = os.path.join('Test', 'test_prints', 'createReduceDDIndependentSet.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()

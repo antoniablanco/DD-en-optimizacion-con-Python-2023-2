@@ -30,13 +30,16 @@ class LinearObjective:
         self._terminal_node = terminal_node
 
     def _get_arc_transition_value(self, arc, level):
+        print(level, self._weights)
         return self._weights[level] * arc.variable_value
         
     def dijkstra(self, root_node):
         next_node = root_node
         next_node.update_weight(0)
         self._unvisited_nodes.append(next_node)
+        print(self._terminal_node.id_node)
         while next_node.id_node != self._terminal_node.id_node:
+            print(next_node.id_node)
             self._update_lists(next_node)
             next_node = self._find_minimum_node()
 
