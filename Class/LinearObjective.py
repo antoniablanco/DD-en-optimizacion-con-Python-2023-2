@@ -30,32 +30,37 @@ class LinearObjective:
         self._terminal_node = terminal_node
 
     def _get_arc_transition_value(self, arc, level):
-        print(level, self._weights)
+        arc.transition_value = self._weights[level] * arc.variable_value
         return self._weights[level] * arc.variable_value
         
     def dijkstra(self, root_node):
         next_node = root_node
         next_node.update_weight(0)
         self._unvisited_nodes.append(next_node)
-        print(self._terminal_node.id_node)
         while next_node.id_node != self._terminal_node.id_node:
-            print(next_node.id_node)
             self._update_lists(next_node)
             next_node = self._find_minimum_node()
 
-        self._print_inverse_route(next_node)
+        self._save_results(next_node)
 
-    def _print_best_weight_route(self, weight, route):
-        # print("Best Route:"," -> ".join(route))
-
-        print("Best Route:"," -> ".join(map(str, route)))
+    def _transform_best_weight(self, terminal_node):
+        weight = terminal_node.weight
         if self._objective == "max":
-            print("Weight: " + str(-weight))
+            return -weight
         else:
-            print("Weight: " + str(weight))
+            return weight
+        
+    def _save_results(self, terminal_node):
+       
+        self._best_route = self._get_route_of_node(terminal_node)
+        weight = terminal_node.weight
+        if self._objective == "max":
+            self._best_weight =  -weight
+        else:
+            self._best_weight =  weight
 
-    def _print_inverse_route(self, terminal_node):
-        current_node = terminal_node
+    def _get_route_of_node(self, node):
+        current_node = node
         route = deque()
         while current_node != None:
             if self._objective == "max":
@@ -63,8 +68,18 @@ class LinearObjective:
             else:
                 route.appendleft((current_node.id_node, current_node.weight))
             current_node = current_node.parent
-        
-        self._print_best_weight_route(terminal_node.weight, route)
+        route = " -> ".join(map(str, route))
+        return route
+    
+    def get_best_route(self):
+        return self._best_route
+    
+    def get_best_weight(self):
+        return self._best_weight
+
+    def _print_best_weight_route(self, weight, route):
+        print("Best Route:", self._best_route)
+        print("Best Weight:", self._best_weight)
     
     def _find_minimum_node(self):
         next_node = self._unvisited_nodes[0]
