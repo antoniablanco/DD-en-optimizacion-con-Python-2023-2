@@ -29,9 +29,8 @@ class ObjectiveFunction():
         '''
         Resuelve el diagrama de decisión, obteniendo la mejor solución para la función objetivo
         entregada en develop_solver.
+        Ademas guarda los resultados.
 
-        Retorna:
-        float: El valor de la mejor solución.
         '''
         try:
             print("Resolviendo diagrama de decisión...")
