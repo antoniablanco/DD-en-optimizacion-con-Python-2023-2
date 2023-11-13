@@ -42,6 +42,10 @@ class DD():
         print("Reduccion del diagrama de decision terminada")
 
     def print_decision_diagram(self):
+        '''
+        NOTA: Este método es solo para fines de prueba, y es importante tener en cuenta que posee 
+        máximo 4 tipos de lineas diferente.
+        '''
         print_instance = Print(self.graph_DD)
         return print_instance.print_graph_G()
 
