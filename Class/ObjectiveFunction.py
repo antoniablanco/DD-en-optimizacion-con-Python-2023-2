@@ -29,40 +29,9 @@ class ObjectiveFunction():
         '''
         Resuelve el diagrama de decisión, obteniendo la mejor solución para la función objetivo
         entregada en develop_solver.
-        Ademas guarda los resultados.
-
         '''
         try:
-            print("Resolviendo diagrama de decisión...")
             self.minmax.dijkstra(self.graph_DD.structure[0][0])
-            print("Diagrama de decisión resuelto")
         except Exception as e:
             print(e)
             raise Exception("Solver not defined")
-        
-    def get_best_route(self):
-        '''
-        Retorna la ruta que lleva a la mejor solución.
-
-        Retorna:
-        str: representación de ruta donde cada variable es una tupla, siendo el primer valor el nodo
-        elegido, y el segundo valor el peso hasta ese momento.
-        '''
-        try:
-            return self.minmax.get_best_route()
-        except Exception as e:
-            print(e)
-            raise Exception("Could not obtain best route")
-        
-    def get_best_solution(self):
-        '''
-        Retorna el valor de la mejor solución.
-
-        Retorna:
-        int: valor de la mejor solución.
-        '''
-        try:
-            return self.minmax.get_best_weight()
-        except Exception as e:
-            print(e)
-            raise Exception("Could not obtain best solution")
