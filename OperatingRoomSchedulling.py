@@ -13,9 +13,6 @@ class OperatingRoomSchedulling(AbstractProblem):
         return state_one == state_two
 
     def transition_function(self, previus_state, variable_id, variable_value):
-        print(previus_state)
-        print(variable_id)
-        print(variable_value)
         is_feasible = True
         if variable_value in previus_state:
             is_feasible = False
@@ -25,7 +22,6 @@ class OperatingRoomSchedulling(AbstractProblem):
 
 number_operations = 4
 
-# El estado es operaciones hechas, tiempo usado y ultima operacion
 initial_state = []
 variables = [(f'x_{i}', list(range(number_operations))) for i in range(number_operations)]
 
