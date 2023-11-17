@@ -10,6 +10,7 @@ Para ello es necesario que el largo de cada row dentro de matrix_of_wheight sea
 igual al de right_side_of_restrictions, al de variables y initial_state.
 Deben ser valores enteros.
 '''
+
 # Valores construcción knapsack
 matrix_of_wheight = [[3, 3, 4, 6], [2, 2, 1, 5], [4, 2, 1, 3]]
 right_side_of_restrictions = [6, 5, 8]
@@ -34,5 +35,6 @@ decision_diagram = dd_instance.get_decision_diagram_graph()
 objective_function_instance = ObjectiveFunction(decision_diagram)
 objective_function_instance.develop_solver([-5, 1, 18, 17], 'max')
 objective_function_instance.solve_dd()
+print(objective_function_instance.get_time())
 
 
