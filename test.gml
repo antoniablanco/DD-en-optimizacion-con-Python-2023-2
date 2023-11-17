@@ -65,70 +65,6 @@ graph [
 	 hasFill 0
 	 w 90.0   h 110.0  ]
 ]
- node [
-	 id 8
-	 label "8"
- 	graphics [
-	 type "circle"
-	 hasFill 0
-	 w 90.0   h 110.0  ]
-]
- node [
-	 id 9
-	 label "9"
- 	graphics [
-	 type "circle"
-	 hasFill 0
-	 w 90.0   h 110.0  ]
-]
- node [
-	 id 10
-	 label "10"
- 	graphics [
-	 type "circle"
-	 hasFill 0
-	 w 90.0   h 110.0  ]
-]
- node [
-	 id 11
-	 label "11"
- 	graphics [
-	 type "circle"
-	 hasFill 0
-	 w 90.0   h 110.0  ]
-]
- node [
-	 id 12
-	 label "12"
- 	graphics [
-	 type "circle"
-	 hasFill 0
-	 w 90.0   h 110.0  ]
-]
- node [
-	 id 13
-	 label "13"
- 	graphics [
-	 type "circle"
-	 hasFill 0
-	 w 90.0   h 110.0  ]
-]
- node [
-	 id 14
-	 label "14"
- 	graphics [
-	 type "circle"
-	 hasFill 0
-	 w 90.0   h 110.0  ]
-]
- node [
-	 id 15
-	 label "15"
- 	graphics [
-	 type "circle"
-	 hasFill 0
-	 w 90.0   h 110.0  ]
-]
 edge [
 	source 0
 	target 1
@@ -142,242 +78,68 @@ edge [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
 edge [
-	source 0
+	source 1
 	target 3
 	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
 edge [
-	source 0
+	source 1
 	target 4
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
 edge [
 	source 1
-	target 5
+	target 4
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
 edge [
-	source 1
+	source 2
+	target 4
+	graphics [
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
+]
+edge [
+	source 2
+	target 4
+	graphics [
+	fill "#000000" 		targetArrow "diamond"	 	 ]
+]
+edge [
+	source 3
+	target 5
+	graphics [
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
+]
+edge [
+	source 3
 	target 6
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
 edge [
-	source 1
-	target 7
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 2
-	target 5
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 2
-	target 8
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 2
-	target 9
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 3
+	source 4
 	target 6
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
 edge [
-	source 3
-	target 8
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 3
-	target 10
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 4
+	source 5
 	target 7
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
 edge [
-	source 4
-	target 9
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 4
-	target 10
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
 	source 5
-	target 11
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 5
-	target 12
+	target 7
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 ]
 ]
 edge [
 	source 6
-	target 11
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 6
-	target 13
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 7
-	target 12
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 7
-	target 13
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 8
-	target 11
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 8
-	target 14
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 8
-	target 11
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 9
-	target 12
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 9
-	target 14
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 9
-	target 12
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 10
-	target 13
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 10
-	target 14
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 10
-	target 13
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 10
-	target 14
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 11
-	target 15
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 12
-	target 15
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 13
-	target 15
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 13
-	target 15
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 ]
-]
-edge [
-	source 14
-	target 15
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 14
-	target 15
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 14
-	target 15
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 14
-	target 15
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 14
-	target 15
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
-]
-edge [
-	source 14
-	target 15
+	target 7
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 ]
 ]
