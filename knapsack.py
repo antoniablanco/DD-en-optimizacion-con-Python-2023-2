@@ -1,7 +1,6 @@
 from Class.DD import DD
 from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction
 from Exceptions.MyExceptions import SameLenError
-
 from Class.Problems.KnapsackProblem import ProblemKnapsack
 
 '''
@@ -35,4 +34,5 @@ decision_diagram = dd_instance.get_decision_diagram_graph()
 objective_function_instance = ObjectiveFunction(decision_diagram)
 objective_function_instance.develop_solver([-5, 1, 18, 17], 'max')
 objective_function_instance.solve_dd()
+
 
