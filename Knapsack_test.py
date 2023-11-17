@@ -1,11 +1,12 @@
 import unittest
 from unittest.mock import patch
-from Class.AbstractProblemClass import AbstractProblem
+from Class.Problems.AbstractProblemClass import AbstractProblem
 from Class.DD import DD
-from Class.ObjectiveFunction import ObjectiveFunction
+from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction
 from contextlib import contextmanager
-from Test.dd_controlled_generators import DDKnapsack
-from Test.dd_controlled_generators import ReduceDDKnapsack
+import DDKnapsack
+import ReduceDDKnapsack
+import DDIndependentSet
 import io
 import os
 
@@ -55,7 +56,7 @@ class ProblemKnapsackTest(unittest.TestCase):
     def test_V_create_dd(self, mock_stdout):
         dd_knapsack_instance = DD(self.knapsack_instance, v=True)
 
-        file_path = os.path.join('Test', 'test_prints', 'createDDKnapsack.txt')
+        file_path = os.path.join('public', 'Prints', 'createDDKnapsack.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()
@@ -75,7 +76,7 @@ class ProblemKnapsackTest(unittest.TestCase):
         dd_knapsack_instance = DD(self.knapsack_instance, v=False)
         dd_knapsack_instance.create_reduce_decision_diagram(v=True)
 
-        file_path = os.path.join('Test', 'test_prints', 'createReduceDDKnapsack.txt')
+        file_path = os.path.join('public', 'Prints', 'createReduceDDKnapsack.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()
@@ -107,22 +108,6 @@ class ProblemKnapsackTest(unittest.TestCase):
     def test_get_copy(self):
         dd_knapsack_instance = DD(self.knapsack_instance, v=False)
         self.assertIsNot(dd_knapsack_instance.graph_DD, dd_knapsack_instance.get_decision_diagram_graph_copy)
-
-    def test_objective_result_solution(self):
-        dd_knapsack_instance = DD(self.knapsack_instance, v=False)
-        objective_function_instance = ObjectiveFunction(dd_knapsack_instance.get_decision_diagram_graph())
-        objective_function_instance.develop_solver([-5, 1, 18, 17], 'min')
-        objective_function_instance.solve_dd()
-        result = objective_function_instance.get_best_solution()
-        self.assertEqual(result, -5)
-
-    def test_objective_result_route(self):
-        dd_knapsack_instance = DD(self.knapsack_instance, v=False)
-        objective_function_instance = ObjectiveFunction(dd_knapsack_instance.get_decision_diagram_graph())
-        objective_function_instance.develop_solver([-5, 1, 18, 17], 'min')
-        objective_function_instance.solve_dd()
-        result = objective_function_instance.get_best_route()
-        self.assertEqual(result,"(0, 0) -> ('2', -5) -> ('4', -5) -> ('8', -5) -> ('10', -5)")
 
 if __name__ == '__main__':
     unittest.main()

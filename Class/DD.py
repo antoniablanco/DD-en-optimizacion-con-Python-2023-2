@@ -1,9 +1,9 @@
-from Class.Constructor import Constructor
-from Class.ReduceConstructor import ReduceConstructor
-from Class.Print import Print
-from Class.GraphFile import GraphFile
-from Class.LinearObjective import LinearObjective
+from Class.Constructor.Constructor import Constructor
+from Class.ReduceConstructor.ReduceConstructor import ReduceConstructor
+from Class.GraphVisualization.Print import Print
+from Class.GraphVisualization.GraphFile import GraphFile
 import copy
+import time
 
 
 class DD():
@@ -22,24 +22,33 @@ class DD():
         - DD: El diagrama de decisión creado, que se actualiza al generar el diagrama reducido o relajado.
         - objective: El tipo de objetivo (por ejemplo, "min" o "max"). Por defecto es "min".
         '''
+        self.constructor_time = 0
+        self.reduce_constructor_time = 0
+
         self.problem = problem
         self.graph_DD = self._create_decision_diagram(v)
-        self.objective = 'min'
 
     def _create_decision_diagram(self, should_visualize):
         print("")
         print("Iniciando la creación del diagrama de decision ...")
+        start_time = time.time()  
         self.constructor = Constructor(self.problem)
-        print("Diagrama de decision creado")
+        graph = self.constructor.get_decision_diagram(should_visualize)
+        end_time = time.time()  
+        self.constructor_time = end_time - start_time
 
-        return self.constructor.get_decision_diagram(should_visualize)
+        print(f"Diagrama de decision creado")
+        return graph
     
     def create_reduce_decision_diagram(self, v=False):
         print("")
         print("Iniciando la reducción del diagrama de decision ...")
+        start_time = time.time()
         self.reduce_constructor = ReduceConstructor(self.graph_DD)
         self.graph_DD = self.reduce_constructor.get_reduce_decision_diagram(v)
-        print("Reduccion del diagrama de decision terminada")
+        end_time = time.time() 
+        self.reduce_constructor_time = end_time - start_time
+        print(f"Reduccion del diagrama de decision terminada")
 
     def print_decision_diagram(self):
         '''
@@ -69,4 +78,11 @@ class DD():
         ''' Retorna una copia del objeto de la clase Graph, que no posee un
         puntero al mismo objeto. '''
         return copy.deepcopy(self.graph_DD)
+    
+    def get_constructor_time(self):
+        ''' Retorna el tiempo de ejecución del constructor. '''
+        return self.constructor_time
 
+    def get_reduce_constructor_time(self):
+        ''' Retorna el tiempo de ejecución del reduce constructor. '''
+        return self.reduce_constructor_time
