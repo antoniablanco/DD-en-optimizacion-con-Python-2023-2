@@ -1,45 +1,8 @@
-from Class.AbstractProblemClass import AbstractProblem
 from Class.DD import DD
-from Class.ObjectiveFunction import ObjectiveFunction
+from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction
 from Exceptions.MyExceptions import SameLenError
 
-class ProblemKnapsack(AbstractProblem):
-
-    def __init__(self, initial_state, variables, list_of_wheight_for_restrictions, right_side_of_restrictions):
-        super().__init__(initial_state, variables)
-
-        self.list_of_wheight_for_restrictions = list_of_wheight_for_restrictions
-        self.right_side_of_restrictions = right_side_of_restrictions
-
-        self.check_atributes(variables)
-
-    def check_atributes(self, variables):
-        self.check_same_len_matrix_and_right_side()
-        self.check_same_len_rows_matrix_and_variables(variables)
-    
-    def check_same_len_matrix_and_right_side(self):
-        if ((len(self.list_of_wheight_for_restrictions) != len(self.right_side_of_restrictions)) or (len(initial_state) != len(self.right_side_of_restrictions))):
-            raise SameLenError("matrix_of_wheight and right_side_of_restrictions must have the same length")
-    
-    def check_same_len_rows_matrix_and_variables(self, variables):
-        for row in range(len(self.list_of_wheight_for_restrictions)):
-            if len(self.list_of_wheight_for_restrictions[row]) != len(variables):
-                raise SameLenError("rows of matrix_of_wheight and right_side_of_restrictions must have the same length of variables")
-
-    def equals(self, state_one, state_two):
-        return set(state_one) == set(state_two)
-
-    def transition_function(self, previus_state, variable_id, variable_value):
-        isFeasible = True
-        state = []
-        for row in range(len(self.list_of_wheight_for_restrictions)):
-            lista_suma_variables = self.list_of_wheight_for_restrictions[row]
-            new_state = int(previus_state[row])+lista_suma_variables[int(variable_id[2:])-1]*int(variable_value)
-            state.append(new_state)
-
-            isFeasible_this_row = int(state[row]) <= self.right_side_of_restrictions[row]
-            isFeasible = isFeasible and isFeasible_this_row
-        return state, isFeasible
+from Class.Problems.KnapsackProblem import ProblemKnapsack
 
 '''
 Los siguientes 2 atributos fueron agregados solo para el tipo de problema de Knapsack, 
@@ -67,7 +30,6 @@ dd_instance.print_decision_diagram()
 dd_instance.export_graph_file("test")
 
 decision_diagram = dd_instance.get_decision_diagram_graph()
-
 
 # Resolución del diagrama
 objective_function_instance = ObjectiveFunction(decision_diagram)

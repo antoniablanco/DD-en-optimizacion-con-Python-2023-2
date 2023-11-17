@@ -1,4 +1,4 @@
-from Class.LinearObjective import LinearObjective
+from Class.ObjectiveFunction.LinearObjective import LinearObjective
 
 
 class ObjectiveFunction():

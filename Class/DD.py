@@ -1,8 +1,7 @@
-from Class.Constructor import Constructor
-from Class.ReduceConstructor import ReduceConstructor
-from Class.Print import Print
-from Class.GraphFile import GraphFile
-from Class.LinearObjective import LinearObjective
+from Class.Constructor.Constructor import Constructor
+from Class.ReduceConstructor.ReduceConstructor import ReduceConstructor
+from Class.GraphVisualization.Print import Print
+from Class.GraphVisualization.GraphFile import GraphFile
 import copy
 
 
@@ -24,7 +23,6 @@ class DD():
         '''
         self.problem = problem
         self.graph_DD = self._create_decision_diagram(v)
-        self.objective = 'min'
 
     def _create_decision_diagram(self, should_visualize):
         print("")

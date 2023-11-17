@@ -1,8 +1,8 @@
 import unittest
 from unittest.mock import patch
-from Class.AbstractProblemClass import AbstractProblem
+from Class.Problems.AbstractProblemClass import AbstractProblem
 from Class.DD import DD
-from Class.ObjectiveFunction import ObjectiveFunction
+from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction
 from contextlib import contextmanager
 import DDKnapsack
 import ReduceDDKnapsack

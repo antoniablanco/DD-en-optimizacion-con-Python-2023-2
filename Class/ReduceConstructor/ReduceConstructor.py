@@ -1,6 +1,6 @@
-from Class.Node import Node
-from Class.Arc import Arc
-from Class.Graph import Graph
+from Class.Structure.Node import Node
+from Class.Structure.Arc import Arc
+from Class.Structure.Graph import Graph
 
 import copy
 
