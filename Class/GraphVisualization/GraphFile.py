@@ -2,12 +2,15 @@ from Class.Structure.Node import Node
 from Class.Structure.Arc import Arc
 from Class.Structure.Graph import Graph
 
+from Class.decorators.timer import timing_decorator
+
 class GraphFile:
     '''
     Clase que se encarga de generar un archivo GML (Graph Modeling Language)
     para representar un grafo jerárquico dirigido con nodos y arcos.
     '''
 
+    @timing_decorator(enabled=False)
     def __init__(self, file_name: str, graph: Graph):
         '''
         Constructor de la clase GraphFile.

@@ -52,7 +52,7 @@ class LinearObjective:
     def _assing_terminal_node_id(self, terminal_node: Node) -> None:
         self._terminal_node = terminal_node
 
-        
+    
     def dijkstra(self, root_node: Node) -> None:
         '''
         Implementa el algoritmo de Dijkstra desde el nodo raíz.

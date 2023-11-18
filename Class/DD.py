@@ -5,6 +5,9 @@ from Class.GraphVisualization.GraphFile import GraphFile
 import copy
 import time
 
+from Class.decorators.timer import timing_decorator
+
+
 
 class DD():
     '''
@@ -28,6 +31,7 @@ class DD():
         self.problem = problem
         self.graph_DD = self._create_decision_diagram(v)
 
+    @timing_decorator(enabled=False)
     def _create_decision_diagram(self, should_visualize):
         print("")
         print("Iniciando la creación del diagrama de decision ...")
@@ -40,6 +44,7 @@ class DD():
         print(f"Diagrama de decision creado")
         return graph
     
+    @timing_decorator(enabled=False)
     def create_reduce_decision_diagram(self, v=False):
         print("")
         print("Iniciando la reducción del diagrama de decision ...")
@@ -50,6 +55,8 @@ class DD():
         self.reduce_constructor_time = end_time - start_time
         print(f"Reduccion del diagrama de decision terminada")
 
+
+    @timing_decorator(enabled=False)
     def print_decision_diagram(self):
         '''
         NOTA: Este método es solo para fines de prueba, y es importante tener en cuenta que posee 

@@ -3,6 +3,8 @@ import time
 
 from Class.Structure.Graph import Graph
 
+from Class.decorators.timer import timing_decorator
+
 class ObjectiveFunction():
     '''
     Clase DD ObjectiveFunction para la asignación de funciones objetivos y la obtención de un 
@@ -21,6 +23,7 @@ class ObjectiveFunction():
         self.graph_DD = graphDD
         self.time = 0
     
+    @timing_decorator(enabled=False)
     def develop_solver(self, weights: list[int], objective: str="min"):
         '''
         Guarda la información necesaria para tener una función objetivo.
@@ -36,6 +39,7 @@ class ObjectiveFunction():
             print(e)
             raise Exception("Solver not defined")
     
+    @timing_decorator(enabled=True)
     def solve_dd(self):
         '''
         Resuelve el diagrama de decisión, obteniendo la mejor solución para la función objetivo

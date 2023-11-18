@@ -5,6 +5,8 @@ from Class.Structure.Graph import Graph
 from Class.Structure.Node import Node
 from Class.Structure.Arc import Arc
 
+from Class.decorators.timer import timing_decorator
+
 
 
 class Print():
@@ -23,6 +25,8 @@ class Print():
         self._G = nx.MultiGraph()
         self._domain = []
 
+
+    @timing_decorator(enabled=False)
     def print_graph_G(self):
         '''
         Función publica que imprime el grafo utilizando Matplotlib y NetworkX.
