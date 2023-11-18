@@ -1,13 +1,18 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
+from Class.Structure.Graph import Graph
+from Class.Structure.Node import Node
+from Class.Structure.Arc import Arc
+
+
 
 class Print():
     '''
     Clase que imprime la representación visual de un grafo utilizando NetworkX y Matplotlib.
     '''
 
-    def __init__(self, graph):
+    def __init__(self, graph: Graph):
         '''
         Constructor de la clase Print.
 
@@ -40,7 +45,7 @@ class Print():
                 self._G.add_node(node.id_node)
                 self._add_arcs_to_G(node)
                 
-    def _add_arcs_to_G(self, node):
+    def _add_arcs_to_G(self, node: Node):
         '''
         Agrega arcos y sus propiedades al objeto MultiGraph de NetworkX.
 
@@ -54,7 +59,7 @@ class Print():
             style = self.add_edge_style_to_graph(arc.variable_value)
             self._G.add_edge(arc.out_node.id_node, arc.in_node.id_node, style=style, label=arc.variable_value)
     
-    def add_edge_style_to_graph(self, arc_variable_value):
+    def add_edge_style_to_graph(self, arc_variable_value: int):
         '''
         Asigna estilos de línea a los arcos del grafo visualizado.
 
@@ -102,7 +107,7 @@ class Print():
             style = data.get("style", "solid")
             nx.draw_networkx_edges(self._G, pos, edgelist=[(u, v)], style=style)
     
-    def _add_nodes_to_graph(self, pos):
+    def _add_nodes_to_graph(self, pos: int):
         '''
         Agrega nodos al grafo visualizado.
 

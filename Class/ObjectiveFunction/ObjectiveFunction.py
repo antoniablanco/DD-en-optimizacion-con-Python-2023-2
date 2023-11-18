@@ -1,17 +1,27 @@
 from Class.ObjectiveFunction.LinearObjective import LinearObjective
 import time
 
+from Class.Structure.Graph import Graph
+
 class ObjectiveFunction():
     '''
     Clase DD ObjectiveFunction para la asignación de funciones objetivos y la obtención de un 
     óptimo para un diagrama de decisión.
     '''
     
-    def __init__(self, graphDD):
+    def __init__(self, graphDD: Graph):
+        '''
+        Constructor de la clase ObjectiveFunction.
+
+        Parámetros:
+        graphDD (Graph): Diagrama de decisión que se resolverá.
+        '''
+
+
         self.graph_DD = graphDD
         self.time = 0
     
-    def develop_solver(self, weights, objective="min"):
+    def develop_solver(self, weights: list[int], objective: str="min"):
         '''
         Guarda la información necesaria para tener una función objetivo.
 
