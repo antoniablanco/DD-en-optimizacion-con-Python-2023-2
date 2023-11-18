@@ -1,12 +1,18 @@
+import os
+import sys
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
+sys.path.append(parent_dir)
+
 import unittest
 from unittest.mock import patch
 from Class.Problems.AbstractProblemClass import AbstractProblem
 from Class.DD import DD
 from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction
 from contextlib import contextmanager
-import DDKnapsack
-import ReduceDDKnapsack
-import DDIndependentSet
+import dd_controlled_generators.DDKnapsack as DDKnapsack
+import dd_controlled_generators.ReduceDDKnapsack as ReduceDDKnapsack
 import io
 import os
 
@@ -56,7 +62,7 @@ class ProblemKnapsackTest(unittest.TestCase):
     def test_V_create_dd(self, mock_stdout):
         dd_knapsack_instance = DD(self.knapsack_instance, v=True)
 
-        file_path = os.path.join('public', 'Prints', 'createDDKnapsack.txt')
+        file_path = os.path.join('Test', 'test_prints', 'createDDKnapsack.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()
@@ -76,7 +82,7 @@ class ProblemKnapsackTest(unittest.TestCase):
         dd_knapsack_instance = DD(self.knapsack_instance, v=False)
         dd_knapsack_instance.create_reduce_decision_diagram(v=True)
 
-        file_path = os.path.join('public', 'Prints', 'createReduceDDKnapsack.txt')
+        file_path = os.path.join('Test', 'test_prints', 'createReduceDDKnapsack.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()
