@@ -1,5 +1,5 @@
-from Class.LinearObjective import LinearObjective
-
+from Class.ObjectiveFunction.LinearObjective import LinearObjective
+import time
 
 class ObjectiveFunction():
     '''
@@ -9,6 +9,7 @@ class ObjectiveFunction():
     
     def __init__(self, graphDD):
         self.graph_DD = graphDD
+        self.time = 0
     
     def develop_solver(self, weights, objective="min"):
         '''
@@ -31,7 +32,14 @@ class ObjectiveFunction():
         entregada en develop_solver.
         '''
         try:
+            start_time = time.time()
             self.minmax.dijkstra(self.graph_DD.structure[0][0])
+            end_time = time.time() 
+            self.time = end_time - start_time
         except Exception as e:
             print(e)
             raise Exception("Solver not defined")
+    
+    def get_time(self):
+        ''' Retorna el tiempo de ejecución del algoritmo de resolucion. '''
+        return self.time

@@ -1,6 +1,13 @@
-from Class.Node import Node
-from Class.Arc import Arc
-from Class.Graph import Graph
+import os
+import sys
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
+sys.path.append(parent_dir)
+
+from Class.Structure.Node import Node
+from Class.Structure.Arc import Arc
+from Class.Structure.Graph import Graph
 
 node_0 = Node('0', [0])
 graph = Graph(node_0)
