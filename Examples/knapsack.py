@@ -42,6 +42,4 @@ decision_diagram = dd_instance.get_decision_diagram_graph()
 objective_function_instance = ObjectiveFunction(decision_diagram)
 objective_function_instance.develop_solver([-5, 1, 18, 17], 'max')
 objective_function_instance.solve_dd()
-print(objective_function_instance.get_time())
-
 

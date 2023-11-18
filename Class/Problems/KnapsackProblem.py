@@ -1,8 +1,11 @@
 from Class.Problems.AbstractProblemClass import AbstractProblem
 from Exceptions.MyExceptions import SameLenError
 
+from Class.decorators.timer import timing_decorator
+
 class ProblemKnapsack(AbstractProblem):
 
+    @timing_decorator(enabled=False)
     def __init__(self, initial_state, variables, list_of_wheight_for_restrictions, right_side_of_restrictions):
         super().__init__(initial_state, variables)
 
