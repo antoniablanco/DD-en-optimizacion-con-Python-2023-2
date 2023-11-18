@@ -2,12 +2,15 @@ from Class.Structure.Node import Node
 from Class.Structure.Arc import Arc
 from Class.Structure.Graph import Graph
 
+from Class.decorators.timer import timing_decorator
+
 
 class Constructor():
     '''
     Clase que construye un grafo de decisión basado en un problema dado.
     '''
 
+    @timing_decorator(enabled=False)
     def __init__(self, problem):
         '''
         Constructor de la clase Constructor.
