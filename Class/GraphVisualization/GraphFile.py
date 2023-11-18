@@ -1,10 +1,14 @@
+from Class.Structure.Node import Node
+from Class.Structure.Arc import Arc
+from Class.Structure.Graph import Graph
+
 class GraphFile:
     '''
     Clase que se encarga de generar un archivo GML (Graph Modeling Language)
     para representar un grafo jerárquico dirigido con nodos y arcos.
     '''
 
-    def __init__(self, file_name, graph):
+    def __init__(self, file_name: str, graph: Graph):
         '''
         Constructor de la clase GraphFile.
 
@@ -15,18 +19,19 @@ class GraphFile:
         self.file_name = file_name
         self.graph = graph
 
-        self.create_gml_file()
-        self.start_file()
-        self.add_nodes()
-        self.end_file()
+        self._create_gml_file()
+        self.is_graph_binary = self._check_if_graph_is_binary()
+        self._start_file()
+        self._add_nodes_and_arcs()
+        self._end_file()
 
-    def create_gml_file(self):
+    def _create_gml_file(self):
         '''
         Crea el archivo GML y abre el archivo para escritura.
         '''
         self.file = open(f"{self.file_name}.gml", 'w')
 
-    def start_file(self):
+    def _start_file(self):
         '''
         Inicia la estructura del archivo GML con la información del grafo.
         '''
@@ -34,18 +39,53 @@ class GraphFile:
         self.file.write("\tdirected 1\n")
         self.file.write("\thierarchic 1")
 
-    def add_nodes(self):
+    def _add_nodes_and_arcs(self):
         '''
         Agrega nodos al archivo GML, junto con la información de sus arcos salientes.
         '''
         arcs = []
         for layer in self.graph.structure:
             for node in layer:
-                self.add_node(node)
-                arcs += node.out_arcs
-        self.add_arcs(arcs)
+                self._add_node(node)
+                arcs += node.out_arcs      
+        self._add_arcs(arcs)
+            
+    def _check_if_graph_is_binary(self) -> bool:
+        '''
+        Determina si un grafo es binario, es decir, si todos sus variables son binarios.
+
+        Retorna:
+        - True si el grafo es binario.
+        - False si el grafo no es binario.
+        '''
+
+        for layer in self.graph.structure:
+            for node in layer:
+                if not self._is_node_binary(node):
+                    return False
+                
+        return True
+                
+
+    def _is_node_binary(self, node: Node) -> bool:
+        '''
+        Determina si un nodo es binario, es decir, si sus arcos salientes son de valor 0 o 1.
+
+        Parámetros:
+        - node (Node): Objeto de la clase Node que posee arcos con valor de variable.
+
+        Retorna:
+        - True si el nodo es binario.
+        - False si el nodo no es binario.
+        '''
+        for arc in node.out_arcs:
+            if arc.variable_value != 0 and arc.variable_value != 1:
+                return False
+            
+        return True
+
     
-    def add_node(self, node):
+    def _add_node(self, node: Node) -> None:
         '''
         Agrega información de un nodo al archivo GML.
 
@@ -67,7 +107,7 @@ class GraphFile:
         self.file.write("\t w 90.0   h 110.0  ]\n")
         self.file.write(f"]")
 
-    def add_arcs(self, arcs):
+    def _add_arcs(self, arcs: list[Arc]) -> None:
         '''
         Agrega arcos al archivo GML.
 
@@ -75,9 +115,9 @@ class GraphFile:
         - arcs (list): Lista de objetos Arc a ser agregados al archivo GML.
         '''
         for arc in arcs:
-            self.add_arc(arc)
+            self._add_arc(arc)
 
-    def add_arc(self, arc):
+    def _add_arc(self, arc: Arc) -> None:
         '''
         Agrega información de un arco al archivo GML.
 
@@ -85,24 +125,55 @@ class GraphFile:
         - arc (Arc): Objeto de la clase Arc que se va a agregar al archivo GML.
         '''
         self.file.write(f"\nedge [\n")
+        self._add_arc_source(arc)
+        self._add_arc_target(arc)
+
+        if not self.is_graph_binary:
+            self._add_arc_label(arc)
+
+
+        self._add_arc_graphics(arc)
+        self.file.write(f"]\n")
+
+
+    def _add_arc_source(self, arc: Arc) -> None:
         if arc.out_node.id_node == 'r':
             self.file.write(f"\tsource 0\n")
         else:
             self.file.write(f"\tsource {arc.out_node.id_node}\n")
 
+    def _add_arc_label(self, arc: Arc) -> None:
+        self.file.write(f"\tlabel \"{arc.variable_value}\"\n")
+
+    def _add_arc_target(self, arc: Arc) -> None:
         if arc.in_node.id_node == 't':
             self.file.write(f"\ttarget 500\n")
         else:
             self.file.write(f"\ttarget {arc.in_node.id_node}\n")
 
+    def _add_arc_graphics(self, arc: Arc) -> None:
         self.file.write("\tgraphics [\n")
-        if arc.variable_value == 0:
-            self.file.write(f"\tfill \"#808080\" 		targetArrow \"standard\"	 style	\"dashed\"	 ]\n")
+
+        if self.is_graph_binary:
+            self._add_binary_arc_graphics(arc)
+
         else:
-            self.file.write(f"\tfill \"#000000\" 		targetArrow \"diamond\"	 	 ]\n")
+            self._add_normal_arc_graphics(arc)
+
         self.file.write(f"]")
+
+
+    def _add_normal_arc_graphics(self, arc: Arc) -> None:
+        self.file.write(f"\tfill \"#000000\" 		targetArrow \"standard\"	 	 \n")
+
+
+    def _add_binary_arc_graphics(self, arc: Arc) -> None:
+        if arc.variable_value == 0:
+            self.file.write(f"\tfill \"#808080\" 		targetArrow \"standard\"	 style	\"dashed\"	 \n")
+        else:
+            self.file.write(f"\tfill \"#000000\" 		targetArrow \"diamond\"	 	 \n")
     
-    def end_file(self):
+    def _end_file(self):
         '''
         Finaliza la estructura del archivo GML.
         '''
