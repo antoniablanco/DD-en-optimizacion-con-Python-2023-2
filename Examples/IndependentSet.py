@@ -1,3 +1,10 @@
+import os
+import sys
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
+sys.path.append(parent_dir)
+
 from Class.DD import DD
 from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction 
 from Exceptions.MyExceptions import SameVariables, MustBeIntegers, ConsistentDictionaryOfNeighbors
@@ -29,7 +36,7 @@ dd_instance.export_graph_file("test2")
 decision_diagram = dd_instance.get_decision_diagram_graph()
 
 objective_function_instance = ObjectiveFunction(decision_diagram)
-objective_function_instance.develop_solver([1, 1, 1, 1, 1], 'max')
+objective_function_instance.develop_solver([1, 1, 1, 1, 1], 'min')
 objective_function_instance.solve_dd()
 print(objective_function_instance.get_time())
 

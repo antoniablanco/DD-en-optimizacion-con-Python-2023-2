@@ -1,12 +1,17 @@
+import os
+import sys
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
+sys.path.append(parent_dir)
+
 import unittest
 from unittest.mock import patch
 from Class.Problems.AbstractProblemClass import AbstractProblem
 from Class.DD import DD
 from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction
 from contextlib import contextmanager
-import DDKnapsack
-import ReduceDDKnapsack
-import DDIndependentSet
+import dd_controlled_generators.DDIndependentSet as DDIndependentSet
 import io
 import os
 
@@ -67,7 +72,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
     def test_V_create_dd(self, mock_stdout):
         dd_independent_instance = DD(self.independent_set_instance, v=True)
 
-        file_path = os.path.join('public', 'Prints', 'createDDIndependentSet.txt')
+        file_path = os.path.join('Test', 'test_prints', 'createDDIndependentSet.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()
@@ -87,7 +92,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
         dd_independent_set_instance = DD(self.independent_set_instance, v=False)
         dd_independent_set_instance.create_reduce_decision_diagram(v=True)
 
-        file_path = os.path.join('public', 'Prints', 'createReduceDDIndependentSet.txt')
+        file_path = os.path.join('Test', 'test_prints', 'createReduceDDIndependentSet.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()
