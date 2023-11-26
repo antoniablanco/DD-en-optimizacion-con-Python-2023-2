@@ -10,7 +10,7 @@ from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction
 from Class.Problems.OperatingRoomSchedullingProblem import OperatingRoomSchedulling
 import numpy as np
 
-number_operations = 4
+number_operations = 3
 
 initial_state = []
 variables = [(f'x_{i}', list(range(number_operations))) for i in range(number_operations)]
@@ -24,3 +24,9 @@ dd_instance.print_decision_diagram()
 dd_instance.export_graph_file("test")
 
 decision_diagram = dd_instance.get_decision_diagram_graph()
+
+# Resolución del diagrama
+objective_function_instance = ObjectiveFunction(decision_diagram)
+w = [[1, 1, 1], [[2, 1, 1], [2,2,5], [3,3,2]]]
+objective_function_instance.develop_solver(w, 'min')
+objective_function_instance.solve_dd()
