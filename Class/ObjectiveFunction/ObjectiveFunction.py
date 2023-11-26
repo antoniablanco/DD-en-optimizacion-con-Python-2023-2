@@ -1,4 +1,5 @@
 from Class.ObjectiveFunction.LinearObjective import LinearObjective
+from Class.ObjectiveFunction.SchedullingObjective import SchedullingObjective
 import time
 
 from Class.Structure.Graph import Graph
@@ -33,7 +34,8 @@ class ObjectiveFunction():
         objective (str): Tipo de objetivo (por ejemplo, "min" o "max").
         '''
         try:
-            self.minmax = LinearObjective(weights, objective)
+            # self.minmax = LinearObjective(weights, objective)
+            self.minmax = SchedullingObjective(weights, objective)
             self.minmax.assign_graph(self.graph_DD)
         except Exception as e:
             print(e)
@@ -47,7 +49,8 @@ class ObjectiveFunction():
         '''
         try:
             start_time = time.time()
-            self.minmax.dijkstra(self.graph_DD.structure[0][0])
+            # self.minmax.dijkstra(self.graph_DD.structure[0][0])
+            self.minmax.earliest_completion_time(self.graph_DD.structure[0][0])
             end_time = time.time() 
             self.time = end_time - start_time
         except Exception as e:

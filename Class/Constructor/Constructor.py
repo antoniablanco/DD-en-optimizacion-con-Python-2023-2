@@ -150,7 +150,7 @@ class Constructor():
                 return True, node
         return False, None
 
-    def _create_arc_for_the_new_node(self, existed_node, node_created, variable_value, variable_id):  
+    def _create_arc_for_the_new_node(self, existed_node, node_created, variable_value, variable_id):
         '''
         Crea un arco para un nodo ya existente.
 
@@ -182,7 +182,7 @@ class Constructor():
         for layer in self.graph.structure:
             print("------------------------------------------------------")
             for node in layer:
-                in_arcs_str = ", ".join(str(arc) for arc in node.in_arcs) 
+                in_arcs_str = ", ".join(str(arc) for arc in node.in_arcs)
                 print(str(node) + "(" + in_arcs_str + ")", end=" ")
             print("")
     
