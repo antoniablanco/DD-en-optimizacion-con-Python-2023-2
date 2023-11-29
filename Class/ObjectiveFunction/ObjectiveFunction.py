@@ -46,11 +46,15 @@ class ObjectiveFunction():
         '''
         Resuelve el diagrama de decisión, obteniendo la mejor solución para la función objetivo
         entregada en develop_solver.
+
+        Parámetros:
+        - cut (str): Tipo de corte que quieres utilizar ("iis" y "nogood"), "none" en caso de no querer cortes.
+        - T (int): máximo weight que acepta el problema.
         '''
         try:
             start_time = time.time()
             # self.minmax.dijkstra(self.graph_DD.structure[0][0])
-            self.minmax.earliest_completion_time(self.graph_DD.structure[0][0])
+            self.minmax.earliest_completion_time(self.graph_DD.structure[0][0], "iis", 4.8)
             end_time = time.time() 
             self.time = end_time - start_time
         except Exception as e:

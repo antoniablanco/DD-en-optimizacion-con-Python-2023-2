@@ -20,8 +20,8 @@ class SchedullingObjective:
         self.operation_time = weights[0]
         self.setup_time = weights[1]
 
-        self._visited_nodes = []
         self._unvisited_nodes = []
+        self._cuts = []
 
         self._objective = objective
         self._choose_transform_weights()
@@ -52,30 +52,67 @@ class SchedullingObjective:
     def _assing_terminal_node_id(self, terminal_node: Node) -> None:
         self._terminal_node = terminal_node
 
-    def earliest_completion_time(self, root_node: Node) -> None:
+    def earliest_completion_time(self, root_node: Node, cut: str, T: int) -> None:
         '''
         Implementa el algoritmo de Earliest Completion Time desde el nodo raíz.
 
         Parámetros:
         - root_node (Node): Nodo raíz desde el cual se inicia el algoritmo.
+        - cut (str): Tipo de corte que quieres utilizar ("iis" y "nogood"), "none" en caso de no querer cortes.
+        - T (int): máximo weight que acepta el problema.
         '''
         next_node = root_node
         next_node.update_weight(0)
         self._unvisited_nodes.append(next_node)
         while next_node.id_node != self._terminal_node.id_node:
+            if cut == "iis":
+                if next_node.weight > T:
+                    if self._check_if_is_iis(next_node.state):
+                        self._cuts.append(next_node.state)
             self._update_lists(next_node)
             next_node = self._unvisited_nodes[0]
+        if cut == "nogood":
+            if self._terminal_node.weight > T:
+                self._cuts = self._terminal_node.state
 
-        self._print_best_weight_route(self._terminal_node.weight)
+        self._print_best_weight_route(self._terminal_node.weight, cut)
+
+    def _check_if_is_iis(self, state:list):
+        '''
+        Revisa si el estado entregado es un super conjunto de algún IIS ya encontrado.
+
+        Parámetros:
+        - state (list): Estado del nodo a revisar.
+        '''
+        is_iis_subset = []
+        for iis in self._cuts:
+            is_iis_subset.append(not self._subset(iis, state))
+        return all(is_iis_subset)
+
+    def _subset(self, conjunto1: list, conjunto2: list):
+        '''
+        Revisa si el conjunto 1 es un subconjunto del conjunto 2.
+
+        Parámetros:
+        - conjunto1 (list)
+        - conjunto2 (list)
+        '''
+        if len(conjunto1) == 0:
+            return False
+        elif set(conjunto1) <= set(conjunto2):
+            return True
+        else:
+            return False
 
     def _update_lists(self, next_node: Node) -> None:
         '''
         Actualiza las listas de nodos visitados y no visitados.
 
         Parámetros:
-
+        - next_node (Node): Nodo que se acaba de visitar.
+        - cut (str): Tipo de corte que quieres utilizar ("iis" y "nogood"), "none" en caso de no querer cortes.
+        - T (int): máximo weight que acepta el problema.
         '''
-        self._visited_nodes.append(next_node)
         self._unvisited_nodes.remove(next_node)
         self._update_unvisited_nodes(next_node)
 
@@ -86,26 +123,19 @@ class SchedullingObjective:
 
         Parámetros:
         - next_node (Node): Nodo que se acaba de visitar.
+        - cut (str): Tipo de corte que quieres utilizar ("iis" y "nogood"), "none" en caso de no querer cortes.
+        - T (int): máximo weight que acepta el problema.
         '''
-        node_level = self._get_node_level(next_node)
         for arc in next_node.out_arcs:
             node = arc.in_node
             transition_value = self._get_arc_transition_value(arc)
-            if node not in self._visited_nodes and node not in self._unvisited_nodes:
-                self._update_node(node, next_node, transition_value)
+            if node not in self._unvisited_nodes:
+                node.update_weight(transition_value)
                 self._unvisited_nodes.append(node)
             elif node.weight > transition_value:
-                self._update_node(node, next_node, transition_value)
-
-    def _get_node_level(self, node: Node) -> None:
-        '''
-        Retorna el nivel en el que se encuentra un nodo en el grafo.
-        '''
-        for level in range(0, len(self._graph.structure)):
-            if node in self._graph.structure[level]:
-                return level
+                node.update_weight(transition_value)
             
-    def _get_arc_transition_value(self, arc: Arc) -> None:
+    def _get_arc_transition_value(self, arc: Arc) -> int:
         '''
         Retorna el valor de transición de un arco.
         '''
@@ -142,26 +172,19 @@ class SchedullingObjective:
         '''
         return self.operation_time[id_operacion_actual]
 
-    def _update_node(self, node:Node, next_node: Node, transition_value: int) -> None:
-        '''
-        Actualiza el peso y el padre de un nodo.
-
-        Parámetros:
-        - node (Node): Nodo que se va a actualizar.
-        - next_node (Node): Nodo que se acaba de visitar.
-        - transition_value (int): Valor de transición del arco que conecta el nodo actual con el nodo que se acaba de visitar.
-        '''
-        node.update_weight(transition_value)
-        node.update_parent(next_node)
-
-    def _print_best_weight_route(self, weight: int) -> None:
+    def _print_best_weight_route(self, weight: int, cut: str) -> None:
         '''
         Imprime el mejor tiempo que encuentra el algoritmo.
 
         Parámetros:
         - weight (int): Peso de la mejor ruta encontrada.
+        - cut (str): Tipo de corte que quieres utilizar ("iis" o "nogood"), "none" en caso de no querer cortes.
         '''
         if self._objective == "max":
             print("Weight: " + str(-weight))
         else:
             print("Weight: " + str(weight))
+        if cut == "iis":
+            print("IIS: " + str(self._cuts))
+        elif cut == "nogood":
+            print("NO GOOD: " + str(self._cuts))
