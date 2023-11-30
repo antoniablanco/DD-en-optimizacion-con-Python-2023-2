@@ -1,11 +1,11 @@
-from Class.Structure.Node import Node
-from Class.Structure.Arc import Arc
-from Class.Structure.Graph import Graph
+from Class.DDStructure.Node import Node
+from Class.DDStructure.Arc import Arc
+from Class.DDStructure.Graph import Graph
 
 import copy
 
 
-class ReduceConstructor():
+class ReduceDDBuilder():
     '''
     Clase que implementa un algoritmo para la reducción de un grafo de decisión.
     '''

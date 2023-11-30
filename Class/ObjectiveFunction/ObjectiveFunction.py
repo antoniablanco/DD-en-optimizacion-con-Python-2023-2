@@ -2,7 +2,8 @@ from Class.ObjectiveFunction.LinearObjective import LinearObjective
 from Class.ObjectiveFunction.SchedullingObjective import SchedullingObjective
 import time
 
-from Class.Structure.Graph import Graph
+from Class.DDStructure.Graph import Graph
+from Class.DD import DD
 
 from Class.decorators.timer import timing_decorator
 
@@ -12,7 +13,7 @@ class ObjectiveFunction():
     óptimo para un diagrama de decisión.
     '''
     
-    def __init__(self, graphDD: Graph):
+    def __init__(self, DD: DD):
         '''
         Constructor de la clase ObjectiveFunction.
 
@@ -21,7 +22,7 @@ class ObjectiveFunction():
         '''
 
 
-        self.graph_DD = graphDD
+        self.graph_DD = DD.get_decision_diagram_graph()
         self.time = 0
     
     @timing_decorator(enabled=False)
@@ -34,14 +35,14 @@ class ObjectiveFunction():
         objective (str): Tipo de objetivo (por ejemplo, "min" o "max").
         '''
         try:
-            # self.minmax = LinearObjective(weights, objective)
-            self.minmax = SchedullingObjective(weights, objective)
+            self.minmax = LinearObjective(weights, objective)
+            # self.minmax = SchedullingObjective(weights, objective)
             self.minmax.assign_graph(self.graph_DD)
         except Exception as e:
             print(e)
             raise Exception("Solver not defined")
     
-    @timing_decorator(enabled=True)
+    @timing_decorator(enabled=False)
     def solve_dd(self):
         '''
         Resuelve el diagrama de decisión, obteniendo la mejor solución para la función objetivo
@@ -49,8 +50,8 @@ class ObjectiveFunction():
         '''
         try:
             start_time = time.time()
-            # self.minmax.dijkstra(self.graph_DD.structure[0][0])
-            self.minmax.earliest_completion_time(self.graph_DD.structure[0][0])
+            self.minmax.dijkstra(self.graph_DD.structure[0][0])
+            #self.minmax.earliest_completion_time(self.graph_DD.structure[0][0])
             end_time = time.time() 
             self.time = end_time - start_time
         except Exception as e:
