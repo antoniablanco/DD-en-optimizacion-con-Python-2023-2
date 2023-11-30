@@ -82,9 +82,9 @@ edge [
 ]]
 
 edge [
-	source 1
+	source 0
 	target 3
-	label "0"
+	label "2"
 	graphics [
 	fill "#000000" 		targetArrow "standard"	 	 
 ]]
@@ -99,7 +99,7 @@ edge [
 
 edge [
 	source 1
-	target 4
+	target 5
 	label "2"
 	graphics [
 	fill "#000000" 		targetArrow "standard"	 	 
@@ -115,8 +115,8 @@ edge [
 
 edge [
 	source 2
-	target 4
-	label "1"
+	target 6
+	label "2"
 	graphics [
 	fill "#000000" 		targetArrow "standard"	 	 
 ]]
@@ -139,16 +139,8 @@ edge [
 
 edge [
 	source 4
-	target 6
-	label "0"
-	graphics [
-	fill "#000000" 		targetArrow "standard"	 	 
-]]
-
-edge [
-	source 5
 	target 7
-	label "0"
+	label "2"
 	graphics [
 	fill "#000000" 		targetArrow "standard"	 	 
 ]]
@@ -157,6 +149,14 @@ edge [
 	source 5
 	target 7
 	label "1"
+	graphics [
+	fill "#000000" 		targetArrow "standard"	 	 
+]]
+
+edge [
+	source 6
+	target 7
+	label "0"
 	graphics [
 	fill "#000000" 		targetArrow "standard"	 	 
 ]]
