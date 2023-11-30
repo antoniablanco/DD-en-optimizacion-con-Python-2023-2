@@ -1,5 +1,5 @@
-from Class.Constructor.Constructor import Constructor
-from Class.ReduceConstructor.ReduceConstructor import ReduceConstructor
+from Class.DDBuilder.DDBuilder import DDBuilder
+from Class.ReduceDDBuilder.ReduceDDBuilder import ReduceDDBuilder
 from Class.GraphVisualization.Print import Print
 from Class.GraphVisualization.GraphFile import GraphFile
 import copy
@@ -13,7 +13,7 @@ class DD():
     '''
     Clase DD (Decision Diagram) para la creación y manipulación de diagramas de decisión.
     '''
-    def __init__(self, problem, v=False):
+    def __init__(self, problem, verbose=False):
         '''
         Constructor de la clase DD.
 
@@ -25,34 +25,34 @@ class DD():
         - DD: El diagrama de decisión creado, que se actualiza al generar el diagrama reducido o relajado.
         - objective: El tipo de objetivo (por ejemplo, "min" o "max"). Por defecto es "min".
         '''
-        self.constructor_time = 0
-        self.reduce_constructor_time = 0
+        self.dd_builder_time = 0
+        self.reduce_dd_builder_time = 0
 
         self.problem = problem
-        self.graph_DD = self._create_decision_diagram(v)
+        self.graph_DD = self._create_decision_diagram(verbose)
 
     @timing_decorator(enabled=False)
     def _create_decision_diagram(self, should_visualize):
         print("")
         print("Iniciando la creación del diagrama de decision ...")
         start_time = time.time()  
-        self.constructor = Constructor(self.problem)
-        graph = self.constructor.get_decision_diagram(should_visualize)
+        self.DDBuilder = DDBuilder(self.problem)
+        graph = self.DDBuilder.get_decision_diagram(should_visualize)
         end_time = time.time()  
-        self.constructor_time = end_time - start_time
+        self.dd_builder_time = end_time - start_time
 
         print(f"Diagrama de decision creado")
         return graph
     
     @timing_decorator(enabled=False)
-    def create_reduce_decision_diagram(self, v=False):
+    def create_reduce_decision_diagram(self, verbose=False):
         print("")
         print("Iniciando la reducción del diagrama de decision ...")
         start_time = time.time()
-        self.reduce_constructor = ReduceConstructor(self.graph_DD)
-        self.graph_DD = self.reduce_constructor.get_reduce_decision_diagram(v)
+        self.reduce_dd_builder = ReduceDDBuilder(self.graph_DD)
+        self.graph_DD = self.reduce_dd_builder.get_reduce_decision_diagram(verbose)
         end_time = time.time() 
-        self.reduce_constructor_time = end_time - start_time
+        self.reduce_dd_builder_time = end_time - start_time
         print(f"Reduccion del diagrama de decision terminada")
 
 
@@ -67,7 +67,7 @@ class DD():
 
     def export_graph_file(self, file_name):
         '''
-        Genera un archivo Margarita con el diagrama de decisión actual.
+        Genera un archivo .GML con el diagrama de decisión actual.
 
         Parámetros:
         file_name (str): El nombre del archivo Margarita.
@@ -86,10 +86,10 @@ class DD():
         puntero al mismo objeto. '''
         return copy.deepcopy(self.graph_DD)
     
-    def get_constructor_time(self):
-        ''' Retorna el tiempo de ejecución del constructor. '''
-        return self.constructor_time
+    def get_DDBuilder_time(self):
+        ''' Retorna el tiempo de ejecución del DDBuilder. '''
+        return self.dd_builder_time
 
     def get_reduce_constructor_time(self):
         ''' Retorna el tiempo de ejecución del reduce constructor. '''
-        return self.reduce_constructor_time
+        return self.reduce_dd_builder_time

@@ -1,9 +1,9 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
-from Class.Structure.Graph import Graph
-from Class.Structure.Node import Node
-from Class.Structure.Arc import Arc
+from Class.DDStructure.Graph import Graph
+from Class.DDStructure.Node import Node
+from Class.DDStructure.Arc import Arc
 
 from Class.decorators.timer import timing_decorator
 

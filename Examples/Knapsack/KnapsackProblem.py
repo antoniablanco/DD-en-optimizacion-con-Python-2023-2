@@ -19,13 +19,12 @@ class ProblemKnapsack(AbstractProblem):
         self.check_same_len_rows_matrix_and_variables(variables)
     
     def check_same_len_matrix_and_right_side(self, initial_state):
-        if ((len(self.list_of_wheight_for_restrictions) != len(self.right_side_of_restrictions)) or (len(initial_state) != len(self.right_side_of_restrictions))):
-            raise SameLenError("matrix_of_wheight and right_side_of_restrictions must have the same length")
+        assert len(self.list_of_wheight_for_restrictions) == len(self.right_side_of_restrictions), "matrix_of_wheight and right_side_of_restrictions must have the same length"
+        assert len(initial_state) == len(self.right_side_of_restrictions), "matrix_of_wheight and right_side_of_restrictions must have the same length"
     
     def check_same_len_rows_matrix_and_variables(self, variables):
         for row in range(len(self.list_of_wheight_for_restrictions)):
-            if len(self.list_of_wheight_for_restrictions[row]) != len(variables):
-                raise SameLenError("rows of matrix_of_wheight and right_side_of_restrictions must have the same length of variables")
+            assert len(self.list_of_wheight_for_restrictions[row]) == len(variables), "rows of matrix_of_wheight and right_side_of_restrictions must have the same length of variables"
 
     def equals(self, state_one, state_two):
         return set(state_one) == set(state_two)
