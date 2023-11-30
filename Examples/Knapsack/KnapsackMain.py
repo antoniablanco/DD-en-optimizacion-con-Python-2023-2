@@ -44,6 +44,6 @@ dd_instance.export_graph_file("test")
 
 # Resolución del diagrama
 objective_function_instance = ObjectiveFunction(dd_instance)
-objective_function_instance.develop_solver([-5, 1, 18, 17], 'max')
+objective_function_instance.set_objective([-5, 1, 18, 17], 'max')
 objective_function_instance.solve_dd()
 

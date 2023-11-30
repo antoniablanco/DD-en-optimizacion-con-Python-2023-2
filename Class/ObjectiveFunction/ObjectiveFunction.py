@@ -26,7 +26,7 @@ class ObjectiveFunction():
         self.time = 0
     
     @timing_decorator(enabled=False)
-    def develop_solver(self, weights: list[int], objective: str="min"):
+    def set_objective(self, weights: list[int], objective: str="min"):
         '''
         Guarda la información necesaria para tener una función objetivo.
 

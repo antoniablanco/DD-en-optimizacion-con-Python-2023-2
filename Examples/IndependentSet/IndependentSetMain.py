@@ -35,7 +35,7 @@ dd_instance.print_decision_diagram()
 dd_instance.export_graph_file("test2")
 
 objective_function_instance = ObjectiveFunction(dd_instance)
-objective_function_instance.develop_solver([1, 1, 1, 1, 1, 1], 'min')
+objective_function_instance.set_objective([1, 1, 1, 1, 1, 1], 'min')
 objective_function_instance.solve_dd()
 print(objective_function_instance.get_time())
 
