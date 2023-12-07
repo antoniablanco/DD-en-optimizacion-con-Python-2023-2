@@ -18,3 +18,8 @@ class ConsistentDictionaryOfNeighbors(Exception):
     def __init__(self, message="Dictionary of neighbors must be consistent"):
         self.message = message
         super().__init__(self.message)
+
+class MissingObjectiveFunction(Exception):
+    def __init__(self, message="The Objective Function  has not been set"):
+        self.message = message
+        super().__init__(self.message)
