@@ -7,7 +7,7 @@ root_dir = os.path.abspath(os.path.join(parent_dir, os.pardir))
 sys.path.append(root_dir)
 
 from Class.DD import DD
-from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction 
+from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjective
 from Exceptions.MyExceptions import SameVariables, MustBeIntegers, ConsistentDictionaryOfNeighbors
 from IndependentSetProblem import ProblemIndependentSet
 
@@ -35,7 +35,8 @@ dd_instance.print_decision_diagram()
 dd_instance.export_graph_file("test2")
 
 objective_function_instance = ObjectiveFunction(dd_instance)
-objective_function_instance.set_objective([1, 1, 1, 1, 1, 1], 'min')
+linear_objective_instance = LinearObjective([1, 1, 1, 1, 1, 1], 'min')
+objective_function_instance.set_objective(linear_objective_instance)
 objective_function_instance.solve_dd()
 print(objective_function_instance.get_time())
 
