@@ -54,7 +54,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
         independent_set_initial_state = [1, 2, 3, 4, 5]
         independent_set_variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1]), ('x_5', [0, 1])]
         self.independent_set_instance = ProblemIndependentSet(independent_set_initial_state, independent_set_variables)
-        self.dd_independent_instance = DD(self.independent_set_instance, v=False)
+        self.dd_independent_instance = DD(self.independent_set_instance, verbose=False)
  
     def test_ordered_variables(self):
         ordered_variables_test = ['x_1', 'x_2', 'x_3', 'x_4', 'x_5']
@@ -65,12 +65,12 @@ class ProblemIndependentSetTest(unittest.TestCase):
         self.assertEqual(self.independent_set_instance.variables_domain, variables_domain_test)
 
     def test_is_dd_created(self):
-        dd_independent_instance = DD(self.independent_set_instance, v=True)
+        dd_independent_instance = DD(self.independent_set_instance, verbose=True)
         self.assertIsNotNone(dd_independent_instance.graph_DD)
     
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_V_create_dd(self, mock_stdout):
-        dd_independent_instance = DD(self.independent_set_instance, v=True)
+        dd_independent_instance = DD(self.independent_set_instance, verbose=True)
 
         file_path = os.path.join('Test', 'test_prints', 'createDDIndependentSet.txt')
         
@@ -82,15 +82,15 @@ class ProblemIndependentSetTest(unittest.TestCase):
         self.assertEqual(actual_output.strip(), expected_output.strip())
     
     def test_create_dd_graph_equal(self):
-        dd_independent_instance = DD(self.independent_set_instance, v=False)
+        dd_independent_instance = DD(self.independent_set_instance, verbose=False)
 
         resultado = dd_independent_instance.graph_DD == DDIndependentSet.graph
         self.assertTrue(True)
 
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_V_create_reduce_dd(self, mock_stdout):
-        dd_independent_set_instance = DD(self.independent_set_instance, v=False)
-        dd_independent_set_instance.create_reduce_decision_diagram(v=True)
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_reduce_decision_diagram(verbose=True)
 
         file_path = os.path.join('Test', 'test_prints', 'createReduceDDIndependentSet.txt')
         
@@ -103,26 +103,26 @@ class ProblemIndependentSetTest(unittest.TestCase):
         self.assertEqual(actual_output.strip(), expected_output.strip())
     
     def test_create_reduce_dd_graph_equal(self):
-        dd_independent_set_instance = DD(self.independent_set_instance, v=False)
-        dd_independent_set_instance.create_reduce_decision_diagram(v=False)
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_reduce_decision_diagram(verbose=False)
         resultado = dd_independent_set_instance.graph_DD == DDIndependentSet.graph
 
         self.assertTrue(True)
 
     def test_get_dd_graph(self):
-        dd_independent_set_instance = DD(self.independent_set_instance, v=False)
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
         self.assertIsNotNone(dd_independent_set_instance.get_decision_diagram_graph())
     
     @patch('matplotlib.pyplot.show')
     def test_print_dd_graph(self, mock_show):
-        dd_independent_set_instance = DD(self.independent_set_instance, v=False)
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
 
         with assertNoRaise():
             dd_independent_set_instance.print_decision_diagram()
             mock_show.assert_called_once()
     
     def test_get_copy(self):
-        dd_independent_set_instance = DD(self.independent_set_instance, v=False)
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
         self.assertIsNot(dd_independent_set_instance.graph_DD, dd_independent_set_instance.get_decision_diagram_graph_copy)
 
 

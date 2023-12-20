@@ -2,7 +2,7 @@ import time
 
 
 # Decorador para medir el tiempo de ejecución de una función
-def timing_decorator(enabled=True):
+def timing_decorator(enabled=False):
     def decorator(func):
         def wrapper(self, *args, **kwargs):
             if enabled:

@@ -3,12 +3,13 @@ import sys
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
-sys.path.append(parent_dir)
+root_dir = os.path.abspath(os.path.join(parent_dir, os.pardir))
+sys.path.append(root_dir)
 
 from Class.DD import DD
-from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction 
+from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjective
 from Exceptions.MyExceptions import SameVariables, MustBeIntegers, ConsistentDictionaryOfNeighbors
-from Class.Problems.IndependentSetProblem import ProblemIndependentSet
+from IndependentSetProblem import ProblemIndependentSet
 
 '''
 El siguiente atributo fue implementado para obtener un independent set de un grafo
@@ -26,17 +27,16 @@ variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1]),
 
 problem_instance = ProblemIndependentSet(initial_state, variables, DictVecinos)
 
-dd_instance = DD(problem_instance, v=False)
+dd_instance = DD(problem_instance, verbose=False)
 
 dd_instance.print_decision_diagram()
-dd_instance.create_reduce_decision_diagram(v=False)
+dd_instance.create_reduce_decision_diagram(verbose=False)
 dd_instance.print_decision_diagram()
 dd_instance.export_graph_file("test2")
 
-decision_diagram = dd_instance.get_decision_diagram_graph()
-
-objective_function_instance = ObjectiveFunction(decision_diagram)
-objective_function_instance.develop_solver([1, 1, 1, 1, 1], 'min')
+objective_function_instance = ObjectiveFunction(dd_instance)
+linear_objective_instance = LinearObjective([1, 1, 1, 1, 1, 1], 'min')
+objective_function_instance.set_objective(linear_objective_instance)
 objective_function_instance.solve_dd()
 print(objective_function_instance.get_time())
 

@@ -1,11 +1,11 @@
-from Class.Structure.Node import Node
-from Class.Structure.Arc import Arc
-from Class.Structure.Graph import Graph
+from Class.DDStructure.Node import Node
+from Class.DDStructure.Arc import Arc
+from Class.DDStructure.Graph import Graph
 
 from Class.decorators.timer import timing_decorator
 
 
-class Constructor():
+class DDBuilder():
     '''
     Clase que construye un grafo de decisión basado en un problema dado.
     '''
@@ -150,7 +150,7 @@ class Constructor():
                 return True, node
         return False, None
 
-    def _create_arc_for_the_new_node(self, existed_node, node_created, variable_value, variable_id):  
+    def _create_arc_for_the_new_node(self, existed_node, node_created, variable_value, variable_id):
         '''
         Crea un arco para un nodo ya existente.
 
@@ -182,7 +182,7 @@ class Constructor():
         for layer in self.graph.structure:
             print("------------------------------------------------------")
             for node in layer:
-                in_arcs_str = ", ".join(str(arc) for arc in node.in_arcs) 
+                in_arcs_str = ", ".join(str(arc) for arc in node.in_arcs)
                 print(str(node) + "(" + in_arcs_str + ")", end=" ")
             print("")
     
