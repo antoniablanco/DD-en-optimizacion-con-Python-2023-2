@@ -50,7 +50,7 @@ class ObjectiveFunction():
         self._check_if_objective_is_set()
         start_time = time.time()
         self.minmax.dijkstra(self.graph_DD.structure[0][0])
-        #self.minmax.earliest_completion_time(self.graph_DD.structure[0][0])
+        # self.minmax.earliest_completion_time(self.graph_DD.structure[0][0])
         end_time = time.time() 
         self.time = end_time - start_time
     

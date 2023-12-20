@@ -40,3 +40,6 @@ class ProblemKnapsack(AbstractProblem):
             isFeasible_this_row = int(state[row]) <= self.right_side_of_restrictions[row]
             isFeasible = isFeasible and isFeasible_this_row
         return state, isFeasible
+    
+    def get_sort_value(self, state, variable_id, variable_value):
+        return int(variable_id[2:])

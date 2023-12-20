@@ -1,8 +1,4 @@
 from Class.Problems.AbstractProblemClass import AbstractProblem
-from Class.DD import DD
-from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction
-import numpy as np
-
 
 class OperatingRoomSchedulling(AbstractProblem):
 

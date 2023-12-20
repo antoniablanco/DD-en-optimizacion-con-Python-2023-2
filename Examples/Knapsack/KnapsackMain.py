@@ -40,6 +40,8 @@ dd_instance = DD(problem_instance, verbose=False)
 dd_instance.print_decision_diagram()
 dd_instance.create_reduce_decision_diagram(verbose=False)
 dd_instance.print_decision_diagram()
+dd_instance.create_restricted_decision_diagram(verbose=False)
+dd_instance.print_decision_diagram()
 dd_instance.export_graph_file("test")
 
 # Resolución del diagrama

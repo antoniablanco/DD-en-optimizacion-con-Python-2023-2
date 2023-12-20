@@ -32,7 +32,7 @@ dd_instance = DD(problem_instance, verbose=False)
 dd_instance.print_decision_diagram()
 dd_instance.create_reduce_decision_diagram(verbose=False)
 dd_instance.print_decision_diagram()
-dd_instance.export_graph_file("test2")
+dd_instance.export_graph_file("test")
 
 objective_function_instance = ObjectiveFunction(dd_instance)
 linear_objective_instance = LinearObjective([1, 1, 1, 1, 1, 1], 'min')
