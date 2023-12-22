@@ -11,7 +11,7 @@ class RestrictedDDBuilder():
     '''
 
     @timing_decorator(enabled=False)
-    def __init__(self, problem):
+    def __init__(self, problem, max_width):
         '''
         Constructor de la clase Constructor de un grafo restringido.
 
@@ -24,6 +24,7 @@ class RestrictedDDBuilder():
         self._problem = problem
         self._variables = problem.ordered_variables
         self._variables_domain = problem.variables_domain
+        self._max_width = max_width
 
         self._initialize_graph(problem.initial_state)
         
@@ -49,10 +50,10 @@ class RestrictedDDBuilder():
         '''
         for variable_id in range(len(self._variables)):
             self._create_new_layer(variable_id)
+            self._eliminate_nodes_when_width_is_greater_than_w()
+            self._adjust_node_number()
             self._print_graph(should_visualize)
         
-        self._print_graph(should_visualize)
-
         return self.graph
     
     def _create_new_layer(self, variable_id):
@@ -163,6 +164,40 @@ class RestrictedDDBuilder():
         arc = Arc(existed_node, node_created, variable_value, self._variables[variable_id])
         existed_node.add_out_arc(arc)
         node_created.add_in_arc(arc)
+
+    def _eliminate_nodes_when_width_is_greater_than_w(self):
+        '''
+        Se realiza la decisión de eliminar nodos cuando el ancho del grafo es mayor que el 
+        ancho máximo permitido.
+        '''
+        if self._width_is_greater_than_w():
+            ordered_nodes = sorted(self.graph.structure[-1], key=lambda node: self._problem.get_sort_value(
+            node.state))
+            nodes_to_eliminate = ordered_nodes[self._max_width:] or []
+            self._eliminate_nodes(nodes_to_eliminate)
+    
+    def _width_is_greater_than_w(self):
+        '''
+        Verifica si el ancho del grafo es mayor que el ancho máximo permitido.
+        '''
+        return len(self.graph.structure[-1]) > self._max_width
+
+    def _eliminate_nodes(self, nodes_to_eliminate):
+        '''
+        Elimina los nodos entregados y sus arcos entrantes
+        '''
+        for node in nodes_to_eliminate:
+            self.graph.eliminate_node_and_his_arcs(node)
+    
+    def _adjust_node_number(self):
+        '''
+        Ajusta el número de nodos en el grafo.
+        '''
+        initial_node_number = int(self.graph.structure[-1][0].id_node)
+        for node in self.graph.structure[-1]:
+            node.id_node = str(initial_node_number)
+            initial_node_number += 1
+        self._node_number = initial_node_number 
 
     def _print_graph(self, should_visualize):
         '''

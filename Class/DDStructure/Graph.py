@@ -89,7 +89,15 @@ class Graph():
         if node in self.nodes:
             self.nodes.remove(node)
             self._remove_node_from_layer(node)
-    
+
+    def eliminate_node_and_his_arcs(self, node):
+        for arc in node.in_arcs.copy():
+            arc.out_node.out_arcs.remove(arc)
+            node.in_arcs.remove(arc)
+            del arc
+        self.remove_node(node)
+        del node
+
     def _remove_node_from_layer(self, node):
         '''
         Elimina un nodo de una capa específica.

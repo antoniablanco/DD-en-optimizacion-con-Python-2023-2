@@ -136,6 +136,7 @@ class LinearObjective:
         - weight (int): Peso de la mejor ruta encontrada.
         - route (str): Ruta encontrada por el algoritmo de Dijkstra.
         '''
+        print()
         print("Best Route:"," -> ".join(map(str, route)))
         if self._objective == "max":
             print("Weight: " + str(-weight))

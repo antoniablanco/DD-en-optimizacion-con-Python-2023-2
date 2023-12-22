@@ -41,5 +41,5 @@ class ProblemKnapsack(AbstractProblem):
             isFeasible = isFeasible and isFeasible_this_row
         return state, isFeasible
     
-    def get_sort_value(self, state, variable_id, variable_value):
-        return int(variable_id[2:])
+    def get_sort_value(self, state):
+        return state[0] + state[1] + state[2]
