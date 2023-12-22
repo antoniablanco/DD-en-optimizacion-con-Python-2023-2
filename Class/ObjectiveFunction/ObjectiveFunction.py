@@ -1,3 +1,6 @@
+from Class.ObjectiveFunction.LinearObjective import LinearObjective
+from Class.ObjectiveFunction.SchedullingObjective import SchedullingObjective
+
 import time
 
 from Exceptions.MyExceptions import MissingObjectiveFunction

@@ -42,4 +42,8 @@ class ProblemKnapsack(AbstractProblem):
         return state, isFeasible
     
     def get_sort_value(self, state):
-        return (state[0] + state[1] + state[2])
+        total = 0
+        for i in range(len(state)):
+            total += state[i]
+            
+        return total

@@ -1,0 +1,8 @@
+Iniciando la creación del diagrama de decision ...
+Diagrama de decision creado
+
+Iniciando la creación del diagrama de decision restringido...
+Creación del diagrama de decision restringido terminado
+
+Best Route: ('0', 0) -> ('1', 0) -> ('3', 0) -> ('7', 1) -> ('8', 1) -> ('10', 2)
+Weight: 2
