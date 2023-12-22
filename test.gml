@@ -68,71 +68,105 @@ graph [
 edge [
 	source 0
 	target 1
+	label "0"
 	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
+	fill "#000000" 		targetArrow "standard"	 	 
 ]]
 
 edge [
-	source 1
+	source 0
 	target 2
+	label "1"
 	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
+	fill "#000000" 		targetArrow "standard"	 	 
+]]
+
+edge [
+	source 0
+	target 3
+	label "2"
+	graphics [
+	fill "#000000" 		targetArrow "standard"	 	 
 ]]
 
 edge [
 	source 1
-	target 3
+	target 4
+	label "1"
 	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 
+	fill "#000000" 		targetArrow "standard"	 	 
+]]
+
+edge [
+	source 1
+	target 5
+	label "2"
+	graphics [
+	fill "#000000" 		targetArrow "standard"	 	 
 ]]
 
 edge [
 	source 2
 	target 4
+	label "0"
 	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
+	fill "#000000" 		targetArrow "standard"	 	 
 ]]
 
 edge [
 	source 2
-	target 5
+	target 6
+	label "2"
 	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 
+	fill "#000000" 		targetArrow "standard"	 	 
+]]
+
+edge [
+	source 3
+	target 5
+	label "0"
+	graphics [
+	fill "#000000" 		targetArrow "standard"	 	 
 ]]
 
 edge [
 	source 3
 	target 6
+	label "1"
 	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
+	fill "#000000" 		targetArrow "standard"	 	 
 ]]
 
 edge [
 	source 4
 	target 7
+	label "2"
 	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
-]]
-
-edge [
-	source 4
-	target 7
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 
+	fill "#000000" 		targetArrow "standard"	 	 
 ]]
 
 edge [
 	source 5
 	target 7
+	label "1"
 	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
+	fill "#000000" 		targetArrow "standard"	 	 
 ]]
 
 edge [
 	source 6
 	target 7
+	label "0"
 	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
+	fill "#000000" 		targetArrow "standard"	 	 
+]]
+
+edge [
+	source 6
+	target 7
+	label "0"
+	graphics [
+	fill "#000000" 		targetArrow "standard"	 	 
 ]]
 
 ]
