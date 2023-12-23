@@ -81,22 +81,6 @@ graph [
 	 hasFill 0
 	 w 90.0   h 110.0  ]
 ]
- node [
-	 id 10
-	 label "10"
- 	graphics [
-	 type "circle"
-	 hasFill 0
-	 w 90.0   h 110.0  ]
-]
- node [
-	 id 11
-	 label "11"
- 	graphics [
-	 type "circle"
-	 hasFill 0
-	 w 90.0   h 110.0  ]
-]
 edge [
 	source 0
 	target 1
@@ -169,7 +153,7 @@ edge [
 
 edge [
 	source 7
-	target 10
+	target 9
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 
 ]]
@@ -177,27 +161,6 @@ edge [
 edge [
 	source 8
 	target 9
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
-]]
-
-edge [
-	source 9
-	target 11
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
-]]
-
-edge [
-	source 9
-	target 11
-	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 
-]]
-
-edge [
-	source 10
-	target 11
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
 ]]

@@ -14,6 +14,7 @@ from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearO
 from contextlib import contextmanager
 import dd_controlled_generators.DDIndependentSet as DDIndependentSet
 import dd_controlled_generators.RestrictedDDIndependentSet as RestrictedDDIndependentSet
+import dd_controlled_generators.DiferentOrderedRestrictedDDIndependentSet as DiferentOrderedRestrictedDDIndependentSet
 
 @contextmanager
 def assertNoRaise():
@@ -123,11 +124,18 @@ class ProblemIndependentSetTest(unittest.TestCase):
         print(actual_output.strip())
 
         self.assertEqual(actual_output.strip(), expected_output.strip())
-    
+
     def test_create_restricted_dd_graph_equal(self):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
         dd_independent_set_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
         resultado = dd_independent_set_instance.graph_DD == RestrictedDDIndependentSet.graph
+
+        self.assertTrue(resultado)
+    
+    def test_compare_two_diferent_ordered_graphs(self):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
+        resultado = dd_independent_set_instance.graph_DD == DiferentOrderedRestrictedDDIndependentSet.graph
 
         self.assertTrue(resultado)
 

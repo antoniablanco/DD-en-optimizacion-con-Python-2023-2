@@ -14,6 +14,7 @@ from contextlib import contextmanager
 import dd_controlled_generators.DDKnapsack as DDKnapsack
 import dd_controlled_generators.ReduceDDKnapsack as ReduceDDKnapsack
 import dd_controlled_generators.RestrictedDDKnapsack as RestrictedDDKnapsack
+import dd_controlled_generators.FalseDDKnapsack as FalseDDKnapsack
 import io
 import os
 
@@ -213,6 +214,11 @@ class ProblemKnapsackTest(unittest.TestCase):
 
         self.assertEqual(actual_output.strip(), expected_output.strip())
     
+    def test_compare_two_diferent_graphf(self):
+        dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
+        dd_knapsack_instance.create_reduce_decision_diagram(verbose=False)
+
+        self.assertFalse(dd_knapsack_instance.graph_DD == FalseDDKnapsack.graph)
 
 if __name__ == '__main__':
     unittest.main()

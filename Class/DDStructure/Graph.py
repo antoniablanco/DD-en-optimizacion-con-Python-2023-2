@@ -31,26 +31,38 @@ class Graph():
         '''
         if not isinstance(other, Graph):
             return False
+        
+        devolver = True
         for i, layer in enumerate(self.structure):
             if len(layer) != len(other.structure[i]):
                 return False
-
-            for j in range(len(layer)):
-                node1 = layer[j]
-                node2 = other.structure[i][j]
-
-                # Compara los atributos de los nodos
-                if str(node1.id_node) != str(node2.id_node) or node1.state != node2.state:
-                    return False
-
-                # Compara los atributos de los arcos
-                arcs1 = node1.in_arcs + node1.out_arcs
-                arcs2 = node2.in_arcs + node2.out_arcs
-
-                for arc1, arc2 in zip(arcs1, arcs2):
-                    if arc1.variable_value != arc2.variable_value or arc1.variable_id != arc2.variable_id:
-                        return False
-        return True
+            there_is_equal_node = False
+            for node in layer:
+                for other_node in other.structure[i]:
+                    if node.state == other_node.state:
+                        there_is_equal_node = there_is_equal_node or self._compare_two_nodes(node, other_node)
+            devolver = devolver and there_is_equal_node
+    
+        return devolver
+    
+    def _compare_two_nodes(self, node1, node2):
+        devolver_in_arcs = True
+        for arc1 in node1.in_arcs:
+            there_is_equal_arc = False
+            for arc2 in node2.in_arcs:
+                if arc1.variable_value == arc2.variable_value and arc1.out_node.state == arc2.out_node.state:
+                    there_is_equal_arc = True
+            devolver_in_arcs = devolver_in_arcs and there_is_equal_arc
+        
+        devolver_out_arcs = True
+        for arc1 in node1.out_arcs:
+            there_is_equal_arc = False
+            for arc2 in node2.out_arcs:
+                if arc1.variable_value == arc2.variable_value and arc1.in_node.state == arc2.in_node.state:
+                    there_is_equal_arc = True
+            devolver_out_arcs = devolver_out_arcs and there_is_equal_arc
+        
+        return devolver_in_arcs and devolver_out_arcs
     
     def add_node(self, node):
         '''
