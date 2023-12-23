@@ -1,3 +1,4 @@
+import io
 import os
 import sys
 
@@ -12,9 +13,7 @@ from Class.DD import DD
 from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjective
 from contextlib import contextmanager
 import dd_controlled_generators.DDIndependentSet as DDIndependentSet
-import io
-import os
-
+import dd_controlled_generators.RestrictedDDIndependentSet as RestrictedDDIndependentSet
 
 @contextmanager
 def assertNoRaise():
@@ -50,6 +49,9 @@ class ProblemIndependentSetTest(unittest.TestCase):
                 
                 isFeasible = (int(variable_value) == 1 and int(variable_id[2:]) in previus_state) or (int(variable_value) == 0)
                 return new_state, isFeasible
+            
+            def get_sort_value(self, state):
+                return len(state)
     
         independent_set_initial_state = [1, 2, 3, 4, 5]
         independent_set_variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1]), ('x_5', [0, 1])]
@@ -83,9 +85,8 @@ class ProblemIndependentSetTest(unittest.TestCase):
     
     def test_create_dd_graph_equal(self):
         dd_independent_instance = DD(self.independent_set_instance, verbose=False)
-
         resultado = dd_independent_instance.graph_DD == DDIndependentSet.graph
-        self.assertTrue(True)
+        self.assertTrue(resultado)
 
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_verbose_create_reduce_dd(self, mock_stdout):
@@ -106,8 +107,29 @@ class ProblemIndependentSetTest(unittest.TestCase):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
         dd_independent_set_instance.create_reduce_decision_diagram(verbose=False)
         resultado = dd_independent_set_instance.graph_DD == DDIndependentSet.graph
+        self.assertTrue(resultado)
+    
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_verbose_create_restricted_dd(self, mock_stdout):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_restricted_decision_diagram(verbose=True, max_width=2)
 
-        self.assertTrue(True)
+        file_path = os.path.join('Test', 'test_prints', 'createRestrictedDDIndependentSet.txt')
+        
+        with open(file_path, "r") as file:
+            expected_output = file.read()
+
+        actual_output = mock_stdout.getvalue()
+        print(actual_output.strip())
+
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    def test_create_restricted_dd_graph_equal(self):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
+        resultado = dd_independent_set_instance.graph_DD == RestrictedDDIndependentSet.graph
+
+        self.assertTrue(resultado)
 
     def test_get_dd_graph(self):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)

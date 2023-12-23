@@ -81,5 +81,3 @@ node_7.add_out_arc(arc_7_8)
 node_8.add_in_arc(arc_7_8)
 
 graph.add_node(node_8)
-
-

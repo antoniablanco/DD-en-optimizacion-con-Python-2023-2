@@ -25,6 +25,9 @@ DictVecinos = {'x_1': [2, 3], 'x_2': [1, 3, 4], 'x_3': [1, 2, 4], 'x_4': [2, 3, 
 initial_state = [1, 2, 3, 4, 5, 6] 
 variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1]), ('x_5', [0, 1]), ('x_6', [0, 1])]
 
+#DictVecinos = {'x_1': [2, 3], 'x_2': [1, 3, 4], 'x_3': [1, 2, 4], 'x_4': [2, 3, 5], 'x_5': [4]}
+#initial_state = [1, 2, 3, 4, 5]
+#variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1]), ('x_5', [0, 1])]
 
 problem_instance = ProblemIndependentSet(initial_state, variables, DictVecinos)
 
@@ -41,7 +44,6 @@ objective_function_instance = ObjectiveFunction(dd_instance)
 linear_objective_instance = LinearObjective([1, 1, 1, 1, 1, 1], 'min')
 objective_function_instance.set_objective(linear_objective_instance)
 objective_function_instance.solve_dd()
-print(objective_function_instance.get_time())
 
 
 
