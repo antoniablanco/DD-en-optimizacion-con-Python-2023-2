@@ -40,3 +40,10 @@ class ProblemKnapsack(AbstractProblem):
             isFeasible_this_row = int(state[row]) <= self.right_side_of_restrictions[row]
             isFeasible = isFeasible and isFeasible_this_row
         return state, isFeasible
+    
+    def get_sort_value(self, state):
+        total = 0
+        for i in range(len(state)):
+            total += state[i]
+            
+        return total

@@ -11,7 +11,7 @@ class SchedullingObjective:
 
     def __init__(self, weights: list, objective: str):
         '''
-        Constructor de la clase LinearObjective.
+        Constructor de la clase SchedullingObjective.
 
         Parámetros:
         - weights (list): Lista de pesos utilizados en el algoritmo.
@@ -52,7 +52,7 @@ class SchedullingObjective:
     def _assing_terminal_node_id(self, terminal_node: Node) -> None:
         self._terminal_node = terminal_node
 
-    def earliest_completion_time(self, root_node: Node) -> None:
+    def resolve_graph(self, root_node: Node) -> None:
         '''
         Implementa el algoritmo de Earliest Completion Time desde el nodo raíz.
 
@@ -154,7 +154,7 @@ class SchedullingObjective:
 
     def _print_best_weight_route(self, weight: int) -> None:
         '''
-        Imprime el mejor tiempo que encuentra el algoritmo.
+        Imprime la mejor ruta que encuentra el algoritmo.
 
         Parámetros:
         - weight (int): Peso de la mejor ruta encontrada.

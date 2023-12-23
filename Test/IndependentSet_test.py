@@ -1,3 +1,4 @@
+import io
 import os
 import sys
 
@@ -9,12 +10,11 @@ import unittest
 from unittest.mock import patch
 from Class.Problems.AbstractProblemClass import AbstractProblem
 from Class.DD import DD
-from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction
+from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjective
 from contextlib import contextmanager
 import dd_controlled_generators.DDIndependentSet as DDIndependentSet
-import io
-import os
-
+import dd_controlled_generators.RestrictedDDIndependentSet as RestrictedDDIndependentSet
+import dd_controlled_generators.DiferentOrderedRestrictedDDIndependentSet as DiferentOrderedRestrictedDDIndependentSet
 
 @contextmanager
 def assertNoRaise():
@@ -50,6 +50,9 @@ class ProblemIndependentSetTest(unittest.TestCase):
                 
                 isFeasible = (int(variable_value) == 1 and int(variable_id[2:]) in previus_state) or (int(variable_value) == 0)
                 return new_state, isFeasible
+            
+            def get_sort_value(self, state):
+                return len(state)
     
         independent_set_initial_state = [1, 2, 3, 4, 5]
         independent_set_variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1]), ('x_5', [0, 1])]
@@ -69,7 +72,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
         self.assertIsNotNone(dd_independent_instance.graph_DD)
     
     @patch('sys.stdout', new_callable=io.StringIO)
-    def test_V_create_dd(self, mock_stdout):
+    def test_verbose_create_dd(self, mock_stdout):
         dd_independent_instance = DD(self.independent_set_instance, verbose=True)
 
         file_path = os.path.join('Test', 'test_prints', 'createDDIndependentSet.txt')
@@ -83,12 +86,11 @@ class ProblemIndependentSetTest(unittest.TestCase):
     
     def test_create_dd_graph_equal(self):
         dd_independent_instance = DD(self.independent_set_instance, verbose=False)
-
         resultado = dd_independent_instance.graph_DD == DDIndependentSet.graph
-        self.assertTrue(True)
+        self.assertTrue(resultado)
 
     @patch('sys.stdout', new_callable=io.StringIO)
-    def test_V_create_reduce_dd(self, mock_stdout):
+    def test_verbose_create_reduce_dd(self, mock_stdout):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
         dd_independent_set_instance.create_reduce_decision_diagram(verbose=True)
 
@@ -106,8 +108,36 @@ class ProblemIndependentSetTest(unittest.TestCase):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
         dd_independent_set_instance.create_reduce_decision_diagram(verbose=False)
         resultado = dd_independent_set_instance.graph_DD == DDIndependentSet.graph
+        self.assertTrue(resultado)
+    
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_verbose_create_restricted_dd(self, mock_stdout):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_restricted_decision_diagram(verbose=True, max_width=2)
 
-        self.assertTrue(True)
+        file_path = os.path.join('Test', 'test_prints', 'createRestrictedDDIndependentSet.txt')
+        
+        with open(file_path, "r") as file:
+            expected_output = file.read()
+
+        actual_output = mock_stdout.getvalue()
+        print(actual_output.strip())
+
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+
+    def test_create_restricted_dd_graph_equal(self):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
+        resultado = dd_independent_set_instance.graph_DD == RestrictedDDIndependentSet.graph
+
+        self.assertTrue(resultado)
+    
+    def test_compare_two_diferent_ordered_graphs(self):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
+        resultado = dd_independent_set_instance.graph_DD == DiferentOrderedRestrictedDDIndependentSet.graph
+
+        self.assertTrue(resultado)
 
     def test_get_dd_graph(self):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
@@ -125,6 +155,75 @@ class ProblemIndependentSetTest(unittest.TestCase):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
         self.assertIsNot(dd_independent_set_instance.graph_DD, dd_independent_set_instance.get_decision_diagram_graph_copy)
 
+    def test_get_DDBuilder_time(self):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        self.assertIsNotNone(dd_independent_set_instance.dd_builder_time)
+    
+    def test_get_ReduceDDBuilder_time(self):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_reduce_decision_diagram(verbose=False)
+        self.assertIsNotNone(dd_independent_set_instance.reduce_dd_builder_time)
+    
+    def test_get_RestrictedDDBuilder_time(self):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_restricted_decision_diagram(verbose=False)
+        self.assertIsNotNone(dd_independent_set_instance.restricted_dd_builder_time)
+    
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_get_solution_for_DD(self, mock_stdout):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
 
+        objective_function_instance = ObjectiveFunction(dd_independent_set_instance)
+        linear_objective_instance = LinearObjective([1, 1, 1, 1, 1], 'max')
+        objective_function_instance.set_objective(linear_objective_instance)
+        objective_function_instance.solve_dd()
+        
+        file_path = os.path.join('Test', 'test_prints', 'solutionDDIndependentSet.txt')
+        
+        with open(file_path, "r") as file:
+            expected_output = file.read()
+
+        actual_output = mock_stdout.getvalue()
+
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_get_solution_for_reduceDD(self, mock_stdout):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_reduce_decision_diagram(verbose=False)
+
+        objective_function_instance = ObjectiveFunction(dd_independent_set_instance)
+        linear_objective_instance = LinearObjective([1, 1, 1, 1, 1], 'max')
+        objective_function_instance.set_objective(linear_objective_instance)
+        objective_function_instance.solve_dd()
+        
+        file_path = os.path.join('Test', 'test_prints', 'solutionReduceDDIndependentSet.txt')
+        
+        with open(file_path, "r") as file:
+            expected_output = file.read()
+
+        actual_output = mock_stdout.getvalue()
+
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_get_solution_for_restrictedDD(self, mock_stdout):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_restricted_decision_diagram(verbose=False)
+
+        objective_function_instance = ObjectiveFunction(dd_independent_set_instance)
+        linear_objective_instance = LinearObjective([1, 1, 1, 1, 1], 'max')
+        objective_function_instance.set_objective(linear_objective_instance)
+        objective_function_instance.solve_dd()
+        
+        file_path = os.path.join('Test', 'test_prints', 'solutionRestrictedDDIndependentSet.txt')
+        
+        with open(file_path, "r") as file:
+            expected_output = file.read()
+
+        actual_output = mock_stdout.getvalue()
+
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
 if __name__ == '__main__':
     unittest.main()

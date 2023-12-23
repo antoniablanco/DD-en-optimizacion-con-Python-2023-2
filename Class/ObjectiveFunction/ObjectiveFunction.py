@@ -1,12 +1,10 @@
 from Class.ObjectiveFunction.LinearObjective import LinearObjective
 from Class.ObjectiveFunction.SchedullingObjective import SchedullingObjective
+
 import time
 
-
 from Exceptions.MyExceptions import MissingObjectiveFunction
-from Class.DDStructure.Graph import Graph
 from Class.DD import DD
-
 from Class.decorators.timer import timing_decorator
 
 class ObjectiveFunction():
@@ -23,7 +21,6 @@ class ObjectiveFunction():
         graphDD (Graph): Diagrama de decisión que se resolverá.
         '''
 
-
         self.graph_DD = DD.get_decision_diagram_graph()
         self.time = 0
     
@@ -37,7 +34,6 @@ class ObjectiveFunction():
         objective (str): Tipo de objetivo (por ejemplo, "min" o "max").
         '''
         self.minmax = objective_function
-        # self.minmax = SchedullingObjective(weights, objective)
         self.minmax.assign_graph(self.graph_DD)
     
     @timing_decorator(enabled=False)
@@ -49,8 +45,7 @@ class ObjectiveFunction():
 
         self._check_if_objective_is_set()
         start_time = time.time()
-        self.minmax.dijkstra(self.graph_DD.structure[0][0])
-        #self.minmax.earliest_completion_time(self.graph_DD.structure[0][0])
+        self.minmax.resolve_graph(self.graph_DD.structure[0][0])
         end_time = time.time() 
         self.time = end_time - start_time
     

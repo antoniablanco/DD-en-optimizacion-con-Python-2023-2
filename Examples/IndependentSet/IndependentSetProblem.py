@@ -52,3 +52,6 @@ class ProblemIndependentSet(AbstractProblem):
         
         isFeasible = (int(variable_value) == 1 and int(variable_id[2:]) in previus_state) or (int(variable_value) == 0)
         return new_state, isFeasible
+
+    def get_sort_value(self, state):
+        return len(state)

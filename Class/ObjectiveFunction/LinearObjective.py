@@ -23,6 +23,7 @@ class LinearObjective:
 
         self._visited_nodes = []
         self._unvisited_nodes = []
+
         self._objective = objective
         self._choose_transform_weights()
 
@@ -52,8 +53,7 @@ class LinearObjective:
     def _assing_terminal_node_id(self, terminal_node: Node) -> None:
         self._terminal_node = terminal_node
 
-    
-    def dijkstra(self, root_node: Node) -> None:
+    def resolve_graph(self, root_node: Node) -> None:
         '''
         Implementa el algoritmo de Dijkstra desde el nodo raíz.
 
@@ -136,6 +136,7 @@ class LinearObjective:
         - weight (int): Peso de la mejor ruta encontrada.
         - route (str): Ruta encontrada por el algoritmo de Dijkstra.
         '''
+        print()
         print("Best Route:"," -> ".join(map(str, route)))
         if self._objective == "max":
             print("Weight: " + str(-weight))
