@@ -32,6 +32,11 @@ right_side_of_restrictions = [6, 5, 8]
 initial_state = [0, 0, 0]
 variables = [('x_1', [0, 1]), ('x_2', [0, 1, 2]), ('x_3', [0, 1]), ('x_4', [0, 1])]
 
+# Valores construcción para test
+#matrix_of_wheight = [[3, 3, 4, 6]]
+#right_side_of_restrictions = [6]
+#initial_state = [0]
+#variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1])]
 
 problem_instance = ProblemKnapsack(initial_state, variables, matrix_of_wheight, right_side_of_restrictions)
 

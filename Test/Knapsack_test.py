@@ -13,6 +13,7 @@ from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearO
 from contextlib import contextmanager
 import dd_controlled_generators.DDKnapsack as DDKnapsack
 import dd_controlled_generators.ReduceDDKnapsack as ReduceDDKnapsack
+import dd_controlled_generators.RestrictedDDKnapsack as RestrictedDDKnapsack
 import io
 import os
 
@@ -43,7 +44,11 @@ class ProblemKnapsackTest(unittest.TestCase):
                 return new_state, isFeasible
             
             def get_sort_value(self, state):
-                return (state[0] + state[1] + state[2])
+                total = 0
+                for i in range(len(state)):
+                    total += state[i]
+                    
+                return total
 
         knpasack_initial_state = [0]
         knpasack_variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1])]
@@ -98,6 +103,27 @@ class ProblemKnapsackTest(unittest.TestCase):
         dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
         dd_knapsack_instance.create_reduce_decision_diagram(verbose=False)
         resultado = dd_knapsack_instance.graph_DD == ReduceDDKnapsack.graph
+
+        self.assertTrue(resultado)
+
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_verbose_create_restricted_dd(self, mock_stdout):
+        dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
+        dd_knapsack_instance.create_restricted_decision_diagram(verbose=True, max_width=3)
+
+        file_path = os.path.join('Test', 'test_prints', 'createRestrictedDDKnapsack.txt')
+        
+        with open(file_path, "r") as file:
+            expected_output = file.read()
+
+        actual_output = mock_stdout.getvalue()
+
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    def test_create_restricted_dd_graph_equal(self):
+        dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
+        dd_knapsack_instance.create_restricted_decision_diagram(verbose=False, max_width=3)
+        resultado = dd_knapsack_instance.graph_DD == RestrictedDDKnapsack.graph
 
         self.assertTrue(resultado)
 
