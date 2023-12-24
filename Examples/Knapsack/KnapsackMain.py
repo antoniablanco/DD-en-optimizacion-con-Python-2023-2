@@ -48,6 +48,8 @@ dd_instance.create_reduce_decision_diagram(verbose=False)
 dd_instance.print_decision_diagram()
 dd_instance.create_restricted_decision_diagram(verbose=False, max_width=3)
 dd_instance.print_decision_diagram()
+dd_instance.create_relaxed_decision_diagram(verbose=False, max_width=4)
+dd_instance.print_decision_diagram()
 dd_instance.export_graph_file("test")
 
 # Resolución del diagrama

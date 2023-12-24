@@ -44,7 +44,7 @@ class ProblemKnapsackTest(unittest.TestCase):
                 isFeasible = int(new_state[0]) <= 6
                 return new_state, isFeasible
             
-            def get_sort_value(self, state):
+            def sort_key(self, state):
                 total = 0
                 for i in range(len(state)):
                     total += state[i]
@@ -214,7 +214,7 @@ class ProblemKnapsackTest(unittest.TestCase):
 
         self.assertEqual(actual_output.strip(), expected_output.strip())
     
-    def test_compare_two_diferent_graphf(self):
+    def test_compare_two_diferent_graphs(self):
         dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
         dd_knapsack_instance.create_reduce_decision_diagram(verbose=False)
 

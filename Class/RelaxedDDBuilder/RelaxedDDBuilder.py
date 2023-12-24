@@ -5,15 +5,15 @@ from Class.DDStructure.Graph import Graph
 from Class.decorators.timer import timing_decorator
 
 
-class RestrictedDDBuilder():
+class RelaxedDDBuilder():
     '''
-    Clase que construye un grafo de decisión restringido basado en un problema dado.
+    Clase que construye un grafo de decisión relajado basado en un problema dado.
     '''
 
     @timing_decorator(enabled=False)
     def __init__(self, problem, max_width):
         '''
-        Constructor de la clase Constructor de un grafo restringido.
+        Constructor de la clase Constructor de un grafo relajado.
 
         Parámetros:
         - problem: Objeto tipo problema para el cual se construirá el grafo.
@@ -50,9 +50,8 @@ class RestrictedDDBuilder():
         '''
         for variable_id in range(len(self._variables)):
             self._create_new_layer(variable_id)
-            self._eliminate_nodes_when_width_is_greater_than_w()
+            self._merge_nodes_when_width_is_greater_than_w()
             self._print_graph(should_visualize)
-        self._eliminate_nodes_without_out_arcs()
         self._adjust_node_number()
 
         return self.graph
@@ -166,39 +165,60 @@ class RestrictedDDBuilder():
         existed_node.add_out_arc(arc)
         node_created.add_in_arc(arc)
 
-    def _eliminate_nodes_when_width_is_greater_than_w(self):
+    def _merge_nodes_when_width_is_greater_than_w(self):
         '''
-        Se realiza la decisión de eliminar nodos cuando el ancho del grafo es mayor que el 
-        ancho máximo permitido.
+        Realiza la fusión de nodos cuando el ancho es mayor que w.
         '''
-        if self._width_is_greater_than_w():
-            ordered_nodes = sorted(self.graph.structure[-1], key=lambda node: self._problem.sort_key(
-            node.state))
-            nodes_to_eliminate = ordered_nodes[self._max_width:] or []
-            self._eliminate_nodes(nodes_to_eliminate)
-    
+        while self._width_is_greater_than_w():
+            nodes_to_merge = self.problem.select_nodes_to_merge(self.graph.structure[-1])
+            self._merge_nodes(nodes_to_merge[0], nodes_to_merge[1])
+
     def _width_is_greater_than_w(self):
         '''
         Verifica si el ancho del grafo es mayor que el ancho máximo permitido.
         '''
         return len(self.graph.structure[-1]) > self._max_width
+    
+    def _merge_nodes(self, node_one, node_two):
+        '''
+        Fusiona dos nodos.
 
-    def _eliminate_nodes(self, nodes_to_eliminate):
+        Parámetros:
+        - node_one: Primer nodo a fusionar.
+        - node_two: Segundo nodo a fusionar.
         '''
-        Elimina los nodos entregados y sus arcos entrantes
-        '''
-        for node in nodes_to_eliminate:
-            self.graph.eliminate_node_and_his_in_arcs(node) 
 
-    def _eliminate_nodes_without_out_arcs(self):
+        self._redirect_in_arcs(node_one, node_two)
+        self._change_new_state(node_to_remove, node_to_keep)
+        self._delete_node(node_one)
+    
+    def _redirect_in_arcs(self, node_to_remove, node_to_keep):
         '''
-        Elimina los nodos que no tienen arcos salientes.
+        Redirige los arcos de entrada de un nodo al otro nodo.
+
+        Parámetros:
+        - changin_nodes_ordered: Lista que contiene nodos en el orden deseado.
         '''
-        nodes_in_layers = self.graph.structure[::-1]
-        for layer in nodes_in_layers[1:]:
-            for node in layer:
-                if node.out_arcs == []:
-                    self.graph.eliminate_node_and_his_in_arcs(node)
+        for arc in node_to_remove.in_arcs:
+            arc.in_node = node_to_keep
+            if arc not in node_to_keep.in_arcs:
+                node_to_keep.add_in_arc(arc)
+    
+    def _change_new_state(self, node_to_remove, node_to_keep):
+        '''
+        Cambia el estado del nuevo nodo.
+        '''
+        node_to_keep.state = self._problem.merge_operator(node_to_remove.state, node_to_keep.state)
+
+    def _delete_node(self, node_to_remove):
+        '''
+        Elimina un nodo.
+
+        Parámetros:
+        - changin_nodes_ordered: Lista que contiene nodos en el orden deseado.
+        '''
+        self._graph.remove_node(node_to_remove)
+        del node_to_remove
 
     def _adjust_node_number(self):
         '''
