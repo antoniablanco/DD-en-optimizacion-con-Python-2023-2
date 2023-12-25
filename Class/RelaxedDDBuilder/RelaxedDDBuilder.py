@@ -170,8 +170,9 @@ class RelaxedDDBuilder():
         Realiza la fusión de nodos cuando el ancho es mayor que w.
         '''
         while self._width_is_greater_than_w():
-            nodes_to_merge = self.problem.select_nodes_to_merge(self.graph.structure[-1])
-            self._merge_nodes(nodes_to_merge[0], nodes_to_merge[1])
+            ordered_nodes = sorted(self.graph.structure[-1], 
+            key=lambda node: self._problem.sort_key_nodes_to_merge(node.id_node))
+            self._merge_nodes(ordered_nodes[0], ordered_nodes[1])
 
     def _width_is_greater_than_w(self):
         '''
@@ -179,7 +180,7 @@ class RelaxedDDBuilder():
         '''
         return len(self.graph.structure[-1]) > self._max_width
     
-    def _merge_nodes(self, node_one, node_two):
+    def _merge_nodes(self, node_to_remove, node_to_keep):
         '''
         Fusiona dos nodos.
 
@@ -188,9 +189,9 @@ class RelaxedDDBuilder():
         - node_two: Segundo nodo a fusionar.
         '''
 
-        self._redirect_in_arcs(node_one, node_two)
+        self._redirect_in_arcs(node_to_remove, node_to_keep)
         self._change_new_state(node_to_remove, node_to_keep)
-        self._delete_node(node_one)
+        self._delete_node(node_to_remove)
     
     def _redirect_in_arcs(self, node_to_remove, node_to_keep):
         '''
@@ -217,7 +218,7 @@ class RelaxedDDBuilder():
         Parámetros:
         - changin_nodes_ordered: Lista que contiene nodos en el orden deseado.
         '''
-        self._graph.remove_node(node_to_remove)
+        self.graph.remove_node(node_to_remove)
         del node_to_remove
 
     def _adjust_node_number(self):

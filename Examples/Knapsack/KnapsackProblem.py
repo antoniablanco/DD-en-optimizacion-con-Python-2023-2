@@ -48,9 +48,12 @@ class ProblemKnapsack(AbstractProblem):
             
         return total
     
-    def select_nodes_to_merge(self, nodes):
-        pass 
+    def sort_key_nodes_to_merge(self, id_node):
+        return int(id_node)
 
     def merge_operator(self, state_one, state_two):
-        pass
+        state = []
+        for i in range(len(state_one)):
+            state.append(max(state_one[i], state_two[i]))
+        return state
 

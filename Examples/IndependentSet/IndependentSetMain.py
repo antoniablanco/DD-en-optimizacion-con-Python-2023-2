@@ -38,10 +38,12 @@ dd_instance.create_reduce_decision_diagram(verbose=False)
 dd_instance.print_decision_diagram()
 dd_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
 dd_instance.print_decision_diagram()
+dd_instance.create_relaxed_decision_diagram(verbose=False, max_width=2)
+dd_instance.print_decision_diagram()
 dd_instance.export_graph_file("test")
 
 objective_function_instance = ObjectiveFunction(dd_instance)
-linear_objective_instance = LinearObjective([1, 1, 1, 1, 1, 1], 'min')
+linear_objective_instance = LinearObjective([3, 4, 2, 2, 7, 1], 'max')
 objective_function_instance.set_objective(linear_objective_instance)
 objective_function_instance.solve_dd()
 
