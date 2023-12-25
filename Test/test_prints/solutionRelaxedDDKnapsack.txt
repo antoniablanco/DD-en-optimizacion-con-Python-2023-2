@@ -1,0 +1,8 @@
+Iniciando la creación del diagrama de decision ...
+Diagrama de decision creado
+
+Iniciando la creación del diagrama de decision relajado...
+Creación del diagrama de decision relajado terminado
+
+Best Route: ('0', 0) -> ('1', 0) -> ('3', 0) -> ('6', 18) -> ('9', 18)
+Weight: 18

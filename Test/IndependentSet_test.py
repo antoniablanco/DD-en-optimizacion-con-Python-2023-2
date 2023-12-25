@@ -5,7 +5,7 @@ import sys
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
 sys.path.append(parent_dir)
-
+ 
 import unittest
 from unittest.mock import patch
 from Class.Problems.AbstractProblemClass import AbstractProblem
@@ -186,22 +186,22 @@ class ProblemIndependentSetTest(unittest.TestCase):
 
     def test_get_DDBuilder_time(self):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        self.assertIsNotNone(dd_independent_set_instance.dd_builder_time)
+        self.assertTrue(dd_independent_set_instance.dd_builder_time > 0)
     
     def test_get_ReduceDDBuilder_time(self):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
         dd_independent_set_instance.create_reduce_decision_diagram(verbose=False)
-        self.assertIsNotNone(dd_independent_set_instance.reduce_dd_builder_time)
+        self.assertTrue(dd_independent_set_instance.reduce_dd_builder_time > 0)
     
     def test_get_RestrictedDDBuilder_time(self):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
         dd_independent_set_instance.create_restricted_decision_diagram(verbose=False)
-        self.assertIsNotNone(dd_independent_set_instance.restricted_dd_builder_time)
+        self.assertTrue(dd_independent_set_instance.restricted_dd_builder_time > 0)
     
     def test_get_RelaxedDDBuilder_time(self):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
         dd_independent_set_instance.create_relaxed_decision_diagram(verbose=False)
-        self.assertIsNotNone(dd_independent_set_instance.relaxed_dd_builder_time)
+        self.assertTrue(dd_independent_set_instance.relaxed_dd_builder_time > 0)
     
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_get_solution_for_DD(self, mock_stdout):
