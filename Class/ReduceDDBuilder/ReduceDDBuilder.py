@@ -118,11 +118,10 @@ class ReduceDDBuilder():
         - node_two: Segundo nodo a fusionar.
         '''
         nodes = list(self._get_order_of_changin_nodes(node_one, node_two))
-        changin_nodes_ordered = [nodes[0], nodes[1]]
         
-        self._redirect_in_arcs(changin_nodes_ordered)
-        self._redirect_out_arcs(changin_nodes_ordered)
-        self._delete_node(changin_nodes_ordered)
+        self._redirect_in_arcs(nodes[0], nodes[1])
+        self._redirect_out_arcs(nodes[0], nodes[1])
+        self._delete_node(nodes[0])
     
     def _get_order_of_changin_nodes(self, node_one, node_two):
         '''
@@ -145,39 +144,39 @@ class ReduceDDBuilder():
         else:
             print("Error: No se encuentran los nodos en la capa actual")
     
-    def _redirect_in_arcs(self, changin_nodes_ordered):
+    def _redirect_in_arcs(self, node_to_remove, node_to_keep):
         '''
         Redirige los arcos de entrada de un nodo al otro nodo.
 
         Parámetros:
         - changin_nodes_ordered: Lista que contiene nodos en el orden deseado.
         '''
-        for arc in changin_nodes_ordered[0].in_arcs:
-            arc.in_node = changin_nodes_ordered[1]
-            if arc not in changin_nodes_ordered[1].in_arcs:
-                changin_nodes_ordered[1].add_in_arc(arc)
+        for arc in node_to_remove.in_arcs:
+            arc.in_node = node_to_keep
+            if arc not in node_to_keep.in_arcs:
+                node_to_keep.add_in_arc(arc)
 
-    def _redirect_out_arcs(self, changin_nodes_ordered):
+    def _redirect_out_arcs(self, node_to_remove, node_to_keep):
         '''
         Redirige los arcos de salida de un nodo al otro nodo.
 
         Parámetros:
         - changin_nodes_ordered: Lista que contiene nodos en el orden deseado.
         '''
-        for arc in changin_nodes_ordered[0].out_arcs:
-            arc.out_node = changin_nodes_ordered[1]
-            if arc not in changin_nodes_ordered[1].out_arcs:
-                changin_nodes_ordered[1].add_out_arc(arc)
+        for arc in node_to_remove.out_arcs:
+            arc.out_node = node_to_keep
+            if arc not in node_to_keep.out_arcs:
+                node_to_keep.add_out_arc(arc)
     
-    def _delete_node(self, changin_nodes_ordered):
+    def _delete_node(self, node_to_remove):
         '''
         Elimina un nodo.
 
         Parámetros:
         - changin_nodes_ordered: Lista que contiene nodos en el orden deseado.
         '''
-        self._graph.remove_node(changin_nodes_ordered[0])
-        del changin_nodes_ordered[0]
+        self._graph.remove_node(node_to_remove)
+        del node_to_remove
     
     def _final_layer_set_up(self):
         '''

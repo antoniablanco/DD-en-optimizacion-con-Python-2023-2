@@ -55,3 +55,9 @@ class ProblemIndependentSet(AbstractProblem):
 
     def get_sort_value(self, state):
         return len(state)
+    
+    def sort_key_nodes_to_merge(self, id_node):
+        return int(id_node)
+
+    def merge_operator(self, state_one, state_two):
+        return list(set((state_one + state_two)))

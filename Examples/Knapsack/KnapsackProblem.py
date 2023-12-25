@@ -41,9 +41,19 @@ class ProblemKnapsack(AbstractProblem):
             isFeasible = isFeasible and isFeasible_this_row
         return state, isFeasible
     
-    def get_sort_value(self, state):
+    def sort_key(self, state):
         total = 0
         for i in range(len(state)):
             total += state[i]
             
         return total
+    
+    def sort_key_nodes_to_merge(self, id_node):
+        return int(id_node)
+
+    def merge_operator(self, state_one, state_two):
+        state = []
+        for i in range(len(state_one)):
+            state.append(max(state_one[i], state_two[i]))
+        return state
+

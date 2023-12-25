@@ -1,5 +1,5 @@
 Iniciando la creación del diagrama de decision ...
 Diagrama de decision creado
 
-Best Route: (0, 0) -> ('1', 0) -> ('3', 0) -> ('7', 1) -> ('8', 1) -> ('10', 2)
-Weight: 2
+Best Route: (0, 0) -> ('1', 0) -> ('4', 4) -> ('7', 4) -> ('8', 4) -> ('10', 11)
+Weight: 11

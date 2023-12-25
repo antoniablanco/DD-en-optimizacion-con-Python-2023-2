@@ -1,14 +1,13 @@
 from Class.DDBuilder.DDBuilder import DDBuilder
 from Class.ReduceDDBuilder.ReduceDDBuilder import ReduceDDBuilder
 from Class.RestrictedDDBuilder.RestrictedDDBuilder import RestrictedDDBuilder
+from Class.RelaxedDDBuilder.RelaxedDDBuilder import RelaxedDDBuilder
 from Class.GraphVisualization.Print import Print
 from Class.GraphVisualization.GraphFile import GraphFile
 import copy
 import time
 
 from Class.decorators.timer import timing_decorator
-
-
 
 class DD():
     '''
@@ -28,6 +27,7 @@ class DD():
         self.dd_builder_time = 0
         self.reduce_dd_builder_time = 0
         self.restricted_dd_builder_time = 0
+        self.relaxed_dd_builder_time = 0
 
         self.problem = problem
         self.graph_DD = self._create_decision_diagram(verbose)
@@ -66,6 +66,17 @@ class DD():
         end_time = time.time()  
         self.restricted_dd_builder_time = end_time - start_time
         print(f"Creación del diagrama de decision restringido terminado")
+    
+    @timing_decorator(enabled=False)
+    def create_relaxed_decision_diagram(self, verbose=False, max_width=10):
+        print("")
+        print("Iniciando la creación del diagrama de decision relajado...")
+        start_time = time.time()  
+        self.relaxed_dd_builder = RelaxedDDBuilder(self.problem, max_width)
+        self.graph_DD = self.relaxed_dd_builder.get_decision_diagram(verbose)
+        end_time = time.time()  
+        self.relaxed_dd_builder_time = end_time - start_time
+        print(f"Creación del diagrama de decision relajado terminado")
 
     def print_decision_diagram(self):
         '''

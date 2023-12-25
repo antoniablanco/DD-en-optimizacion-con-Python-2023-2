@@ -32,12 +32,15 @@ class Graph():
         if not isinstance(other, Graph):
             return False
         
+        
         devolver = True
         for i, layer in enumerate(self.structure):
+
             if len(layer) != len(other.structure[i]):
                 return False
-            there_is_equal_node = False
+
             for node in layer:
+                there_is_equal_node = False
                 for other_node in other.structure[i]:
                     if node.state == other_node.state:
                         there_is_equal_node = there_is_equal_node or self._compare_two_nodes(node, other_node)
@@ -61,7 +64,7 @@ class Graph():
                 if arc1.variable_value == arc2.variable_value and arc1.in_node.state == arc2.in_node.state:
                     there_is_equal_arc = True
             devolver_out_arcs = devolver_out_arcs and there_is_equal_arc
-        
+
         return devolver_in_arcs and devolver_out_arcs
     
     def add_node(self, node):

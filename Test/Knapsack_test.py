@@ -15,6 +15,7 @@ import dd_controlled_generators.DDKnapsack as DDKnapsack
 import dd_controlled_generators.ReduceDDKnapsack as ReduceDDKnapsack
 import dd_controlled_generators.RestrictedDDKnapsack as RestrictedDDKnapsack
 import dd_controlled_generators.FalseDDKnapsack as FalseDDKnapsack
+import dd_controlled_generators.RelaxedDDKnapsack as RelaxedDDKnapsack
 import io
 import os
 
@@ -44,12 +45,20 @@ class ProblemKnapsackTest(unittest.TestCase):
                 isFeasible = int(new_state[0]) <= 6
                 return new_state, isFeasible
             
-            def get_sort_value(self, state):
+            def sort_key(self, state):
                 total = 0
                 for i in range(len(state)):
                     total += state[i]
-                    
                 return total
+            
+            def sort_key_nodes_to_merge(self, id_node):
+                return int(id_node)
+
+            def merge_operator(self, state_one, state_two):
+                state = []
+                for i in range(len(state_one)):
+                    state.append(max(state_one[i], state_two[i]))
+                return state
 
         knpasack_initial_state = [0]
         knpasack_variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1])]
@@ -127,6 +136,27 @@ class ProblemKnapsackTest(unittest.TestCase):
         resultado = dd_knapsack_instance.graph_DD == RestrictedDDKnapsack.graph
 
         self.assertTrue(resultado)
+    
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_verbose_create_relaxed_dd(self, mock_stdout):
+        dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
+        dd_knapsack_instance.create_relaxed_decision_diagram(verbose=True, max_width=3)
+
+        file_path = os.path.join('Test', 'test_prints', 'createRelaxedDDKnapsack.txt')
+        
+        with open(file_path, "r") as file:
+            expected_output = file.read()
+
+        actual_output = mock_stdout.getvalue()
+
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    def test_create_relaxed_dd_graph_equal(self):
+        dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
+        dd_knapsack_instance.create_relaxed_decision_diagram(verbose=False, max_width=3)
+        resultado = dd_knapsack_instance.graph_DD == RelaxedDDKnapsack.graph
+
+        self.assertTrue(resultado)
 
     def test_get_dd_graph(self):
         dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
@@ -146,17 +176,22 @@ class ProblemKnapsackTest(unittest.TestCase):
 
     def test_get_DDBuilder_time(self):
         dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
-        self.assertIsNotNone(dd_knapsack_instance.dd_builder_time)
+        self.assertTrue(dd_knapsack_instance.dd_builder_time > 0)
     
     def test_get_ReduceDDBuilder_time(self):
         dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
         dd_knapsack_instance.create_reduce_decision_diagram(verbose=False)
-        self.assertIsNotNone(dd_knapsack_instance.reduce_dd_builder_time)
+        self.assertTrue(dd_knapsack_instance.reduce_dd_builder_time > 0)
     
     def test_get_RestrictedDDBuilder_time(self):
         dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
         dd_knapsack_instance.create_restricted_decision_diagram(verbose=False)
-        self.assertIsNotNone(dd_knapsack_instance.restricted_dd_builder_time)
+        self.assertTrue(dd_knapsack_instance.restricted_dd_builder_time > 0)
+    
+    def test_get_RelaxedDDBuilder_time(self):
+        dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
+        dd_knapsack_instance.create_relaxed_decision_diagram(verbose=False)
+        self.assertTrue(dd_knapsack_instance.relaxed_dd_builder_time > 0)
     
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_get_solution_for_DD(self, mock_stdout):
@@ -198,7 +233,7 @@ class ProblemKnapsackTest(unittest.TestCase):
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_get_solution_for_restrictedDD(self, mock_stdout):
         dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
-        dd_knapsack_instance.create_restricted_decision_diagram(verbose=False)
+        dd_knapsack_instance.create_restricted_decision_diagram(verbose=False, max_width=3)
 
         objective_function_instance = ObjectiveFunction(dd_knapsack_instance)
         linear_objective_instance = LinearObjective([-5, 1, 18, 17], 'max')
@@ -214,7 +249,26 @@ class ProblemKnapsackTest(unittest.TestCase):
 
         self.assertEqual(actual_output.strip(), expected_output.strip())
     
-    def test_compare_two_diferent_graphf(self):
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_get_solution_for_relaxedDD(self, mock_stdout):
+        dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
+        dd_knapsack_instance.create_relaxed_decision_diagram(verbose=False, max_width=3)
+
+        objective_function_instance = ObjectiveFunction(dd_knapsack_instance)
+        linear_objective_instance = LinearObjective([-5, 1, 18, 17], 'max')
+        objective_function_instance.set_objective(linear_objective_instance)
+        objective_function_instance.solve_dd()
+        
+        file_path = os.path.join('Test', 'test_prints', 'solutionRelaxedDDKnapsack.txt')
+        
+        with open(file_path, "r") as file:
+            expected_output = file.read()
+
+        actual_output = mock_stdout.getvalue()
+
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    def test_compare_two_diferent_graphs(self):
         dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
         dd_knapsack_instance.create_reduce_decision_diagram(verbose=False)
 
