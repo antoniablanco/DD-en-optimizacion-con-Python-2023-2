@@ -15,6 +15,7 @@ from contextlib import contextmanager
 import dd_controlled_generators.DDIndependentSet as DDIndependentSet
 import dd_controlled_generators.RestrictedDDIndependentSet as RestrictedDDIndependentSet
 import dd_controlled_generators.DiferentOrderedRestrictedDDIndependentSet as DiferentOrderedRestrictedDDIndependentSet
+import dd_controlled_generators.RelaxedDDIndependentSet as RelaxedDDIndependentSet
 
 @contextmanager
 def assertNoRaise():
@@ -53,6 +54,12 @@ class ProblemIndependentSetTest(unittest.TestCase):
             
             def sort_key(self, state):
                 return len(state)
+            
+            def sort_key_nodes_to_merge(self, id_node):
+                return int(id_node)
+
+            def merge_operator(self, state_one, state_two):
+                return list(set((state_one + state_two)))
     
         independent_set_initial_state = [1, 2, 3, 4, 5]
         independent_set_variables = [('x_1', [0, 1]), ('x_2', [0, 1]), ('x_3', [0, 1]), ('x_4', [0, 1]), ('x_5', [0, 1])]
@@ -132,6 +139,28 @@ class ProblemIndependentSetTest(unittest.TestCase):
 
         self.assertTrue(resultado)
     
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_verbose_create_relaxed_dd(self, mock_stdout):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_relaxed_decision_diagram(verbose=True, max_width=2)
+
+        file_path = os.path.join('Test', 'test_prints', 'createRelaxedDDIndependentSet.txt')
+        
+        with open(file_path, "r") as file:
+            expected_output = file.read()
+
+        actual_output = mock_stdout.getvalue()
+        print(actual_output.strip())
+
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+
+    def test_create_relaxed_dd_graph_equal(self):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_relaxed_decision_diagram(verbose=False, max_width=2)
+        resultado = dd_independent_set_instance.graph_DD == RelaxedDDIndependentSet.graph
+
+        self.assertTrue(resultado)
+    
     def test_compare_two_diferent_ordered_graphs(self):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
         dd_independent_set_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
@@ -169,12 +198,17 @@ class ProblemIndependentSetTest(unittest.TestCase):
         dd_independent_set_instance.create_restricted_decision_diagram(verbose=False)
         self.assertIsNotNone(dd_independent_set_instance.restricted_dd_builder_time)
     
+    def test_get_RelaxedDDBuilder_time(self):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_relaxed_decision_diagram(verbose=False)
+        self.assertIsNotNone(dd_independent_set_instance.relaxed_dd_builder_time)
+    
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_get_solution_for_DD(self, mock_stdout):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
 
         objective_function_instance = ObjectiveFunction(dd_independent_set_instance)
-        linear_objective_instance = LinearObjective([1, 1, 1, 1, 1], 'max')
+        linear_objective_instance = LinearObjective([3, 4, 2, 2, 7], 'max')
         objective_function_instance.set_objective(linear_objective_instance)
         objective_function_instance.solve_dd()
         
@@ -193,7 +227,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
         dd_independent_set_instance.create_reduce_decision_diagram(verbose=False)
 
         objective_function_instance = ObjectiveFunction(dd_independent_set_instance)
-        linear_objective_instance = LinearObjective([1, 1, 1, 1, 1], 'max')
+        linear_objective_instance = LinearObjective([3, 4, 2, 2, 7], 'max')
         objective_function_instance.set_objective(linear_objective_instance)
         objective_function_instance.solve_dd()
         
@@ -209,14 +243,33 @@ class ProblemIndependentSetTest(unittest.TestCase):
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_get_solution_for_restrictedDD(self, mock_stdout):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_restricted_decision_diagram(verbose=False)
+        dd_independent_set_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
 
         objective_function_instance = ObjectiveFunction(dd_independent_set_instance)
-        linear_objective_instance = LinearObjective([1, 1, 1, 1, 1], 'max')
+        linear_objective_instance = LinearObjective([3, 4, 2, 2, 7], 'max')
         objective_function_instance.set_objective(linear_objective_instance)
         objective_function_instance.solve_dd()
         
         file_path = os.path.join('Test', 'test_prints', 'solutionRestrictedDDIndependentSet.txt')
+        
+        with open(file_path, "r") as file:
+            expected_output = file.read()
+
+        actual_output = mock_stdout.getvalue()
+
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_get_solution_for_relaxedDD(self, mock_stdout):
+        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
+        dd_independent_set_instance.create_relaxed_decision_diagram(verbose=False, max_width=2)
+
+        objective_function_instance = ObjectiveFunction(dd_independent_set_instance)
+        linear_objective_instance = LinearObjective([3, 4, 2, 2, 7], 'max')
+        objective_function_instance.set_objective(linear_objective_instance)
+        objective_function_instance.solve_dd()
+        
+        file_path = os.path.join('Test', 'test_prints', 'solutionRelaxedDDIndependentSet.txt')
         
         with open(file_path, "r") as file:
             expected_output = file.read()
