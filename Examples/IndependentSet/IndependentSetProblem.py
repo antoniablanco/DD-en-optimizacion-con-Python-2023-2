@@ -53,7 +53,7 @@ class ProblemIndependentSet(AbstractProblem):
         isFeasible = (int(variable_value) == 1 and int(variable_id[2:]) in previus_state) or (int(variable_value) == 0)
         return new_state, isFeasible
 
-    def get_sort_value(self, state):
+    def sort_key(self, state):
         return len(state)
     
     def sort_key_nodes_to_merge(self, id_node):

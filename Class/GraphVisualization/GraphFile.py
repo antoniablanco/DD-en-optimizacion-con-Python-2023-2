@@ -96,18 +96,22 @@ class GraphFile:
         - node (Node): Objeto de la clase Node que se va a agregar al archivo GML.
         '''
         self.file.write(f"\n node [\n")
-        if node.id_node == 'r':
-            self.file.write(f"\t id 0\n")
-        elif node.id_node == 't':
-            self.file.write(f"\t id 500\n")
-        else:
-            self.file.write(f"\t id {node.id_node}\n")
+        self.file.write(f"\t id {node.id_node}\n")
         
-        self.file.write(f"\t label \"{node.id_node}\"\n")
+        self.file.write(f"\t label \"{node.id_node}             {node.state}\"\n")
         self.file.write(" \tgraphics [\n")
-        self.file.write(f"\t type \"circle\"\n")
+        self.file.write(f"\t type \"ellipse\"\n")
         self.file.write(f"\t hasFill 0\n")
-        self.file.write("\t w 90.0   h 110.0  ]\n")
+        self.file.write("\t w 90.0   h 110.0\n")
+        self.file.write("\t outline \"#000000\" ]\n")
+        self.file.write(f"]")
+        self.file.write(" \tLabelGraphics [\n")
+        self.file.write(f"\t text	\"{node.id_node}             {node.state}\"\n")
+        self.file.write(f"\t fontSize	12\n")
+        self.file.write("\t fontName	\"Dialog\"\n")
+        self.file.write("\t model	\"sides\"\n")
+        self.file.write("\t anchor	\"e\"\n")
+        self.file.write("\t borderDistance	-50.0\n")
         self.file.write(f"]")
 
     def _add_arcs(self, arcs: list[Arc]) -> None:

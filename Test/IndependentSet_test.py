@@ -128,7 +128,6 @@ class ProblemIndependentSetTest(unittest.TestCase):
             expected_output = file.read()
 
         actual_output = mock_stdout.getvalue()
-        print(actual_output.strip())
 
         self.assertEqual(actual_output.strip(), expected_output.strip())
 
@@ -150,7 +149,6 @@ class ProblemIndependentSetTest(unittest.TestCase):
             expected_output = file.read()
 
         actual_output = mock_stdout.getvalue()
-        print(actual_output.strip())
 
         self.assertEqual(actual_output.strip(), expected_output.strip())
 
