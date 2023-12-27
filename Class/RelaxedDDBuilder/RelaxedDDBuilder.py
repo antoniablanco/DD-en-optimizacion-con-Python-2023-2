@@ -10,7 +10,7 @@ class RelaxedDDBuilder(AbstractDDBuilder):
         self._max_width = max_width
     
     def _specific_layer_function(self):
-        self._merge_nodes_when_width_is_greater_than_w()
+        self._merge_nodes_when_width_is_greater_than_w() 
 
     def _specific_final_function(self):
         self._adjust_node_number()
@@ -21,7 +21,8 @@ class RelaxedDDBuilder(AbstractDDBuilder):
         '''
         while self._width_is_greater_than_w():
             ordered_nodes = sorted(self.graph.structure[-1], 
-            key=lambda node: self._problem.sort_key_nodes_to_merge(node.id_node))
+            key=lambda node: self._problem.get_priority_for_merge_nodes(node.id_node),
+            reverse=True)
             self._merge_nodes(ordered_nodes[0], ordered_nodes[1])
 
     def _width_is_greater_than_w(self):

@@ -45,14 +45,14 @@ class ProblemKnapsackTest(unittest.TestCase):
                 isFeasible = int(new_state[0]) <= 6
                 return new_state, isFeasible
             
-            def sort_key(self, state):
+            def get_priority_for_discard_node(self, state):
                 total = 0
                 for i in range(len(state)):
                     total += state[i]
-                return total
+                return -total
             
-            def sort_key_nodes_to_merge(self, id_node):
-                return int(id_node)
+            def get_priority_for_merge_nodes(self, id_node):
+                return -int(id_node)
 
             def merge_operator(self, state_one, state_two):
                 state = []
@@ -185,12 +185,12 @@ class ProblemKnapsackTest(unittest.TestCase):
     
     def test_get_RestrictedDDBuilder_time(self):
         dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
-        dd_knapsack_instance.create_restricted_decision_diagram(verbose=False)
+        dd_knapsack_instance.create_restricted_decision_diagram(verbose=False, max_width=3)
         self.assertTrue(dd_knapsack_instance.restricted_dd_builder_time > 0)
     
     def test_get_RelaxedDDBuilder_time(self):
         dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
-        dd_knapsack_instance.create_relaxed_decision_diagram(verbose=False)
+        dd_knapsack_instance.create_relaxed_decision_diagram(verbose=False, max_width=3)
         self.assertTrue(dd_knapsack_instance.relaxed_dd_builder_time > 0)
     
     @patch('sys.stdout', new_callable=io.StringIO)

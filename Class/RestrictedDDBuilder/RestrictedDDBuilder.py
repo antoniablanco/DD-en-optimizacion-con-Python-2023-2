@@ -22,8 +22,8 @@ class RestrictedDDBuilder(AbstractDDBuilder):
         ancho máximo permitido.
         '''
         if self._width_is_greater_than_w():
-            ordered_nodes = sorted(self.graph.structure[-1], key=lambda node: self._problem.sort_key(
-            node.state))
+            ordered_nodes = sorted(self.graph.structure[-1], key=lambda node: self._problem.get_priority_for_discard_node(
+            node.state), reverse=True)
             nodes_to_eliminate = ordered_nodes[self._max_width:] or []
             self._eliminate_nodes(nodes_to_eliminate)
     

@@ -51,14 +51,14 @@ graph [
 ]
  node [
 	 id 3
-	 label "3             [5]"
+	 label "3             [3, 4, 5]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"3             [5]"
+	 text	"3             [3, 4, 5]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -83,14 +83,14 @@ graph [
 ]
  node [
 	 id 5
-	 label "5             [5]"
+	 label "5             [4, 5]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"5             [5]"
+	 text	"5             [4, 5]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -99,14 +99,14 @@ graph [
 ]
  node [
 	 id 6
-	 label "6             [4, 5]"
+	 label "6             [5]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"6             [4, 5]"
+	 text	"6             [5]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -179,6 +179,13 @@ edge [
 	source 1
 	target 3
 	graphics [
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
+]]
+
+edge [
+	source 1
+	target 4
+	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 
 ]]
 
@@ -197,8 +204,15 @@ edge [
 ]]
 
 edge [
-	source 4
+	source 3
 	target 6
+	graphics [
+	fill "#000000" 		targetArrow "diamond"	 	 
+]]
+
+edge [
+	source 4
+	target 5
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
 ]]
@@ -211,17 +225,17 @@ edge [
 ]]
 
 edge [
-	source 6
-	target 7
+	source 5
+	target 8
 	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
+	fill "#000000" 		targetArrow "diamond"	 	 
 ]]
 
 edge [
 	source 6
-	target 8
+	target 7
 	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
 ]]
 
 edge [

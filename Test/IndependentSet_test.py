@@ -52,11 +52,11 @@ class ProblemIndependentSetTest(unittest.TestCase):
                 isFeasible = (int(variable_value) == 1 and int(variable_id[2:]) in previus_state) or (int(variable_value) == 0)
                 return new_state, isFeasible
             
-            def sort_key(self, state):
-                return len(state)
+            def get_priority_for_discard_node(self, state):
+                return -len(state)
             
-            def sort_key_nodes_to_merge(self, id_node):
-                return int(id_node)
+            def get_priority_for_merge_nodes(self, id_node):
+                return -int(id_node)
 
             def merge_operator(self, state_one, state_two):
                 return list(set((state_one + state_two)))
@@ -193,12 +193,12 @@ class ProblemIndependentSetTest(unittest.TestCase):
     
     def test_get_RestrictedDDBuilder_time(self):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_restricted_decision_diagram(verbose=False)
+        dd_independent_set_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
         self.assertTrue(dd_independent_set_instance.restricted_dd_builder_time > 0)
     
     def test_get_RelaxedDDBuilder_time(self):
         dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_relaxed_decision_diagram(verbose=False)
+        dd_independent_set_instance.create_relaxed_decision_diagram(verbose=False, max_width=2)
         self.assertTrue(dd_independent_set_instance.relaxed_dd_builder_time > 0)
     
     @patch('sys.stdout', new_callable=io.StringIO)

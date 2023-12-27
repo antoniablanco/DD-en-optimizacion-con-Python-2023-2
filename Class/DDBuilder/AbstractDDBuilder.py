@@ -178,7 +178,7 @@ class AbstractDDBuilder(ABC):
         '''
         if should_visualize:
             self._print()
-
+ 
     def _print(self):
         '''
         Imprime el contenido de cada capa del grafo.

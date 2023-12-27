@@ -41,15 +41,14 @@ class ProblemKnapsack(AbstractProblem):
             isFeasible = isFeasible and isFeasible_this_row
         return state, isFeasible
     
-    def sort_key(self, state):
+    def get_priority_for_discard_node(self, state):
         total = 0
         for i in range(len(state)):
             total += state[i]
-            
-        return total
+        return -total
     
-    def sort_key_nodes_to_merge(self, id_node):
-        return int(id_node)
+    def get_priority_for_merge_nodes(self, id_node):
+        return -int(id_node)
 
     def merge_operator(self, state_one, state_two):
         state = []
