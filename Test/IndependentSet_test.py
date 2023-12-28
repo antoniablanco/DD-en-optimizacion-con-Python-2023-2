@@ -55,7 +55,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
             def get_priority_for_discard_node(self, state):
                 return -len(state)
             
-            def get_priority_for_merge_nodes(self, id_node):
+            def get_priority_for_merge_nodes(self, id_node, state):
                 return -int(id_node)
 
             def merge_operator(self, state_one, state_two):

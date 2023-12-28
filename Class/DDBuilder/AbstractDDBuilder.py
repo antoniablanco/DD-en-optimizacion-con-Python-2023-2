@@ -15,7 +15,7 @@ class AbstractDDBuilder(ABC):
     @timing_decorator(enabled=False)
     def __init__(self, problem):
         '''
-        Constructor de la clase Constructor.
+        Constructor de la clase abstracta.
 
         Parámetros:
         - problem: Objeto tipo problema para el cual se construirá el grafo.
@@ -193,8 +193,15 @@ class AbstractDDBuilder(ABC):
     
     @abstractmethod
     def _specific_layer_function(self):
+        '''
+        Función especifica implementada para cada tipo de grafo de decisión. Esta ocurre al final de la creación
+        de cada capa.
+        '''
         pass
 
     @abstractmethod
     def _specific_final_function(self):
+        '''
+        Función especifica implementada para cada tipo de grafo de decisión. Esta ocurre al final de toda la creación.
+        '''
         pass

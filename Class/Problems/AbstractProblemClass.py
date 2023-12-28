@@ -73,20 +73,21 @@ class AbstractProblem(ABC):
         eliminación de nodos, es decir se eliminará primero aquel nodo con mayor prioridad.
 
         Parámetros:
-        state: El estado en base al cual se va a ordenar. *LEER IMPORTANTE
+        state: El estado del nodo a ordenar. *LEER IMPORTANTE
 
         Retorna:
         int: El valor de ordenamiento del estado.
         '''
         raise NotImplementedError("The method get_priority_for_discard_node has not been implemented yet")
 
-    def get_priority_for_merge_nodes(self, node_id):
+    def get_priority_for_merge_nodes(self, node_id, state):
         '''
         Método abstracto que debe ser implementado por las subclases para definir la función de prioridad para
-        juntar dos nodos, tras ordenarlos aquellos dos nodos que posean la mayor prioridad, serán ordenados.
+        juntar dos nodos. Tras ordenarlos aquellos, dos nodos que posean las mayores prioridades, serán juntados.
 
         Parámetros:
         node_id: El identificador del nodo a ordenar.
+        state: El estado del nodo a ordenar. *LEER IMPORTANTE
 
         Retorna:
         int: El valor de ordenamiento del nodo.

@@ -51,7 +51,7 @@ class ProblemKnapsackTest(unittest.TestCase):
                     total += state[i]
                 return -total
             
-            def get_priority_for_merge_nodes(self, id_node):
+            def get_priority_for_merge_nodes(self, id_node, state):
                 return -int(id_node)
 
             def merge_operator(self, state_one, state_two):
