@@ -54,9 +54,38 @@ class RelaxedDDBuilder(AbstractDDBuilder):
         - node_to_remove: Nodo que será eliminado.
         - node_to_keep: Nodo que se mantendrá.
         '''
+        new_state = self._problem.merge_operator(node_to_remove.state, node_to_keep.state)
+        exist_node, same_state_node = self._exist_node_with_same_state(new_state)
+        if exist_node and (same_state_node!=node_to_keep) and (same_state_node!=node_to_remove):
+            self. _merge_with_an_existing_node(node_to_remove, node_to_keep, same_state_node)
+        else:
+            self._merge_when_doesnt_exist_node(node_to_remove, node_to_keep, new_state)
+    
+    def _merge_with_an_existing_node(self, node_one, node_two, exist_node):
+        '''
+        Realiza la fusión de dos nodos con uno ya existente.
 
+        Parámetros:
+        - node_one: First node to merge.
+        - node_two: Second node to merge.
+        - exist_node: Node that already exists.
+        '''
+        
+        self._redirect_in_arcs(node_one, exist_node)
+        self._redirect_in_arcs(node_two, exist_node)
+        self._delete_node(node_one)
+        self._delete_node(node_two)
+    
+    def _merge_when_doesnt_exist_node(self, node_to_remove, node_to_keep, new_state):
+        '''
+        Realiza la fusión de dos nodos cuando no existe un nodo con el mismo estado.
+
+        Parámetros:
+        - node_to_remove: Nodo que será eliminado.
+        - node_to_keep: Nodo que se mantendrá.
+        '''
+        self._change_new_state(node_to_keep, new_state)
         self._redirect_in_arcs(node_to_remove, node_to_keep)
-        self._change_new_state(node_to_remove, node_to_keep)
         self._delete_node(node_to_remove)
     
     def _redirect_in_arcs(self, node_to_remove, node_to_keep):
@@ -72,7 +101,7 @@ class RelaxedDDBuilder(AbstractDDBuilder):
             if arc not in node_to_keep.in_arcs:
                 node_to_keep.add_in_arc(arc)
     
-    def _change_new_state(self, node_to_remove, node_to_keep):
+    def _change_new_state(self, node, new_state):
         '''
         Cambia el estado del nuevo nodo en base a los estados de los nodos juntados.
 
@@ -80,7 +109,7 @@ class RelaxedDDBuilder(AbstractDDBuilder):
         - node_to_remove: Nodo que será eliminado.
         - node_to_keep: Nodo que se mantendrá.
         '''
-        node_to_keep.state = self._problem.merge_operator(node_to_remove.state, node_to_keep.state)
+        node.state = new_state
 
     def _delete_node(self, node_to_remove):
         '''

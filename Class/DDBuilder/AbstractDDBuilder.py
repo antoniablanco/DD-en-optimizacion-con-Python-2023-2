@@ -131,8 +131,8 @@ class AbstractDDBuilder(ABC):
         - variable_id: Índice de la variable para la cual se crean los arcos.
         - node_state: Estado del nuevo nodo.
         '''
-        nodo_existe, same_state_node = self._exist_node_with_same_state(node_state)
-        if nodo_existe:
+        exist_node, same_state_node = self._exist_node_with_same_state(node_state)
+        if exist_node:
             self._create_arc_for_the_new_node(existed_node, same_state_node, variable_value, variable_id)
         else:
             node_created = Node(str(self._node_number), node_state)
