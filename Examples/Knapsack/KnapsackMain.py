@@ -1,9 +1,6 @@
 import os
 import sys
 
-print("------------------")
-print(sys.path)
-
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
@@ -13,7 +10,6 @@ sys.path.append(root_dir)
 
 from Class.DD import DD 
 from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjective
-from Exceptions.MyExceptions import SameLenError
 from KnapsackProblem import ProblemKnapsack
 
 '''
