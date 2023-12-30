@@ -1,6 +1,4 @@
 
-Iniciando la creación del diagrama de decision ...
-Diagrama de decision creado
 
 Iniciando la creación del diagrama de decision restringido...
 
