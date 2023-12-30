@@ -45,5 +45,5 @@ dd_instance.export_graph_file("test")
 objective_function_instance = ObjectiveFunction(dd_instance)
 linear_objective_instance = LinearObjective([-5, 1, 18, 17], 'max')
 objective_function_instance.set_objective(linear_objective_instance)
-objective_function_instance.solve_dd()
+#objective_function_instance.solve_dd()
 
