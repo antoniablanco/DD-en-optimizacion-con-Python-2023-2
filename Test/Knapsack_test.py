@@ -273,6 +273,82 @@ class ProblemKnapsackTest(unittest.TestCase):
         dd_knapsack_instance.create_reduce_decision_diagram(verbose=False)
 
         self.assertFalse(dd_knapsack_instance.graph_DD == FalseDDKnapsack.graph)
+    
+    def test_compare_gml_dd_graph(self):
+        dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
+        dd_knapsack_instance.export_graph_file('test')
+
+        expected_file_path = os.path.join('Test', 'gml_files', 'exact_dd_knapsack.gml')
+        actual_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'test.gml'))
+
+        self.assertTrue(os.path.exists(actual_file_path))
+        self.assertTrue(os.path.exists(expected_file_path))
+
+        with open(expected_file_path, "r") as file:
+            expected_output = file.read()
+        
+        with open(actual_file_path, "r") as file:
+            actual_output = file.read()
+        
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    def test_compare_gml_reduce_dd_graph(self):
+        dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
+        dd_knapsack_instance.create_reduce_decision_diagram(verbose=False)
+        dd_knapsack_instance.export_graph_file('test')
+
+        expected_file_path = os.path.join('Test', 'gml_files', 'reduce_dd_knapsack.gml')
+        actual_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'test.gml'))
+
+        self.assertTrue(os.path.exists(actual_file_path))
+        self.assertTrue(os.path.exists(expected_file_path))
+
+        with open(expected_file_path, "r") as file:
+            expected_output = file.read()
+        
+        with open(actual_file_path, "r") as file:
+            actual_output = file.read()
+        
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    def test_compare_gml_restricted_dd_graph(self):
+        dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
+        dd_knapsack_instance.create_restricted_decision_diagram(verbose=False, max_width=3)
+        dd_knapsack_instance.export_graph_file('test')
+
+        expected_file_path = os.path.join('Test', 'gml_files', 'restricted_dd_knapsack.gml')
+        actual_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'test.gml'))
+
+        self.assertTrue(os.path.exists(actual_file_path))
+        self.assertTrue(os.path.exists(expected_file_path))
+
+        with open(expected_file_path, "r") as file:
+            expected_output = file.read()
+        
+        with open(actual_file_path, "r") as file:
+            actual_output = file.read()
+        
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    def test_compare_gml_relax_dd_graph(self):
+        dd_knapsack_instance = DD(self.knapsack_instance, verbose=False)
+        dd_knapsack_instance.create_relaxed_decision_diagram(verbose=False, max_width=3)
+        dd_knapsack_instance.export_graph_file('test')
+
+        expected_file_path = os.path.join('Test', 'gml_files', 'relax_dd_knapsack.gml')
+        actual_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'test.gml'))
+
+        self.assertTrue(os.path.exists(actual_file_path))
+        self.assertTrue(os.path.exists(expected_file_path))
+
+        with open(expected_file_path, "r") as file:
+            expected_output = file.read()
+        
+        with open(actual_file_path, "r") as file:
+            actual_output = file.read()
+        
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+
 
 if __name__ == '__main__':
     unittest.main()
