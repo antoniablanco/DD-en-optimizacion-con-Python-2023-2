@@ -57,7 +57,7 @@ class DD():
         print(f"Reduccion del diagrama de decision terminada")
     
     @timing_decorator(enabled=False)
-    def create_restricted_decision_diagram(self, verbose=False, max_width=10):
+    def create_restricted_decision_diagram(self, max_width, verbose=False):
         print("")
         print("Iniciando la creación del diagrama de decision restringido...")
         start_time = time.time()  
@@ -68,7 +68,7 @@ class DD():
         print(f"Creación del diagrama de decision restringido terminado")
     
     @timing_decorator(enabled=False)
-    def create_relaxed_decision_diagram(self, verbose=False, max_width=10):
+    def create_relaxed_decision_diagram(self, max_width, verbose=False):
         print("")
         print("Iniciando la creación del diagrama de decision relajado...")
         start_time = time.time()  
@@ -118,3 +118,4 @@ class DD():
     def get_restricted_constructor_time(self):
         ''' Retorna el tiempo de ejecución del restricted constructor. '''
         return self.restricted_dd_builder_time
+

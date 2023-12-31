@@ -23,7 +23,16 @@ First should proceed to the construction of a **Problem** class, which must inhe
 * **equals:** Takes two states as input and should give as output a boolean value indicating whether they are equal or not.
 * **transition_function:** Takes as inputs a previous state, a variable identifier (e.g., "x_2"), and the domain this variable takes (e.g., "1"). It outputs a new state and a boolean value indicating whether the state is feasible or not.
 
-Once this class is built, it is essential to create an instance of it to be passed to the "DD" class. In this, you'll find functions to create, reduce, and visualize a diagram, as well as obtain a copy of it.
+If you want to obtain the restricted diagram, it is necessary to implement the following function when constructing your **Problem** class.
+
+* **get_priority_for_discard_node:** Takes the state of a node as input and outputs a number representing the priority for discarding the node.
+
+Furthermore, to obtain the relaxed diagram, it is necessary to add the following two functions in the **Problem** class.
+
+* **get_priority_for_merge_nodes:** Takes a state and the ID of a node as inputs and outputs a number representing the priority for merging the node with others.
+* **merge_operator:** Takes two states, each one from a node that is going to merge, as inputs. It outputs a new state for the merged nodes..
+
+Once this class is built, it is essential to create an instance of it to be passed to the "DD" class. In this, you'll find functions to create, reduce, restrict, relax and visualize a diagram, as well as obtain a copy of it.
 
 Finally, to obtain the problem's solution, create an instance of the **ObjectiveFunction** class, to which you pass the DD object containing the graph. Within this function, you can assign and solve the objective function.
 
@@ -36,6 +45,14 @@ It is the initial and necessary feature for all the following ones; that's why i
 #### Create Reduce Decision
 
 To create the reduced decision diagram, is necesary use *create_reduce_decision_diagram()* from the **DD** class, which transforms the graph class object saved when creating the diagram into its reduced form. This new version is then stored within the **DD** class.
+
+#### Create Restricted Decision
+
+To create the restricted decision diagram, is necesary use *create_restricted_decision_diagram()* from the **DD** class, which transforms the graph class object saved when creating the diagram into its restricted form. This new version is then stored within the **DD** class.
+
+#### Create Relax Decision
+
+To create the relax decision diagram, is necesary use *create_relax_decision_diagram()* from the **DD** class, which transforms the graph class object saved when creating the diagram into its relax form. This new version is then stored within the **DD** class.
 
 #### Print Decision Diagram
 
@@ -55,11 +72,11 @@ The first step to use this feature is to assign the objective function, for whic
 
 #### Get the Time of the Algoritms
 
-If it's want to get the time taken by the algorithms for creating the diagram and its reduction, you need to use the *get_dd_builder_time()* and *get_reduce_constructor_time()* methods of the **DD** class. On the other hand, to obtain the objective function time, you should use *get_time()* from the **ObjectiveFunction** class.
+If it's want to get the time taken by the algorithms for creating the diagram or another of its forms, you need to use the *get_dd_builder_time()* or *get_zzz_constructor_time()* methods of the **DD** class, where zzz represent the type of graph that its wnated, for example relax, restricted or reduce. On the other hand, to obtain the objective function time, you should use *get_time()* from the **ObjectiveFunction** class.
 
 ## Examples
 
-For a more comprehensive understanding of these classes, it is recommended to thoroughly review the examples available in the **"/Examples/"** folder within the code, and execute **Knapsack/KnapsackMain** *or* **IndependentSet/IndependentSetMain***.* These examples are generic and open for testing different values. In light of the above, the examples will be explained below.
+For a more comprehensive understanding of these classes, it is recommended to thoroughly review the examples available in the **"/Examples/"** folder within the code, and execute **Knapsack/KnapsackMain** *or* **IndependentSet/IndependentSetMain.** These examples are generic and open for testing different values. In light of the above, the examples will be explained below.
 
 #### Knapsack
 

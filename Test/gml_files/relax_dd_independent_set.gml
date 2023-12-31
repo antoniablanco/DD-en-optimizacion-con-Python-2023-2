@@ -3,14 +3,14 @@ graph [
 	hierarchic 1
  node [
 	 id 0
-	 label "0             [0]"
+	 label "0             [1, 2, 3, 4, 5]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"0             [0]"
+	 text	"0             [1, 2, 3, 4, 5]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -19,14 +19,14 @@ graph [
 ]
  node [
 	 id 1
-	 label "1             [0]"
+	 label "1             [2, 3, 4, 5]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"1             [0]"
+	 text	"1             [2, 3, 4, 5]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -35,14 +35,14 @@ graph [
 ]
  node [
 	 id 2
-	 label "2             [3]"
+	 label "2             [4, 5]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"2             [3]"
+	 text	"2             [4, 5]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -51,14 +51,14 @@ graph [
 ]
  node [
 	 id 3
-	 label "3             [0]"
+	 label "3             [3, 4, 5]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"3             [0]"
+	 text	"3             [3, 4, 5]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -67,14 +67,14 @@ graph [
 ]
  node [
 	 id 4
-	 label "4             [3]"
+	 label "4             [4, 5]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"4             [3]"
+	 text	"4             [4, 5]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -83,14 +83,14 @@ graph [
 ]
  node [
 	 id 5
-	 label "5             [0]"
+	 label "5             [4, 5]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"5             [0]"
+	 text	"5             [4, 5]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -99,14 +99,14 @@ graph [
 ]
  node [
 	 id 6
-	 label "6             [4]"
+	 label "6             [5]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"6             [4]"
+	 text	"6             [5]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -115,14 +115,14 @@ graph [
 ]
  node [
 	 id 7
-	 label "7             [3]"
+	 label "7             [5]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"7             [3]"
+	 text	"7             [5]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -131,14 +131,30 @@ graph [
 ]
  node [
 	 id 8
-	 label "8             [0]"
+	 label "8             []"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"8             [0]"
+	 text	"8             []"
+	 fontSize	12
+	 fontName	"Dialog"
+	 model	"sides"
+	 anchor	"e"
+	 borderDistance	-50.0
+]
+ node [
+	 id 9
+	 label "9             []"
+ 	graphics [
+	 type "ellipse"
+	 hasFill 0
+	 w 90.0   h 110.0
+	 outline "#000000" ]
+] 	LabelGraphics [
+	 text	"9             []"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -168,7 +184,7 @@ edge [
 
 edge [
 	source 1
-	target 4
+	target 3
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 
 ]]
@@ -196,14 +212,14 @@ edge [
 
 edge [
 	source 4
-	target 7
+	target 5
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
 ]]
 
 edge [
 	source 5
-	target 8
+	target 7
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
 ]]
@@ -217,14 +233,28 @@ edge [
 
 edge [
 	source 6
-	target 8
+	target 7
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
 ]]
 
 edge [
 	source 7
-	target 8
+	target 9
+	graphics [
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
+]]
+
+edge [
+	source 7
+	target 9
+	graphics [
+	fill "#000000" 		targetArrow "diamond"	 	 
+]]
+
+edge [
+	source 8
+	target 9
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
 ]]

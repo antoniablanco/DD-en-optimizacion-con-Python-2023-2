@@ -167,6 +167,8 @@ class ReduceDDBuilder():
             arc.out_node = node_to_keep
             if arc not in node_to_keep.out_arcs:
                 node_to_keep.add_out_arc(arc)
+
+                
     
     def _delete_node(self, node_to_remove):
         '''
@@ -182,8 +184,8 @@ class ReduceDDBuilder():
         '''
         Configura la última capa del grafo después de la reducción.
         '''
-        self._update_node_names()
         self._eliminate_edge_from_nodes_that_node_exist(self._graph.structure[-1][0])
+        self._update_node_names()
         self._eliminate_duplicate_edge()
 
     def _update_node_names(self):
@@ -213,14 +215,18 @@ class ReduceDDBuilder():
         '''
         Elimina los arcos duplicados en los nodos.
         '''
+
         for node in self._graph.nodes:
             unique_arcs = set()
-            for i, arc1 in enumerate(node.in_arcs[:-1]):
+
+            for arc1 in node.in_arcs:
                 if arc1 in unique_arcs:
                     continue  
-                for arc2 in node.in_arcs[i+1:]:
-                    if arc1.variable_value == arc2.variable_value and arc1.out_node == arc2.out_node:
+
+                for arc2 in node.in_arcs:
+                    if arc1.variable_value == arc2.variable_value and arc1.out_node == arc2.out_node and arc1 != arc2:
                         node.in_arcs.remove(arc2)
                         arc2.out_node.out_arcs.remove(arc2)
                     else:
                         unique_arcs.add(arc1)  
+        

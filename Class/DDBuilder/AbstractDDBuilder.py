@@ -15,7 +15,7 @@ class AbstractDDBuilder(ABC):
     @timing_decorator(enabled=False)
     def __init__(self, problem):
         '''
-        Constructor de la clase Constructor.
+        Constructor de la clase abstracta.
 
         Parámetros:
         - problem: Objeto tipo problema para el cual se construirá el grafo.
@@ -131,8 +131,8 @@ class AbstractDDBuilder(ABC):
         - variable_id: Índice de la variable para la cual se crean los arcos.
         - node_state: Estado del nuevo nodo.
         '''
-        nodo_existe, same_state_node = self._exist_node_with_same_state(node_state)
-        if nodo_existe:
+        exist_node, same_state_node = self._exist_node_with_same_state(node_state)
+        if exist_node:
             self._create_arc_for_the_new_node(existed_node, same_state_node, variable_value, variable_id)
         else:
             node_created = Node(str(self._node_number), node_state)
@@ -178,7 +178,7 @@ class AbstractDDBuilder(ABC):
         '''
         if should_visualize:
             self._print()
-
+ 
     def _print(self):
         '''
         Imprime el contenido de cada capa del grafo.
@@ -193,8 +193,15 @@ class AbstractDDBuilder(ABC):
     
     @abstractmethod
     def _specific_layer_function(self):
+        '''
+        Función especifica implementada para cada tipo de grafo de decisión. Esta ocurre al final de la creación
+        de cada capa.
+        '''
         pass
 
     @abstractmethod
     def _specific_final_function(self):
+        '''
+        Función especifica implementada para cada tipo de grafo de decisión. Esta ocurre al final de toda la creación.
+        '''
         pass

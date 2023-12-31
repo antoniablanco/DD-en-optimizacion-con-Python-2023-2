@@ -52,11 +52,11 @@ class ProblemIndependentSetTest(unittest.TestCase):
                 isFeasible = (int(variable_value) == 1 and int(variable_id[2:]) in previus_state) or (int(variable_value) == 0)
                 return new_state, isFeasible
             
-            def sort_key(self, state):
-                return len(state)
+            def get_priority_for_discard_node(self, state):
+                return -len(state)
             
-            def sort_key_nodes_to_merge(self, id_node):
-                return int(id_node)
+            def get_priority_for_merge_nodes(self, id_node, state):
+                return -int(id_node)
 
             def merge_operator(self, state_one, state_two):
                 return list(set((state_one + state_two)))
@@ -75,8 +75,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
         self.assertEqual(self.independent_set_instance.variables_domain, variables_domain_test)
 
     def test_is_dd_created(self):
-        dd_independent_instance = DD(self.independent_set_instance, verbose=True)
-        self.assertIsNotNone(dd_independent_instance.graph_DD)
+        self.assertIsNotNone(self.dd_independent_instance.graph_DD)
     
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_verbose_create_dd(self, mock_stdout):
@@ -92,14 +91,12 @@ class ProblemIndependentSetTest(unittest.TestCase):
         self.assertEqual(actual_output.strip(), expected_output.strip())
     
     def test_create_dd_graph_equal(self):
-        dd_independent_instance = DD(self.independent_set_instance, verbose=False)
-        resultado = dd_independent_instance.graph_DD == DDIndependentSet.graph
+        resultado = self.dd_independent_instance.graph_DD == DDIndependentSet.graph
         self.assertTrue(resultado)
 
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_verbose_create_reduce_dd(self, mock_stdout):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_reduce_decision_diagram(verbose=True)
+        self.dd_independent_instance.create_reduce_decision_diagram(verbose=True)
 
         file_path = os.path.join('Test', 'test_prints', 'createReduceDDIndependentSet.txt')
         
@@ -107,20 +104,17 @@ class ProblemIndependentSetTest(unittest.TestCase):
             expected_output = file.read()
 
         actual_output = mock_stdout.getvalue()
-        print(actual_output.strip())
 
         self.assertEqual(actual_output.strip(), expected_output.strip())
     
     def test_create_reduce_dd_graph_equal(self):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_reduce_decision_diagram(verbose=False)
-        resultado = dd_independent_set_instance.graph_DD == DDIndependentSet.graph
+        self.dd_independent_instance.create_reduce_decision_diagram(verbose=False)
+        resultado = self.dd_independent_instance.graph_DD == DDIndependentSet.graph
         self.assertTrue(resultado)
     
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_verbose_create_restricted_dd(self, mock_stdout):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_restricted_decision_diagram(verbose=True, max_width=2)
+        self.dd_independent_instance.create_restricted_decision_diagram(verbose=True, max_width=2)
 
         file_path = os.path.join('Test', 'test_prints', 'createRestrictedDDIndependentSet.txt')
         
@@ -132,16 +126,14 @@ class ProblemIndependentSetTest(unittest.TestCase):
         self.assertEqual(actual_output.strip(), expected_output.strip())
 
     def test_create_restricted_dd_graph_equal(self):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
-        resultado = dd_independent_set_instance.graph_DD == RestrictedDDIndependentSet.graph
+        self.dd_independent_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
+        resultado = self.dd_independent_instance.graph_DD == RestrictedDDIndependentSet.graph
 
         self.assertTrue(resultado)
     
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_verbose_create_relaxed_dd(self, mock_stdout):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_relaxed_decision_diagram(verbose=True, max_width=2)
+        self.dd_independent_instance.create_relaxed_decision_diagram(verbose=True, max_width=2)
 
         file_path = os.path.join('Test', 'test_prints', 'createRelaxedDDIndependentSet.txt')
         
@@ -153,59 +145,49 @@ class ProblemIndependentSetTest(unittest.TestCase):
         self.assertEqual(actual_output.strip(), expected_output.strip())
 
     def test_create_relaxed_dd_graph_equal(self):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_relaxed_decision_diagram(verbose=False, max_width=2)
-        resultado = dd_independent_set_instance.graph_DD == RelaxedDDIndependentSet.graph
+        self.dd_independent_instance.create_relaxed_decision_diagram(verbose=False, max_width=2)
+        resultado = self.dd_independent_instance.graph_DD == RelaxedDDIndependentSet.graph
 
         self.assertTrue(resultado)
     
     def test_compare_two_diferent_ordered_graphs(self):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
-        resultado = dd_independent_set_instance.graph_DD == DiferentOrderedRestrictedDDIndependentSet.graph
+        self.dd_independent_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
+        resultado = self.dd_independent_instance.graph_DD == DiferentOrderedRestrictedDDIndependentSet.graph
 
         self.assertTrue(resultado)
 
     def test_get_dd_graph(self):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        self.assertIsNotNone(dd_independent_set_instance.get_decision_diagram_graph())
+        self.assertIsNotNone(self.dd_independent_instance.get_decision_diagram_graph())
     
     @patch('matplotlib.pyplot.show')
     def test_print_dd_graph(self, mock_show):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
 
         with assertNoRaise():
-            dd_independent_set_instance.print_decision_diagram()
+            self.dd_independent_instance.print_decision_diagram()
             mock_show.assert_called_once()
     
     def test_get_copy(self):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        self.assertIsNot(dd_independent_set_instance.graph_DD, dd_independent_set_instance.get_decision_diagram_graph_copy)
+        self.assertIsNot(self.dd_independent_instance.graph_DD, self.dd_independent_instance.get_decision_diagram_graph_copy)
 
     def test_get_DDBuilder_time(self):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        self.assertTrue(dd_independent_set_instance.dd_builder_time > 0)
+        self.assertTrue(self.dd_independent_instance.dd_builder_time > 0)
     
     def test_get_ReduceDDBuilder_time(self):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_reduce_decision_diagram(verbose=False)
-        self.assertTrue(dd_independent_set_instance.reduce_dd_builder_time > 0)
+        self.dd_independent_instance.create_reduce_decision_diagram(verbose=False)
+        self.assertTrue(self.dd_independent_instance.reduce_dd_builder_time > 0)
     
     def test_get_RestrictedDDBuilder_time(self):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_restricted_decision_diagram(verbose=False)
-        self.assertTrue(dd_independent_set_instance.restricted_dd_builder_time > 0)
+        self.dd_independent_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
+        self.assertTrue(self.dd_independent_instance.restricted_dd_builder_time > 0)
     
     def test_get_RelaxedDDBuilder_time(self):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_relaxed_decision_diagram(verbose=False)
-        self.assertTrue(dd_independent_set_instance.relaxed_dd_builder_time > 0)
+        self.dd_independent_instance.create_relaxed_decision_diagram(verbose=False, max_width=2)
+        self.assertTrue(self.dd_independent_instance.relaxed_dd_builder_time > 0)
     
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_get_solution_for_DD(self, mock_stdout):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
 
-        objective_function_instance = ObjectiveFunction(dd_independent_set_instance)
+        objective_function_instance = ObjectiveFunction(self.dd_independent_instance)
         linear_objective_instance = LinearObjective([3, 4, 2, 2, 7], 'max')
         objective_function_instance.set_objective(linear_objective_instance)
         objective_function_instance.solve_dd()
@@ -221,10 +203,9 @@ class ProblemIndependentSetTest(unittest.TestCase):
 
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_get_solution_for_reduceDD(self, mock_stdout):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_reduce_decision_diagram(verbose=False)
+        self.dd_independent_instance.create_reduce_decision_diagram(verbose=False)
 
-        objective_function_instance = ObjectiveFunction(dd_independent_set_instance)
+        objective_function_instance = ObjectiveFunction(self.dd_independent_instance)
         linear_objective_instance = LinearObjective([3, 4, 2, 2, 7], 'max')
         objective_function_instance.set_objective(linear_objective_instance)
         objective_function_instance.solve_dd()
@@ -240,10 +221,9 @@ class ProblemIndependentSetTest(unittest.TestCase):
 
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_get_solution_for_restrictedDD(self, mock_stdout):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
+        self.dd_independent_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
 
-        objective_function_instance = ObjectiveFunction(dd_independent_set_instance)
+        objective_function_instance = ObjectiveFunction(self.dd_independent_instance)
         linear_objective_instance = LinearObjective([3, 4, 2, 2, 7], 'max')
         objective_function_instance.set_objective(linear_objective_instance)
         objective_function_instance.solve_dd()
@@ -259,10 +239,9 @@ class ProblemIndependentSetTest(unittest.TestCase):
     
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_get_solution_for_relaxedDD(self, mock_stdout):
-        dd_independent_set_instance = DD(self.independent_set_instance, verbose=False)
-        dd_independent_set_instance.create_relaxed_decision_diagram(verbose=False, max_width=2)
+        self.dd_independent_instance.create_relaxed_decision_diagram(verbose=False, max_width=2)
 
-        objective_function_instance = ObjectiveFunction(dd_independent_set_instance)
+        objective_function_instance = ObjectiveFunction(self.dd_independent_instance)
         linear_objective_instance = LinearObjective([3, 4, 2, 2, 7], 'max')
         objective_function_instance.set_objective(linear_objective_instance)
         objective_function_instance.solve_dd()
@@ -274,6 +253,77 @@ class ProblemIndependentSetTest(unittest.TestCase):
 
         actual_output = mock_stdout.getvalue()
 
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    def test_compare_gml_exact_dd_graph(self):
+        self.dd_independent_instance.export_graph_file('test')
+
+        expected_file_path = os.path.join('Test', 'gml_files', 'exact_dd_independent_set.gml')
+        actual_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'test.gml'))
+
+        self.assertTrue(os.path.exists(actual_file_path))
+        self.assertTrue(os.path.exists(expected_file_path))
+
+        with open(expected_file_path, "r") as file:
+            expected_output = file.read()
+        
+        with open(actual_file_path, "r") as file:
+            actual_output = file.read()
+        
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    def test_compare_gml_reduce_dd_graph(self):
+        self.dd_independent_instance.create_reduce_decision_diagram(verbose=False)
+        self.dd_independent_instance.export_graph_file('test')
+
+        expected_file_path = os.path.join('Test', 'gml_files', 'reduce_dd_independent_set.gml')
+        actual_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'test.gml'))
+
+        self.assertTrue(os.path.exists(actual_file_path))
+        self.assertTrue(os.path.exists(expected_file_path))
+
+        with open(expected_file_path, "r") as file:
+            expected_output = file.read()
+        
+        with open(actual_file_path, "r") as file:
+            actual_output = file.read()
+        
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    def test_compare_gml_restricted_dd_graph(self):
+        self.dd_independent_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
+        self.dd_independent_instance.export_graph_file('test')
+
+        expected_file_path = os.path.join('Test', 'gml_files', 'restricted_dd_independent_set.gml')
+        actual_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'test.gml'))
+
+        self.assertTrue(os.path.exists(actual_file_path))
+        self.assertTrue(os.path.exists(expected_file_path))
+
+        with open(expected_file_path, "r") as file:
+            expected_output = file.read()
+        
+        with open(actual_file_path, "r") as file:
+            actual_output = file.read()
+        
+        self.assertEqual(actual_output.strip(), expected_output.strip())
+    
+    def test_compare_gml_relax_dd_graph(self):
+        self.dd_independent_instance.create_relaxed_decision_diagram(verbose=False, max_width=2)
+        self.dd_independent_instance.export_graph_file('test')
+
+        expected_file_path = os.path.join('Test', 'gml_files', 'relax_dd_independent_set.gml')
+        actual_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'test.gml'))
+
+        self.assertTrue(os.path.exists(actual_file_path))
+        self.assertTrue(os.path.exists(expected_file_path))
+
+        with open(expected_file_path, "r") as file:
+            expected_output = file.read()
+        
+        with open(actual_file_path, "r") as file:
+            actual_output = file.read()
+        
         self.assertEqual(actual_output.strip(), expected_output.strip())
     
 if __name__ == '__main__':

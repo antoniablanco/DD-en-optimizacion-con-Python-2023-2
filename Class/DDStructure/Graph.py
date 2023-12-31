@@ -49,6 +49,10 @@ class Graph():
         return devolver
     
     def _compare_two_nodes(self, node1, node2):
+        '''
+        Verifica entre dos nodos, que sus arcos de entrada y salida sean iguales. Es decir que 
+        los arcos posean el mismo valor y provengan/terminen en un nodo con igual estado.
+        '''
         devolver_in_arcs = True
         for arc1 in node1.in_arcs:
             there_is_equal_arc = False
@@ -93,25 +97,31 @@ class Graph():
         '''Crea una nueva capa en el grafo.'''
         self.structure.append([])
         self.actual_layer += 1
-
-    def remove_node(self, node):
+    
+    def eliminate_node_and_his_in_arcs(self, node):
         '''
-        Elimina un nodo del grafo.
+        Elimina un nodo y sus arcos entrantes.
 
         Parámetros:
         - node(Node): Objeto nodo que se eliminará.
         '''
-        if node in self.nodes:
-            self.nodes.remove(node)
-            self._remove_node_from_layer(node)
-
-    def eliminate_node_and_his_in_arcs(self, node):
         for arc in node.in_arcs.copy():
             arc.out_node.out_arcs.remove(arc)
             node.in_arcs.remove(arc)
             del arc
         self.remove_node(node)
         del node
+
+    def remove_node(self, node):
+        '''
+        Elimina un nodo del grafo.
+
+        Parámetros:
+        - node(Node): Objeto nodo que se eliminará del grafo.
+        '''
+        if node in self.nodes:
+            self.nodes.remove(node)
+            self._remove_node_from_layer(node)
 
     def _remove_node_from_layer(self, node):
         '''
@@ -124,41 +134,4 @@ class Graph():
             if node in layer:
                 layer.remove(node)
 
-    def get_index_node(self, search_node):
-        '''
-        Retorna el índice de un nodo específico en el grafo.
-
-        Parámetros:
-        - search_node(Node): Objeto nodo que se busca.
-
-        Retorna:
-        tuple: Una tupla que contiene el índice del nodo y el índice de la capa.
-        '''
-        index_node = None
-        index_layer = None
-
-        for layer_index, layer in enumerate(self.structure):
-            index_in_layer = self._find_node_in_layer(layer, search_node)
-            if index_in_layer is not None:
-                index_node = index_in_layer
-                index_layer = layer_index
-                break
-
-        return (index_node, index_layer)
-
-    def _find_node_in_layer(self, layer, search_node):
-        '''
-        Encuentra un nodo en una capa específica.
-
-        Parámetros:
-        - layer(int): La capa en la que se busca el nodo.
-        - search_node(Node): El nodo que se busca en la capa.
-
-        Retorna:
-        int: El índice del nodo en la capa o None si no se encuentra.
-        '''
-        for node_index, node in enumerate(layer):
-            if node is search_node:
-                return node_index
-
-        return None
+    
