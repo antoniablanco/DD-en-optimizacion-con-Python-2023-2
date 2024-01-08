@@ -71,7 +71,7 @@ class ReduceDDBuilder():
         - layer: Lista de nodos en la capa actual.
         '''
         for i, node_one in enumerate(layer):
-            nodes = layer[i+1:]  
+            nodes = layer[i+1:]
 
             while len(nodes) > 0:
                 node_two = nodes.pop(0)
@@ -89,10 +89,9 @@ class ReduceDDBuilder():
         Retorna:
         bool: True si los nodos deben fusionarse, False en caso contrario.
         '''
-        NodesOfPathNodeOne = self._get_node_of_every_type_of_path(node_one)
-        NodesOfPathNodeTwo = self._get_node_of_every_type_of_path(node_two)
-        if NodesOfPathNodeOne == NodesOfPathNodeTwo:
-            return True
+        PathsOfNodeOne = self._get_node_of_every_type_of_path(node_one)
+        PathsOfNodeTwo = self._get_node_of_every_type_of_path(node_two)
+        return PathsOfNodeOne == PathsOfNodeTwo
 
     def _get_node_of_every_type_of_path(self, node):
         '''
@@ -104,9 +103,9 @@ class ReduceDDBuilder():
         Retorna:
         dict: Un diccionario que contiene nodos del camino como claves y valores de las variables como valores.
         '''
-        NodesOfPath = {}
+        NodesOfPath = []
         for arc in node.out_arcs:
-            NodesOfPath[arc.in_node] = arc.variable_value
+            NodesOfPath.append(str(arc.in_node)+"_"+str(arc.variable_value))
         return NodesOfPath
 
     def _merge_nodes(self, node_one, node_two):
@@ -117,11 +116,11 @@ class ReduceDDBuilder():
         - node_one: Primer nodo a fusionar.
         - node_two: Segundo nodo a fusionar.
         '''
-        nodes = list(self._get_order_of_changin_nodes(node_one, node_two))
+        node_to_remove, node_to_keep = list(self._get_order_of_changin_nodes(node_one, node_two))
         
-        self._redirect_in_arcs(nodes[0], nodes[1])
-        self._redirect_out_arcs(nodes[0], nodes[1])
-        self._delete_node(nodes[0])
+        self._redirect_in_arcs(node_to_remove, node_to_keep)
+        self._delete_out_arcs(node_to_remove)
+        self._delete_node(node_to_remove)
     
     def _get_order_of_changin_nodes(self, node_one, node_two):
         '''
@@ -138,9 +137,9 @@ class ReduceDDBuilder():
         current_layer = self._graph.structure[self._layerWorking]
         if node_one in current_layer and node_two in current_layer:
             if current_layer.index(node_one) > current_layer.index(node_two):
-                return (node_one, node_two)  
+                return node_one, node_two 
             else:
-                return (node_two, node_one)
+                return node_two, node_one
         else:
             print("Error: No se encuentran los nodos en la capa actual")
     
@@ -155,20 +154,18 @@ class ReduceDDBuilder():
             arc.in_node = node_to_keep
             if arc not in node_to_keep.in_arcs:
                 node_to_keep.add_in_arc(arc)
-
-    def _redirect_out_arcs(self, node_to_remove, node_to_keep):
+    
+    def _delete_out_arcs(self, node_to_remove):
         '''
-        Redirige los arcos de salida de un nodo al otro nodo.
+        Elimina los arcos de salida de un nodo.
 
         Parámetros:
         - changin_nodes_ordered: Lista que contiene nodos en el orden deseado.
         '''
         for arc in node_to_remove.out_arcs:
-            arc.out_node = node_to_keep
-            if arc not in node_to_keep.out_arcs:
-                node_to_keep.add_out_arc(arc)
-
-                
+            node_to_remove.out_arcs.remove(arc)
+            arc.in_node.in_arcs.remove(arc)
+            del arc                
     
     def _delete_node(self, node_to_remove):
         '''
@@ -184,9 +181,7 @@ class ReduceDDBuilder():
         '''
         Configura la última capa del grafo después de la reducción.
         '''
-        self._eliminate_edge_from_nodes_that_node_exist(self._graph.structure[-1][0])
         self._update_node_names()
-        self._eliminate_duplicate_edge()
 
     def _update_node_names(self):
         '''
@@ -200,33 +195,5 @@ class ReduceDDBuilder():
                     node.id_node = str(valor_actual)
                     valor_actual += 1
     
-    def _eliminate_edge_from_nodes_that_node_exist(self, node):
-        '''
-        Elimina los arcos de entrada de un nodo que no existen en el grafo.
 
-        Parámetros:
-        - node: Nodo del cual se eliminan los arcos de entrada.
-        '''
-        for arc in node.in_arcs:
-            if arc.out_node not in self._graph.nodes:
-                node.in_arcs.remove(arc)
-
-    def _eliminate_duplicate_edge(self):
-        '''
-        Elimina los arcos duplicados en los nodos.
-        '''
-
-        for node in self._graph.nodes:
-            unique_arcs = set()
-
-            for arc1 in node.in_arcs:
-                if arc1 in unique_arcs:
-                    continue  
-
-                for arc2 in node.in_arcs:
-                    if arc1.variable_value == arc2.variable_value and arc1.out_node == arc2.out_node and arc1 != arc2:
-                        node.in_arcs.remove(arc2)
-                        arc2.out_node.out_arcs.remove(arc2)
-                    else:
-                        unique_arcs.add(arc1)  
         

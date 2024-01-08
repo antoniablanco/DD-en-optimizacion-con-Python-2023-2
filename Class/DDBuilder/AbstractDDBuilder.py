@@ -150,6 +150,7 @@ class AbstractDDBuilder(ABC):
         Retorna:
         tuple: (bool, Node) - True si existe un nodo con el mismo estado, False y None en caso contrario.
         '''
+        
         for node in self.graph.structure[-1]:
             if self._problem.equals(node.state, node_state):
                 return True, node
