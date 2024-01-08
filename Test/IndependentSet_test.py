@@ -53,7 +53,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
                 return new_state, isFeasible
             
             def get_priority_for_discard_node(self, state):
-                return -len(state)
+                return len(state)
             
             def get_priority_for_merge_nodes(self, id_node, state):
                 return -int(id_node)

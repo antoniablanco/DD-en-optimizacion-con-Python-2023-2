@@ -47,10 +47,10 @@ class SetCoveringProblem(AbstractProblem):
         return new_state, isFeasible
     
     def get_priority_for_discard_node(self, state):
-        pass
+        return len(state)
     
     def get_priority_for_merge_nodes(self, id_node, state):
-        pass
+        return len(state)
 
     def merge_operator(self, state_one, state_two):
-        pass
+        return list(set(state_one) & set(state_two))

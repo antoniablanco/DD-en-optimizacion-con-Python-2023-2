@@ -49,7 +49,7 @@ class ProblemKnapsackTest(unittest.TestCase):
                 total = 0
                 for i in range(len(state)):
                     total += state[i]
-                return -total
+                return total
             
             def get_priority_for_merge_nodes(self, id_node, state):
                 return -int(id_node)

@@ -33,7 +33,7 @@ dd_instance = DD(problem_instance, verbose=False)
 
 # Construcción del los diagramas de decisión
 #dd_instance.print_decision_diagram()
-#dd_instance.create_reduce_decision_diagram(verbose=False)
+dd_instance.create_reduce_decision_diagram(verbose=True)
 #dd_instance.print_decision_diagram()
 #dd_instance.create_restricted_decision_diagram(verbose=False, max_width=3)
 #dd_instance.print_decision_diagram()

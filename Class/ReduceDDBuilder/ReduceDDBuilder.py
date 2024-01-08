@@ -89,7 +89,7 @@ class ReduceDDBuilder():
         Retorna:
         bool: True si los nodos deben fusionarse, False en caso contrario.
         '''
-        PathsOfNodeOne= self._get_node_of_every_type_of_path(node_one)
+        PathsOfNodeOne = self._get_node_of_every_type_of_path(node_one)
         PathsOfNodeTwo = self._get_node_of_every_type_of_path(node_two)
         return PathsOfNodeOne == PathsOfNodeTwo
 
@@ -103,10 +103,9 @@ class ReduceDDBuilder():
         Retorna:
         dict: Un diccionario que contiene nodos del camino como claves y valores de las variables como valores.
         '''
-        
-        NodesOfPath = {}
+        NodesOfPath = []
         for arc in node.out_arcs:
-            NodesOfPath[arc.in_node] = arc.variable_value
+            NodesOfPath.append(str(arc.in_node)+"_"+str(arc.variable_value))
         return NodesOfPath
 
     def _merge_nodes(self, node_one, node_two):
