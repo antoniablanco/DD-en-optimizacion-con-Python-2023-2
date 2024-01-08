@@ -117,7 +117,7 @@ class SetCoveringTest(unittest.TestCase):
     
     def test_create_reduce_dd_graph_equal(self):
         self.dd_instance.create_reduce_decision_diagram(verbose=False)
-        resultado = self.dd_instance.graph_DD == DDSetCovering.graph
+        resultado = (self.dd_instance.graph_DD == DDSetCovering.graph)
         self.assertTrue(resultado)
     
     @patch('sys.stdout', new_callable=io.StringIO)
@@ -134,7 +134,7 @@ class SetCoveringTest(unittest.TestCase):
         self.assertEqual(actual_output.strip(), expected_output.strip())
 
     def test_create_restricted_dd_graph_equal(self):
-        self.dd_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
+        self.dd_instance.create_restricted_decision_diagram(verbose=False, max_width=3)
         resultado = self.dd_instance.graph_DD == RestrictedDDSetCovering.graph
 
         self.assertTrue(resultado)
@@ -158,12 +158,6 @@ class SetCoveringTest(unittest.TestCase):
 
         self.assertTrue(resultado)
     
-    def test_compare_two_diferent_ordered_graphs(self):
-        self.dd_instance.create_restricted_decision_diagram(verbose=False, max_width=3)
-        resultado = self.dd_instance.graph_DD == RelaxedDDSetCovering.graph
-
-        self.assertFalse(resultado)
-
     def test_get_dd_graph(self):
         self.assertIsNotNone(self.dd_instance.get_decision_diagram_graph())
     

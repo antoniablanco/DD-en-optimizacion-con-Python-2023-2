@@ -53,6 +53,7 @@ class Graph():
         Verifica entre dos nodos, que sus arcos de entrada y salida sean iguales. Es decir que 
         los arcos posean el mismo valor y provengan/terminen en un nodo con igual estado.
         '''
+
         devolver_in_arcs = True
         for arc1 in node1.in_arcs:
             there_is_equal_arc = False
@@ -60,7 +61,8 @@ class Graph():
                 if arc1.variable_value == arc2.variable_value and arc1.out_node.state == arc2.out_node.state:
                     there_is_equal_arc = True
             devolver_in_arcs = devolver_in_arcs and there_is_equal_arc
-        
+
+
         devolver_out_arcs = True
         for arc1 in node1.out_arcs:
             there_is_equal_arc = False
@@ -70,6 +72,7 @@ class Graph():
             devolver_out_arcs = devolver_out_arcs and there_is_equal_arc
 
         return devolver_in_arcs and devolver_out_arcs
+        
     
     def add_node(self, node):
         '''
