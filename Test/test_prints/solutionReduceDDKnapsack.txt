@@ -1,6 +1,0 @@
-
-Iniciando la reducción del diagrama de decision ...
-Reduccion del diagrama de decision terminada
-
-Best Route: (0, 0) -> ('1', 0) -> ('3', 0) -> ('6', 18) -> ('7', 18)
-Weight: 18
