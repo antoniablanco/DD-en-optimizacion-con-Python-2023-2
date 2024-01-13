@@ -1,4 +1,5 @@
 from Class.ObjectiveFunction.LinearObjective import LinearObjective
+from Class.ObjectiveFunction.LinearObjectiveDP import LinearObjectiveDP
 from Class.ObjectiveFunction.SchedullingObjective import SchedullingObjective
 
 import time
@@ -45,7 +46,7 @@ class ObjectiveFunction():
 
         self._check_if_objective_is_set()
         start_time = time.time()
-        self.minmax.resolve_graph(self.graph_DD.structure[0][0])
+        self.minmax.resolve_graph()
         end_time = time.time() 
         self.time = end_time - start_time
     

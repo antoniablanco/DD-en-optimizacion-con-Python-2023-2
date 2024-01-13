@@ -53,14 +53,14 @@ class LinearObjective:
     def _assing_terminal_node_id(self, terminal_node: Node) -> None:
         self._terminal_node = terminal_node
 
-    def resolve_graph(self, root_node: Node) -> None:
+    def resolve_graph(self) -> None:
         '''
         Implementa el algoritmo de Dijkstra desde el nodo raíz.
 
         Parámetros:
         - root_node (Node): Nodo raíz desde el cual se inicia el algoritmo.
         '''
-        next_node = root_node
+        next_node = self._graph.structure[0][0]
         next_node.update_weight(0)
         self._unvisited_nodes.append(next_node)
         while next_node.id_node != self._terminal_node.id_node:

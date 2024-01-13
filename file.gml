@@ -51,14 +51,14 @@ graph [
 ]
  node [
 	 id 3
-	 label "3             [2]"
+	 label "3             [1, 2, 3]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"3             [2]"
+	 text	"3             [1, 2, 3]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -67,14 +67,14 @@ graph [
 ]
  node [
 	 id 4
-	 label "4             [3]"
+	 label "4             [2]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"4             [3]"
+	 text	"4             [2]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -83,14 +83,14 @@ graph [
 ]
  node [
 	 id 5
-	 label "5             []"
+	 label "5             [3]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"5             []"
+	 text	"5             [3]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -99,14 +99,14 @@ graph [
 ]
  node [
 	 id 6
-	 label "6             [2]"
+	 label "6             []"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"6             [2]"
+	 text	"6             []"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -115,14 +115,14 @@ graph [
 ]
  node [
 	 id 7
-	 label "7             [3]"
+	 label "7             [2, 3]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"7             [3]"
+	 text	"7             [2, 3]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -131,14 +131,14 @@ graph [
 ]
  node [
 	 id 8
-	 label "8             []"
+	 label "8             [2]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"8             []"
+	 text	"8             [2]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -147,14 +147,14 @@ graph [
 ]
  node [
 	 id 9
-	 label "9             [2]"
+	 label "9             [3]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"9             [2]"
+	 text	"9             [3]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -179,14 +179,14 @@ graph [
 ]
  node [
 	 id 11
-	 label "11             [3]"
+	 label "11             [2, 3]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"11             [3]"
+	 text	"11             [2, 3]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -211,14 +211,14 @@ graph [
 ]
  node [
 	 id 13
-	 label "13             [3]"
+	 label "13             [2]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"13             [3]"
+	 text	"13             [2]"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -227,14 +227,62 @@ graph [
 ]
  node [
 	 id 14
-	 label "14             []"
+	 label "14             [3]"
  	graphics [
 	 type "ellipse"
 	 hasFill 0
 	 w 90.0   h 110.0
 	 outline "#000000" ]
 ] 	LabelGraphics [
-	 text	"14             []"
+	 text	"14             [3]"
+	 fontSize	12
+	 fontName	"Dialog"
+	 model	"sides"
+	 anchor	"e"
+	 borderDistance	-50.0
+]
+ node [
+	 id 15
+	 label "15             [3]"
+ 	graphics [
+	 type "ellipse"
+	 hasFill 0
+	 w 90.0   h 110.0
+	 outline "#000000" ]
+] 	LabelGraphics [
+	 text	"15             [3]"
+	 fontSize	12
+	 fontName	"Dialog"
+	 model	"sides"
+	 anchor	"e"
+	 borderDistance	-50.0
+]
+ node [
+	 id 16
+	 label "16             []"
+ 	graphics [
+	 type "ellipse"
+	 hasFill 0
+	 w 90.0   h 110.0
+	 outline "#000000" ]
+] 	LabelGraphics [
+	 text	"16             []"
+	 fontSize	12
+	 fontName	"Dialog"
+	 model	"sides"
+	 anchor	"e"
+	 borderDistance	-50.0
+]
+ node [
+	 id 17
+	 label "17             []"
+ 	graphics [
+	 type "ellipse"
+	 hasFill 0
+	 w 90.0   h 110.0
+	 outline "#000000" ]
+] 	LabelGraphics [
+	 text	"17             []"
 	 fontSize	12
 	 fontName	"Dialog"
 	 model	"sides"
@@ -259,68 +307,68 @@ edge [
 	source 1
 	target 3
 	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
 ]]
 
 edge [
-	source 2
+	source 1
 	target 4
 	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
+	fill "#000000" 		targetArrow "diamond"	 	 
 ]]
 
 edge [
 	source 2
 	target 5
 	graphics [
-	fill "#000000" 		targetArrow "diamond"	 	 
-]]
-
-edge [
-	source 3
-	target 6
-	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
 ]]
 
 edge [
-	source 3
+	source 2
 	target 6
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 
 ]]
 
 edge [
-	source 4
-	target 7
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
-]]
-
-edge [
-	source 4
+	source 3
 	target 7
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 
 ]]
 
 edge [
-	source 5
+	source 4
 	target 8
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
 ]]
 
 edge [
-	source 5
+	source 4
 	target 8
+	graphics [
+	fill "#000000" 		targetArrow "diamond"	 	 
+]]
+
+edge [
+	source 5
+	target 9
+	graphics [
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
+]]
+
+edge [
+	source 5
+	target 9
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 
 ]]
 
 edge [
 	source 6
-	target 9
+	target 10
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
 ]]
@@ -341,23 +389,30 @@ edge [
 
 edge [
 	source 7
-	target 10
+	target 12
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 
 ]]
 
 edge [
 	source 8
-	target 10
+	target 13
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
 ]]
 
 edge [
 	source 8
-	target 10
+	target 12
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 
+]]
+
+edge [
+	source 9
+	target 14
+	graphics [
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
 ]]
 
 edge [
@@ -383,35 +438,63 @@ edge [
 
 edge [
 	source 11
-	target 13
-	graphics [
-	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
-]]
-
-edge [
-	source 11
-	target 13
+	target 15
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 
 ]]
 
 edge [
 	source 12
-	target 14
+	target 16
 	graphics [
 	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
 ]]
 
 edge [
 	source 12
-	target 14
+	target 16
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 
 ]]
 
 edge [
 	source 13
-	target 14
+	target 16
+	graphics [
+	fill "#000000" 		targetArrow "diamond"	 	 
+]]
+
+edge [
+	source 14
+	target 15
+	graphics [
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
+]]
+
+edge [
+	source 14
+	target 15
+	graphics [
+	fill "#000000" 		targetArrow "diamond"	 	 
+]]
+
+edge [
+	source 15
+	target 17
+	graphics [
+	fill "#000000" 		targetArrow "diamond"	 	 
+]]
+
+edge [
+	source 16
+	target 17
+	graphics [
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
+]]
+
+edge [
+	source 16
+	target 17
 	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 
 ]]
