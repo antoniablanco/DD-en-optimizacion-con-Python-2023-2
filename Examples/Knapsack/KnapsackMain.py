@@ -9,7 +9,7 @@ root_dir = os.path.abspath(os.path.join(parent_dir, os.pardir))
 sys.path.append(root_dir)
 
 from Class.DD import DD 
-from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjective, LinearObjectiveDP
+from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjectiveDP
 from KnapsackProblem import ProblemKnapsack
 
 
@@ -44,8 +44,8 @@ dd_instance = DD(problem_instance, verbose=False)
 
 # Resolución del diagrama
 objective_function_instance = ObjectiveFunction(dd_instance)
-#linear_objective_instance = LinearObjective([-5, 1, 18, 17], 'max')
 linear_objective_instance = LinearObjectiveDP([-5, 1, 18, 17], 'max')
 objective_function_instance.set_objective(linear_objective_instance)
-print(objective_function_instance.solve_dd())
+objective_function_instance.solve_dd()
+print(*objective_function_instance.get_the_solution())
 

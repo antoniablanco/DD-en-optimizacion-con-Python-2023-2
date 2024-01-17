@@ -43,7 +43,6 @@ dd_instance.export_graph_file("file")
 
 # Resolución del diagrama
 objective_function_instance = ObjectiveFunction(dd_instance)
-#linear_objective_instance = LinearObjective([2, 1, 4, 3, 4, 3], 'min')
 linear_objective_instance = LinearObjectiveDP([2, 1, 4, 3, 4, 3], 'min')
 objective_function_instance.set_objective(linear_objective_instance)
 objective_function_instance.solve_dd()

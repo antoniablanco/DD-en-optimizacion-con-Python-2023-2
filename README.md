@@ -68,7 +68,7 @@ To obtain a copy of the DD instance without it being a pointer to the original o
 
 #### Solve the Decision Diagram
 
-The first step to use this feature is to create an instance of the ObjectiveFunction, providing the dd_instance instance created earlier. Subsequently, it is necessary to create an instance of the algorithm to be used for solving the graph, which should receive a list with the weights of each variable in the objective function, and a string representing whether it is to maximize or minimize. The string values 'min' or 'max' can be used. For example, LinearObjectiveDP or SchedulingObjective. Finally, you should use the *SetObjectiveFunction()* method of the **ObjectiveFunction** class, providing the instance of the created algorithm. Subsequently, you can obtain the solution by using *solve_dd()* of the same class.
+The first step to use this feature is to create an instance of the ObjectiveFunction, providing the dd_instance instance created earlier. Subsequently, it is necessary to create an instance of the algorithm to be used for solving the graph, which should receive a list with the weights of each variable in the objective function, and a string representing whether it is to maximize or minimize. The string values 'min' or 'max' can be used. For example, LinearObjectiveDP or SchedulingObjective. Finally, you should use the *SetObjectiveFunction()* method of the **ObjectiveFunction** class, providing the instance of the created algorithm. Subsequently, you can obtain the solution by using *solve_dd()* of the same class. Or if you already solve the graph and you online one to recover this information, can use *get_the_solution().*
 
 #### Get the Time of the Algoritms
 

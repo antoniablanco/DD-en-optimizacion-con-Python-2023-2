@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import patch
 from Class.Problems.AbstractProblemClass import AbstractProblem
 from Class.DD import DD
-from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjective, LinearObjectiveDP
+from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjectiveDP
 from contextlib import contextmanager
 import dd_controlled_generators.DDKnapsack as DDKnapsack
 import dd_controlled_generators.ReduceDDKnapsack as ReduceDDKnapsack
@@ -184,7 +184,7 @@ class ProblemKnapsackTest(unittest.TestCase):
         value, path = self.get_value_path_solution()
         
         expected_value = 18
-        expected_path = 'arc_0_1(0)->arc_1_3(0)->arc_3_7(1)->arc_7_10(0)'
+        expected_path = ' arc_0_1(0)-> arc_1_3(0)-> arc_3_7(1)-> arc_7_10(0)'
 
         self.assertEqual(value, expected_value)
         self.assertEqual(path, expected_path)
@@ -195,11 +195,10 @@ class ProblemKnapsackTest(unittest.TestCase):
         value, path = self.get_value_path_solution()
         
         expected_value = 18
-        expected_path = 'arc_0_1(0)->arc_1_3(0)->arc_3_6(1)->arc_6_7(0)'
+        expected_path = ' arc_0_1(0)-> arc_1_3(0)-> arc_3_6(1)-> arc_6_7(0)'
 
         self.assertEqual(value, expected_value)
         self.assertEqual(path, expected_path)
-
 
     def test_get_solution_for_restrictedDD(self):
         self.dd_knapsack_instance.create_restricted_decision_diagram(verbose=False, max_width=3)
@@ -207,7 +206,7 @@ class ProblemKnapsackTest(unittest.TestCase):
         value, path = self.get_value_path_solution()
         
         expected_value = 18
-        expected_path = 'arc_0_1(0)->arc_1_3(0)->arc_3_6(1)->arc_6_8(0)'
+        expected_path = ' arc_0_1(0)-> arc_1_3(0)-> arc_3_6(1)-> arc_6_8(0)'
 
         self.assertEqual(value, expected_value)
         self.assertEqual(path, expected_path)
@@ -218,7 +217,7 @@ class ProblemKnapsackTest(unittest.TestCase):
         value, path = self.get_value_path_solution()
         
         expected_value = 18
-        expected_path = 'arc_0_1(0)->arc_1_3(0)->arc_3_6(1)->arc_6_9(0)'
+        expected_path = ' arc_0_1(0)-> arc_1_3(0)-> arc_3_6(1)-> arc_6_9(0)'
 
         self.assertEqual(value, expected_value)
         self.assertEqual(path, expected_path)

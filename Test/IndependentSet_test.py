@@ -189,7 +189,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
         value, path = self.get_value_path_solution()
         
         expected_value = 11
-        expected_path = 'arc_0_1(0)->arc_1_4(1)->arc_4_7(0)->arc_7_8(0)->arc_8_10(1)'
+        expected_path = ' arc_0_1(0)-> arc_1_4(1)-> arc_4_7(0)-> arc_7_8(0)-> arc_8_10(1)'
 
         self.assertEqual(value, expected_value)
         self.assertEqual(path, expected_path)
@@ -200,7 +200,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
         value, path = self.get_value_path_solution()
         
         expected_value = 11
-        expected_path = 'arc_0_1(0)->arc_1_4(1)->arc_4_7(0)->arc_7_8(0)->arc_8_10(1)'
+        expected_path = ' arc_0_1(0)-> arc_1_4(1)-> arc_4_7(0)-> arc_7_8(0)-> arc_8_10(1)'
 
         self.assertEqual(value, expected_value)
         self.assertEqual(path, expected_path)
@@ -211,7 +211,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
         value, path = self.get_value_path_solution()
         
         expected_value = 11
-        expected_path = 'arc_0_1(0)->arc_1_3(1)->arc_3_5(0)->arc_5_7(0)->arc_7_9(1)'
+        expected_path = ' arc_0_1(0)-> arc_1_3(1)-> arc_3_5(0)-> arc_5_7(0)-> arc_7_9(1)'
 
         self.assertEqual(value, expected_value)
         self.assertEqual(path, expected_path)
@@ -222,7 +222,7 @@ class ProblemIndependentSetTest(unittest.TestCase):
         value, path = self.get_value_path_solution()
         
         expected_value = 13
-        expected_path = 'arc_0_1(0)->arc_1_3(1)->arc_3_6(1)->arc_6_7(0)->arc_7_9(1)'
+        expected_path = ' arc_0_1(0)-> arc_1_3(1)-> arc_3_6(1)-> arc_6_7(0)-> arc_7_9(1)'
 
         self.assertEqual(value, expected_value)
         self.assertEqual(path, expected_path)

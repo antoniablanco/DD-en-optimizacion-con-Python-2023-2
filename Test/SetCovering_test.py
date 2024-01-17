@@ -186,12 +186,13 @@ class SetCoveringTest(unittest.TestCase):
         self.dd_instance.create_relaxed_decision_diagram(verbose=False, max_width=2)
         self.assertTrue(self.dd_instance.relaxed_dd_builder_time > 0)
     
-    def test_get_solution_for_DD(self):
+    def test_get_solution_for_DD(self): 
 
         value, path = self.get_value_path_solution()
-        
+        print("value: ", value)
+        print("path: ", path)
         expected_value = 3
-        expected_path = 'arc_0_2(1)->arc_2_6(1)->arc_6_10(0)->arc_10_12(0)->arc_12_16(0)->arc_16_17(0)'
+        expected_path = ' arc_0_2(1)-> arc_2_6(1)-> arc_6_10(0)-> arc_10_12(0)-> arc_12_16(0)-> arc_16_17(0)'
 
         self.assertEqual(value, expected_value)
         self.assertEqual(path, expected_path)
@@ -202,7 +203,7 @@ class SetCoveringTest(unittest.TestCase):
         value, path = self.get_value_path_solution()
         
         expected_value = 3
-        expected_path = 'arc_0_2(1)->arc_2_6(1)->arc_6_10(0)->arc_10_12(0)->arc_12_16(0)->arc_16_17(0)'
+        expected_path = ' arc_0_2(1)-> arc_2_6(1)-> arc_6_10(0)-> arc_10_12(0)-> arc_12_16(0)-> arc_16_17(0)'
 
         self.assertEqual(value, expected_value)
         self.assertEqual(path, expected_path)
@@ -213,7 +214,7 @@ class SetCoveringTest(unittest.TestCase):
         value, path = self.get_value_path_solution()
         
         expected_value = 3
-        expected_path = 'arc_0_2(1)->arc_2_5(1)->arc_5_8(0)->arc_8_10(0)->arc_10_12(0)->arc_12_14(0)'
+        expected_path = ' arc_0_2(1)-> arc_2_5(1)-> arc_5_8(0)-> arc_8_10(0)-> arc_10_12(0)-> arc_12_14(0)'
 
         self.assertEqual(value, expected_value)
         self.assertEqual(path, expected_path)
@@ -224,7 +225,7 @@ class SetCoveringTest(unittest.TestCase):
         value, path = self.get_value_path_solution()
         
         expected_value = 3
-        expected_path = 'arc_0_1(0)->arc_1_3(0)->arc_3_6(0)->arc_6_10(1)->arc_10_12(0)->arc_12_14(0)'
+        expected_path = ' arc_0_1(0)-> arc_1_3(0)-> arc_3_6(0)-> arc_6_10(1)-> arc_10_12(0)-> arc_12_14(0)'
 
         self.assertEqual(value, expected_value)
         self.assertEqual(path, expected_path)

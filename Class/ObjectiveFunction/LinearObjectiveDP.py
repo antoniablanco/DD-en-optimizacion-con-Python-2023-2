@@ -40,33 +40,34 @@ class LinearObjectiveDP:
         '''
 
         self.neutro = "neutro"
-        self.DP = [[self.neutro, ""] for i in range(len(self._graph.nodes))]
+        self.DP = [[self.neutro, "", []] for i in range(len(self._graph.nodes))]
         
         last_layer_number = len(self._graph.structure) - 2
 
-        value, path = self.dp(self._graph.nodes[-1], last_layer_number)
+        value, path, arcs = self.dp(self._graph.nodes[-1], last_layer_number)
         if self._objective == "max":
             value = -value
 
-        print(value, path[2:])
-        return value, path[2:]
+        return value, path[2:], arcs
 
-    def dp(self, node, layer) -> list:
+    def dp(self, node: Node, layer: int) -> list:
         '''
         Funcion de programacion dinamica para resolver el grafo
         '''
         if len(node.in_arcs) == 0:
-            return [0, ""]
+            return [0, "", []]
         
         elif self.DP[int(node.id_node)][0] != self.neutro:
             return self.DP[int(node.id_node)]
         
-        self.DP[int(node.id_node)] = [float("inf"), ""]
+        self.DP[int(node.id_node)] = [float("inf"), "", []]
 
         for arc in node.in_arcs:
             if self.DP[int(node.id_node)][0] > self.dp(arc.out_node, layer - 1)[0] + arc.variable_value * self._weights[layer]:
                 self.DP[int(node.id_node)][0] = self.dp(arc.out_node, layer - 1)[0] + arc.variable_value * self._weights[layer]
-                self.DP[int(node.id_node)][1] = self.dp(arc.out_node, layer - 1)[1] + "->" + str(arc) + "("+str(arc.variable_value)+")"
-
+                self.DP[int(node.id_node)][1] = self.dp(arc.out_node, layer - 1)[1] + "-> " + str(arc) + "("+str(arc.variable_value)+")"
+                self.DP[int(node.id_node)][2] = self.DP[int(arc.out_node.id_node)][2].copy()
+                self.DP[int(node.id_node)][2].append(arc)
+                
         return self.DP[int(node.id_node)]
 
