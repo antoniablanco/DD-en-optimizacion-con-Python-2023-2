@@ -68,11 +68,11 @@ To obtain a copy of the DD instance without it being a pointer to the original o
 
 #### Solve the Decision Diagram
 
-The first step to use this feature is to assign the objective function, for which you should use the *SetObjectiveFunction()* method of the **ObjectiveFunction** class. Subsequently, you can obtain the solution by using *solve_dd()* of the same class.
+The first step to use this feature is to create an instance of the ObjectiveFunction, providing the dd_instance instance created earlier. Subsequently, it is necessary to create an instance of the algorithm to be used for solving the graph, which should receive a list with the weights of each variable in the objective function, and a string representing whether it is to maximize or minimize. The string values 'min' or 'max' can be used. For example, LinearObjectiveDP or SchedulingObjective. Finally, you should use the *SetObjectiveFunction()* method of the **ObjectiveFunction** class, providing the instance of the created algorithm. Subsequently, you can obtain the solution by using *solve_dd()* of the same class. Or if you already solve the graph and you online one to recover this information, can use *get_the_solution().*
 
 #### Get the Time of the Algoritms
 
-If it's want to get the time taken by the algorithms for creating the diagram or another of its forms, you need to use the *get_dd_builder_time()* or *get_zzz_constructor_time()* methods of the **DD** class, where zzz represent the type of graph that its wnated, for example relax, restricted or reduce. On the other hand, to obtain the objective function time, you should use *get_time()* from the **ObjectiveFunction** class.
+If it's want to get the time taken by the algorithms for creating the diagram or another of its forms, you need to use the *get_dd_builder_time()* or *get_TYPE_constructor_time()* methods of the **DD** class, where TYPE represent the type of graph that its wanted, for example relax, restricted or reduce. On the other hand, to obtain the objective function time, you should use *get_time()* from the **ObjectiveFunction** class.
 
 ## Examples
 
@@ -85,6 +85,14 @@ Within the **KnapsackMain** file, it can be noticed that it is a generalized ver
 #### IndependentSet
 
 Similar to the previous case, it can be observed that in the IndependentSetMain file, it corresponds to a generalization of the IndependentSet problem. Therefore, it is possible to test different values. To do so, it is necessary to provide a dictionary in which the *key* is the variable's ID, and the *value* corresponds to a list of all nodes, that can be reached in a single arc, formatted as integers. Once the variables are selected to instantiate the IndependentSet, it is necessary to create the variables to build a decision diagram. These include *initial_state* on one hand and, on the other hand, the variable IDs with their domain in *variables.* After providing all the parameters to the instance of the constructed problem class, you can test the other features.
+
+#### SetCovering
+
+This example represents a generalization of the set covering problem, allowing for different values to test various cases. To construct it, various values need to be provided. First, the initial state should be a list containing numbers representing the number of constraints to be given, for example, "[1,2,3]". Additionally, a dictionary of variables along with their domains must be provided. Specifically for this problem, the `right_side_of_restrictions` is the minimum value for each constraint, associated through their positions. Lastly, `matrix_of_weight` is a list of lists where the values represent the probability of each variable (associated by position) being within the constraint. After providing all these parameters to the instance of the constructed problem class, you can test the other features.
+
+## Test Casses
+
+Test cases have been created for the three examples explained earlier. These test all the implemented features and can be used to verify that different changes implemented continue to provide correct responses.
 
 ## Extending the Code
 

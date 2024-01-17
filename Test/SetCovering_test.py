@@ -10,7 +10,7 @@ import unittest
 from unittest.mock import patch
 from Class.Problems.AbstractProblemClass import AbstractProblem
 from Class.DD import DD
-from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjective
+from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjectiveDP
 from contextlib import contextmanager
 import dd_controlled_generators.DDSetCovering as DDSetCovering
 import dd_controlled_generators.RestrictedDDSetCovering as RestrictedDDSetCovering
@@ -186,76 +186,49 @@ class SetCoveringTest(unittest.TestCase):
         self.dd_instance.create_relaxed_decision_diagram(verbose=False, max_width=2)
         self.assertTrue(self.dd_instance.relaxed_dd_builder_time > 0)
     
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_get_solution_for_DD(self, mock_stdout):
+    def test_get_solution_for_DD(self): 
 
-        objective_function_instance = ObjectiveFunction(self.dd_instance)
-        linear_objective_instance = LinearObjective([2, 1, 4, 3, 4, 3], 'min')
-        objective_function_instance.set_objective(linear_objective_instance)
-        objective_function_instance.solve_dd()
-        
-        file_path = os.path.join('Test', 'test_prints', 'solutionDDSetCovering.txt')
-        
-        with open(file_path, "r") as file:
-            expected_output = file.read()
+        value, path = self.get_value_path_solution()
+        print("value: ", value)
+        print("path: ", path)
+        expected_value = 3
+        expected_path = ' arc_0_2(1)-> arc_2_6(1)-> arc_6_10(0)-> arc_10_12(0)-> arc_12_16(0)-> arc_16_17(0)'
 
-        actual_output = mock_stdout.getvalue()
+        self.assertEqual(value, expected_value)
+        self.assertEqual(path, expected_path)
 
-        self.assertEqual(actual_output.strip(), expected_output.strip())
-
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_get_solution_for_reduceDD(self, mock_stdout):
+    def test_get_solution_for_reduceDD(self):
         self.dd_instance.create_reduce_decision_diagram(verbose=False)
 
-        objective_function_instance = ObjectiveFunction(self.dd_instance)
-        linear_objective_instance = LinearObjective([2, 1, 4, 3, 4, 3], 'min')
-        objective_function_instance.set_objective(linear_objective_instance)
-        objective_function_instance.solve_dd()
+        value, path = self.get_value_path_solution()
         
-        file_path = os.path.join('Test', 'test_prints', 'solutionReduceDDSetCovering.txt')
-        
-        with open(file_path, "r") as file:
-            expected_output = file.read()
+        expected_value = 3
+        expected_path = ' arc_0_2(1)-> arc_2_6(1)-> arc_6_10(0)-> arc_10_12(0)-> arc_12_16(0)-> arc_16_17(0)'
 
-        actual_output = mock_stdout.getvalue()
+        self.assertEqual(value, expected_value)
+        self.assertEqual(path, expected_path)
 
-        self.assertEqual(actual_output.strip(), expected_output.strip())
-
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_get_solution_for_restrictedDD(self, mock_stdout):
+    def test_get_solution_for_restrictedDD(self):
         self.dd_instance.create_restricted_decision_diagram(verbose=False, max_width=3)
 
-        objective_function_instance = ObjectiveFunction(self.dd_instance)
-        linear_objective_instance = LinearObjective([2, 1, 4, 3, 4, 3], 'min')
-        objective_function_instance.set_objective(linear_objective_instance)
-        objective_function_instance.solve_dd()
+        value, path = self.get_value_path_solution()
         
-        file_path = os.path.join('Test', 'test_prints', 'solutionRestrictedDDSetCovering.txt')
-        
-        with open(file_path, "r") as file:
-            expected_output = file.read()
+        expected_value = 3
+        expected_path = ' arc_0_2(1)-> arc_2_5(1)-> arc_5_8(0)-> arc_8_10(0)-> arc_10_12(0)-> arc_12_14(0)'
 
-        actual_output = mock_stdout.getvalue()
-
-        self.assertEqual(actual_output.strip(), expected_output.strip())
+        self.assertEqual(value, expected_value)
+        self.assertEqual(path, expected_path)
     
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_get_solution_for_relaxedDD(self, mock_stdout):
+    def test_get_solution_for_relaxedDD(self):
         self.dd_instance.create_relaxed_decision_diagram(verbose=False, max_width=3)
 
-        objective_function_instance = ObjectiveFunction(self.dd_instance)
-        linear_objective_instance = LinearObjective([2, 1, 4, 3, 4, 3], 'min')
-        objective_function_instance.set_objective(linear_objective_instance)
-        objective_function_instance.solve_dd()
+        value, path = self.get_value_path_solution()
         
-        file_path = os.path.join('Test', 'test_prints', 'solutionRelaxedDDSetCovering.txt')
-        
-        with open(file_path, "r") as file:
-            expected_output = file.read()
+        expected_value = 3
+        expected_path = ' arc_0_1(0)-> arc_1_3(0)-> arc_3_6(0)-> arc_6_10(1)-> arc_10_12(0)-> arc_12_14(0)'
 
-        actual_output = mock_stdout.getvalue()
-
-        self.assertEqual(actual_output.strip(), expected_output.strip())
+        self.assertEqual(value, expected_value)
+        self.assertEqual(path, expected_path)
     
     def test_compare_gml_exact_dd_graph(self):
         self.dd_instance.export_graph_file('test')
@@ -328,5 +301,11 @@ class SetCoveringTest(unittest.TestCase):
         
         self.assertEqual(actual_output.strip(), expected_output.strip())
     
+    def get_value_path_solution(self):
+        objective_function_instance = ObjectiveFunction(self.dd_instance)
+        linear_objective_instance = LinearObjectiveDP([2, 1, 4, 3, 4, 3], 'min')
+        objective_function_instance.set_objective(linear_objective_instance)
+        answer = objective_function_instance.solve_dd()
+        return answer[0], answer[1]
 if __name__ == '__main__':
     unittest.main()

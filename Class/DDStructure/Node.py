@@ -15,9 +15,6 @@ class Node():
         self.state = state
         self.in_arcs = []
         self.out_arcs = []
-
-        self.parent = None
-        self.weight = None
     
     def __str__(self):
         '''

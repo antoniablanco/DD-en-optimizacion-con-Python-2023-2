@@ -9,8 +9,9 @@ root_dir = os.path.abspath(os.path.join(parent_dir, os.pardir))
 sys.path.append(root_dir)
 
 from Class.DD import DD 
-from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjective
+from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjectiveDP
 from KnapsackProblem import ProblemKnapsack
+
 
 '''
 Los siguientes 2 atributos fueron agregados solo para el tipo de problema de Knapsack, 
@@ -33,7 +34,7 @@ dd_instance = DD(problem_instance, verbose=False)
 
 # Construcción del los diagramas de decisión
 #dd_instance.print_decision_diagram()
-dd_instance.create_reduce_decision_diagram(verbose=True)
+#dd_instance.create_reduce_decision_diagram(verbose=True)
 #dd_instance.print_decision_diagram()
 #dd_instance.create_restricted_decision_diagram(verbose=False, max_width=3)
 #dd_instance.print_decision_diagram()
@@ -43,7 +44,8 @@ dd_instance.create_reduce_decision_diagram(verbose=True)
 
 # Resolución del diagrama
 objective_function_instance = ObjectiveFunction(dd_instance)
-linear_objective_instance = LinearObjective([-5, 1, 18, 17], 'max')
+linear_objective_instance = LinearObjectiveDP([-5, 1, 18, 17], 'max')
 objective_function_instance.set_objective(linear_objective_instance)
 objective_function_instance.solve_dd()
+print(*objective_function_instance.get_the_solution())
 

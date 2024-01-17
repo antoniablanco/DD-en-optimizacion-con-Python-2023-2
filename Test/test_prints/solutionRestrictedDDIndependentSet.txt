@@ -1,6 +1,0 @@
-
-Iniciando la creación del diagrama de decision restringido...
-Creación del diagrama de decision restringido terminado
-
-Best Route: ('0', 0) -> ('1', 0) -> ('3', 4) -> ('5', 4) -> ('7', 4) -> ('9', 11)
-Weight: 11

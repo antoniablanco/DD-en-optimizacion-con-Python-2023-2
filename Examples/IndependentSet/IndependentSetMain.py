@@ -7,7 +7,7 @@ root_dir = os.path.abspath(os.path.join(parent_dir, os.pardir))
 sys.path.append(root_dir)
 
 from Class.DD import DD
-from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjective
+from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction, LinearObjectiveDP
 from Exceptions.MyExceptions import SameVariables, MustBeIntegers, ConsistentDictionaryOfNeighbors
 from IndependentSetProblem import ProblemIndependentSet
 
@@ -34,20 +34,21 @@ problem_instance = ProblemIndependentSet(initial_state, variables, DictVecinos)
 dd_instance = DD(problem_instance, verbose=False)
 
 # Construcción del los diagramas de decisión
-dd_instance.print_decision_diagram()
-dd_instance.create_reduce_decision_diagram(verbose=False)
-dd_instance.print_decision_diagram()
-dd_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
-dd_instance.print_decision_diagram()
-dd_instance.create_relaxed_decision_diagram(verbose=False, max_width=2)
-dd_instance.print_decision_diagram()
-dd_instance.export_graph_file("test")
+#dd_instance.print_decision_diagram()
+#dd_instance.create_reduce_decision_diagram(verbose=False)
+#dd_instance.print_decision_diagram()
+#dd_instance.create_restricted_decision_diagram(verbose=False, max_width=2)
+#dd_instance.print_decision_diagram()
+#dd_instance.create_relaxed_decision_diagram(verbose=False, max_width=2)
+#dd_instance.print_decision_diagram()
+#dd_instance.export_graph_file("test")
 
 # Resolución del diagrama
 objective_function_instance = ObjectiveFunction(dd_instance)
-linear_objective_instance = LinearObjective([3, 4, 2, 2, 7, 1], 'max')
+linear_objective_instance = LinearObjectiveDP([3, 4, 2, 2, 7, 1], 'max')
 objective_function_instance.set_objective(linear_objective_instance)
 objective_function_instance.solve_dd()
+print(objective_function_instance.get_time())
 
 
 

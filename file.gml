@@ -259,6 +259,13 @@ edge [
 	source 1
 	target 3
 	graphics [
+	fill "#808080" 		targetArrow "standard"	 style	"dashed"	 
+]]
+
+edge [
+	source 1
+	target 3
+	graphics [
 	fill "#000000" 		targetArrow "diamond"	 	 
 ]]
 
