@@ -23,7 +23,16 @@ First should proceed to the construction of a **Problem** class, which must inhe
 * **equals:** Takes two states as input and should give as output a boolean value indicating whether they are equal or not.
 * **transition_function:** Takes as inputs a previous state, a variable identifier (e.g., "x_2"), and the domain this variable takes (e.g., "1"). It outputs a new state and a boolean value indicating whether the state is feasible or not.
 
-Once this class is built, it is essential to create an instance of it to be passed to the "DD" class. In this, you'll find functions to create, reduce, and visualize a diagram, as well as obtain a copy of it.
+If you want to obtain the restricted diagram, it is necessary to implement the following function when constructing your **Problem** class.
+
+* **get_priority_for_discard_node:** Takes the state of a node as input and outputs a number representing the priority for discarding the node.
+
+Furthermore, to obtain the relaxed diagram, it is necessary to add the following two functions in the **Problem** class.
+
+* **get_priority_for_merge_nodes:** Takes a state and the ID of a node as inputs and outputs a number representing the priority for merging the node with others.
+* **merge_operator:** Takes two states, each one from a node that is going to merge, as inputs. It outputs a new state for the merged nodes..
+
+Once this class is built, it is essential to create an instance of it to be passed to the "DD" class. In this, you'll find functions to create, reduce, restrict, relax and visualize a diagram, as well as obtain a copy of it.
 
 Finally, to obtain the problem's solution, create an instance of the **ObjectiveFunction** class, to which you pass the DD object containing the graph. Within this function, you can assign and solve the objective function.
 
@@ -36,6 +45,14 @@ It is the initial and necessary feature for all the following ones; that's why i
 #### Create Reduce Decision
 
 To create the reduced decision diagram, is necesary use *create_reduce_decision_diagram()* from the **DD** class, which transforms the graph class object saved when creating the diagram into its reduced form. This new version is then stored within the **DD** class.
+
+#### Create Restricted Decision
+
+To create the restricted decision diagram, is necesary use *create_restricted_decision_diagram()* from the **DD** class, which transforms the graph class object saved when creating the diagram into its restricted form. This new version is then stored within the **DD** class.
+
+#### Create Relax Decision
+
+To create the relax decision diagram, is necesary use *create_relax_decision_diagram()* from the **DD** class, which transforms the graph class object saved when creating the diagram into its relax form. This new version is then stored within the **DD** class.
 
 #### Print Decision Diagram
 
@@ -51,15 +68,15 @@ To obtain a copy of the DD instance without it being a pointer to the original o
 
 #### Solve the Decision Diagram
 
-The first step to use this feature is to assign the objective function, for which you should use the *SetObjectiveFunction()* method of the **ObjectiveFunction** class. Subsequently, you can obtain the solution by using *solve_dd()* of the same class.
+The first step to use this feature is to create an instance of the ObjectiveFunction, providing the dd_instance instance created earlier. Subsequently, it is necessary to create an instance of the algorithm to be used for solving the graph, which should receive a list with the weights of each variable in the objective function, and a string representing whether it is to maximize or minimize. The string values 'min' or 'max' can be used. For example, LinearObjectiveDP or SchedulingObjective. Finally, you should use the *SetObjectiveFunction()* method of the **ObjectiveFunction** class, providing the instance of the created algorithm. Subsequently, you can obtain the solution by using *solve_dd()* of the same class. Or if you already solve the graph and you online one to recover this information, can use *get_the_solution().*
 
 #### Get the Time of the Algoritms
 
-If it's want to get the time taken by the algorithms for creating the diagram and its reduction, you need to use the *get_dd_builder_time()* and *get_reduce_constructor_time()* methods of the **DD** class. On the other hand, to obtain the objective function time, you should use *get_time()* from the **ObjectiveFunction** class.
+If it's want to get the time taken by the algorithms for creating the diagram or another of its forms, you need to use the *get_dd_builder_time()* or *get_TYPE_constructor_time()* methods of the **DD** class, where TYPE represent the type of graph that its wanted, for example relax, restricted or reduce. On the other hand, to obtain the objective function time, you should use *get_time()* from the **ObjectiveFunction** class.
 
 ## Examples
 
-For a more comprehensive understanding of these classes, it is recommended to thoroughly review the examples available in the **"/Examples/"** folder within the code, and execute **Knapsack/KnapsackMain** *or* **IndependentSet/IndependentSetMain***.* These examples are generic and open for testing different values. In light of the above, the examples will be explained below.
+For a more comprehensive understanding of these classes, it is recommended to thoroughly review the examples available in the **"/Examples/"** folder within the code, and execute **Knapsack/KnapsackMain** *or* **IndependentSet/IndependentSetMain.** These examples are generic and open for testing different values. In light of the above, the examples will be explained below.
 
 #### Knapsack
 
@@ -68,6 +85,14 @@ Within the **KnapsackMain** file, it can be noticed that it is a generalized ver
 #### IndependentSet
 
 Similar to the previous case, it can be observed that in the IndependentSetMain file, it corresponds to a generalization of the IndependentSet problem. Therefore, it is possible to test different values. To do so, it is necessary to provide a dictionary in which the *key* is the variable's ID, and the *value* corresponds to a list of all nodes, that can be reached in a single arc, formatted as integers. Once the variables are selected to instantiate the IndependentSet, it is necessary to create the variables to build a decision diagram. These include *initial_state* on one hand and, on the other hand, the variable IDs with their domain in *variables.* After providing all the parameters to the instance of the constructed problem class, you can test the other features.
+
+#### SetCovering
+
+This example represents a generalization of the set covering problem, allowing for different values to test various cases. To construct it, various values need to be provided. First, the initial state should be a list containing numbers representing the number of constraints to be given, for example, "[1,2,3]". Additionally, a dictionary of variables along with their domains must be provided. Specifically for this problem, the `right_side_of_restrictions` is the minimum value for each constraint, associated through their positions. Lastly, `matrix_of_weight` is a list of lists where the values represent the probability of each variable (associated by position) being within the constraint. After providing all these parameters to the instance of the constructed problem class, you can test the other features.
+
+## Test Casses
+
+Test cases have been created for the three examples explained earlier. These test all the implemented features and can be used to verify that different changes implemented continue to provide correct responses.
 
 ## Extending the Code
 

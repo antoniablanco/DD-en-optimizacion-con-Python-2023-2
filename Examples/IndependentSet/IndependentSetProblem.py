@@ -52,3 +52,12 @@ class ProblemIndependentSet(AbstractProblem):
         
         isFeasible = (int(variable_value) == 1 and int(variable_id[2:]) in previus_state) or (int(variable_value) == 0)
         return new_state, isFeasible
+
+    def get_priority_for_discard_node(self, state):
+        return -len(state)
+    
+    def get_priority_for_merge_nodes(self, id_node, state):
+        return -int(id_node)
+
+    def merge_operator(self, state_one, state_two):
+        return list(set((state_one + state_two)))

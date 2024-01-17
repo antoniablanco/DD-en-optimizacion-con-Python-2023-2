@@ -9,6 +9,7 @@ sys.path.append(root_dir)
 from Class.DD import DD
 from Class.ObjectiveFunction.ObjectiveFunction import ObjectiveFunction
 from OperatingRoomSchedullingProblem import OperatingRoomSchedulling
+from Class.ObjectiveFunction.SchedullingObjective import SchedullingObjective
 import numpy as np
 
 number_operations = 3
@@ -27,5 +28,6 @@ dd_instance.export_graph_file("test")
 # Resolución del diagrama
 objective_function_instance = ObjectiveFunction(dd_instance)
 w = [[1, 1, 1], [[2, 1, 1], [2,2,5], [3,3,2]]]
-objective_function_instance.set_objective(w, 'min')
+schedulling_objective_instance = SchedullingObjective(w, 'min')
+objective_function_instance.set_objective(schedulling_objective_instance)
 objective_function_instance.solve_dd()

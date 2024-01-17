@@ -9,7 +9,7 @@ from Class.DDStructure.Node import Node
 from Class.DDStructure.Arc import Arc
 from Class.DDStructure.Graph import Graph
 
-node_0 = Node('0', [0])
+node_0 = Node('0', [1, 2, 3, 4, 5])
 graph = Graph(node_0)
 
 # Crear la segunda capa de nodos

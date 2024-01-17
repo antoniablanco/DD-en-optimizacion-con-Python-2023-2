@@ -23,3 +23,13 @@ class MissingObjectiveFunction(Exception):
     def __init__(self, message="The Objective Function  has not been set"):
         self.message = message
         super().__init__(self.message)
+
+class NotImplementedError(Exception):
+    def __init__(self, message="This method has not been implemented yet"):
+        self.message = message
+        super().__init__(self.message)
+
+class ObjectiveNotSetException(Exception):
+    def __init__(self, message="Objective has not been set, please use solve_dd()"):
+        self.message = message
+        super().__init__(self.message)
