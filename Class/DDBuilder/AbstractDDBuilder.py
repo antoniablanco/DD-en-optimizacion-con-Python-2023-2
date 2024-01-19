@@ -67,7 +67,7 @@ class AbstractDDBuilder(ABC):
         Parámetros:
         - variable_id: Índice de la variable para la cual se crea la nueva capa.
         '''
-        self.graph.new_layer()
+        self.graph.add_new_layer()
         self._create_new_nodes_in_the_new_layer(variable_id)
 
     def _create_new_nodes_in_the_new_layer(self, variable_id):

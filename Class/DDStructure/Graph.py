@@ -85,18 +85,7 @@ class Graph():
             self.structure[self.actual_layer].append(node)
             self.nodes.append(node)
     
-    def add_final_node(self, node):
-        '''
-        Agrega un nodo a la última capa del grafo.
-
-        Parámetros:
-        - node(Node): Objeto de la clase nodo que se agregará a la última capa.
-        '''
-        if node not in self.nodes:
-            self.structure[-1].insert(0, node)
-            self.nodes.append(node)
-    
-    def new_layer(self):
+    def add_new_layer(self):
         '''Crea una nueva capa en el grafo.'''
         self.structure.append([])
         self.actual_layer += 1

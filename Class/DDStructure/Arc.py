@@ -18,7 +18,6 @@ class Arc():
         self.in_node = in_node
         self.variable_value = variable_value
         self.variable_id = variable_id
-        self.weight = 0
         self.id = self.__str__()
     
     def __str__(self) -> str:

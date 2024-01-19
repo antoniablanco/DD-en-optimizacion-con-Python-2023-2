@@ -13,7 +13,7 @@ node_0 = Node('0', [1,2,3])
 graph = Graph(node_0)
 
 # Capa x_1
-graph.new_layer()
+graph.add_new_layer()
 node_1 = Node('1', [1, 2, 3])
 arc_0_1 = Arc(node_0, node_1, 0, 'x_1')
 node_0.add_out_arc(arc_0_1)
@@ -27,7 +27,7 @@ node_2.add_in_arc(arc_0_2)
 graph.add_node(node_2)
 
 # Capa x_2
-graph.new_layer()
+graph.add_new_layer()
 node_3 = Node('3', [2])
 arc_1_3_op1 = Arc(node_1, node_3, 0, 'x_2')
 arc_1_3_op2 = Arc(node_1, node_3, 0, 'x_2')
@@ -50,7 +50,7 @@ node_5.add_in_arc(arc_2_5)
 graph.add_node(node_5)
 
 # Capa x_3
-graph.new_layer()
+graph.add_new_layer()
 node_6 = Node('6', [2])
 arc_3_6_op1 = Arc(node_3, node_6, 0, 'x_3')
 arc_3_6_op2 = Arc(node_3, node_6, 1, 'x_3')
@@ -79,7 +79,7 @@ node_8.add_in_arc(arc_5_8_op2)
 graph.add_node(node_8)
 
 # Capa x_4
-graph.new_layer()
+graph.add_new_layer()
 node_9 = Node('9', [2])
 arc_6_9 = Arc(node_6, node_9, 0, 'x_3')
 node_6.add_out_arc(arc_6_9)
@@ -108,7 +108,7 @@ node_11.add_in_arc(arc_7_11)
 graph.add_node(node_11)
 
 # Capa x_5
-graph.new_layer()
+graph.add_new_layer()
 node_12 = Node('12', [])
 arc_9_12 = Arc(node_9, node_12, 1, 'x_3')
 arc_10_12_op1 = Arc(node_10, node_12, 0, 'x_3')
@@ -131,7 +131,7 @@ node_13.add_in_arc(arc_11_13_op2)
 graph.add_node(node_13)
 
 # capa x_6
-graph.new_layer()
+graph.add_new_layer()
 node_14 = Node('14', [])
 arc_12_14_op1 = Arc(node_12, node_14, 0, 'x_6')
 arc_12_14_op2 = Arc(node_12, node_14, 1, 'x_6')

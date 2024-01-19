@@ -13,7 +13,7 @@ node_0 = Node('0', [0])
 graph = Graph(node_0)
 
 
-graph.new_layer()
+graph.add_new_layer()
 node_1 = Node('1', [0])
 arc_0_1 = Arc(node_0, node_1, 0, 'x_1')
 node_0.add_out_arc(arc_0_1)
@@ -27,7 +27,7 @@ node_2.add_in_arc(arc_0_2)
 graph.add_node(node_2)
 
 
-graph.new_layer()
+graph.add_new_layer()
 node_3 = Node('3', [0])
 arc_1_3 = Arc(node_1, node_3, 0, 'x_2')
 node_1.add_out_arc(arc_1_3)
@@ -43,7 +43,7 @@ node_2.add_out_arc(arc_2_4)
 node_4.add_in_arc(arc_2_4)
 graph.add_node(node_4)
 
-graph.new_layer()
+graph.add_new_layer()
 node_5 = Node('5', [0])
 arc_3_5 = Arc(node_3, node_5, 0, 'x_3')
 node_3.add_out_arc(arc_3_5)
@@ -63,7 +63,7 @@ node_7.add_in_arc(arc_4_7)
 graph.add_node(node_7)
 
 
-graph.new_layer()
+graph.add_new_layer()
 node_8 = Node('8', [0])
 arc_5_8_op1 = Arc(node_5, node_8, 0, 'x_4')
 node_5.add_out_arc(arc_5_8_op1)

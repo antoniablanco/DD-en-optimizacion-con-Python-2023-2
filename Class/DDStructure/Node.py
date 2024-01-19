@@ -62,39 +62,3 @@ class Node():
         '''
         if arc in self.out_arcs:
             self.out_arcs.remove(arc)
-
-    def update_weight(self, weight):
-        '''
-        Actualiza el peso asociado al nodo.
-
-        Parámetros:
-        - weight(int): Nuevo valor de peso asociado al nodo.
-        '''
-        self.weight = weight
-
-    def get_weight(self):
-        '''
-        Obtiene el peso asociado al nodo.
-
-        Retorna: int
-        Peso asociado al nodo.
-        '''
-        return self.weight
-
-    def update_parent(self, parent):
-        '''
-        Actualiza el nodo padre.
-
-        Parámetros:
-        - parent(Node): Nuevo nodo padre del nodo actual.
-        '''
-        self.parent = parent
-
-    def get_parent(self):
-        '''
-        Obtiene el nodo padre.
-
-        Retorna: Node
-        Nodo padre del nodo actual.
-        '''
-        return self.parent
