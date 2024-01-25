@@ -58,7 +58,6 @@ class AbstractDDBuilder(ABC):
         self._print_graph(should_visualize)
 
         return self.graph
-
     
     def _create_new_layer(self, variable_id):
         '''

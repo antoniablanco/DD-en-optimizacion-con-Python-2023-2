@@ -118,4 +118,8 @@ class DD():
     def get_restricted_constructor_time(self):
         ''' Retorna el tiempo de ejecución del restricted constructor. '''
         return self.restricted_dd_builder_time
+    
+    def get_relaxed_constructor_time(self):
+        ''' Retorna el tiempo de ejecución del restricted constructor. '''
+        return self.relaxed_dd_builder_time
 
