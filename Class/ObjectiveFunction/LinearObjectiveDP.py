@@ -68,6 +68,5 @@ class LinearObjectiveDP:
                 self.DP[int(node.id_node)][1] = self.dp(arc.out_node, layer - 1)[1] + "-> " + str(arc) + "("+str(arc.variable_value)+")"
                 self.DP[int(node.id_node)][2] = self.DP[int(arc.out_node.id_node)][2].copy()
                 self.DP[int(node.id_node)][2].append(arc)
-                
         return self.DP[int(node.id_node)]
 

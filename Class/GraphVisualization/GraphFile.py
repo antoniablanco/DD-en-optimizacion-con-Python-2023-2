@@ -69,7 +69,6 @@ class GraphFile:
                 
         return True
                 
-
     def _is_node_binary(self, node: Node) -> bool:
         '''
         Determina si un nodo es binario, es decir, si sus arcos salientes son de valor 0 o 1.
@@ -87,7 +86,6 @@ class GraphFile:
             
         return True
 
-    
     def _add_node(self, node: Node) -> None:
         '''
         Agrega información de un nodo al archivo GML.
@@ -142,7 +140,6 @@ class GraphFile:
         self._add_arc_graphics(arc)
         self.file.write(f"]\n")
 
-
     def _add_arc_source(self, arc: Arc) -> None:
         if arc.out_node.id_node == 'r':
             self.file.write(f"\tsource 0\n")
@@ -169,10 +166,8 @@ class GraphFile:
 
         self.file.write(f"]")
 
-
     def _add_normal_arc_graphics(self, arc: Arc) -> None:
         self.file.write(f"\tfill \"#000000\" 		targetArrow \"standard\"	 	 \n")
-
 
     def _add_binary_arc_graphics(self, arc: Arc) -> None:
         if arc.variable_value == 0:

@@ -74,5 +74,5 @@ class ObjectiveFunction():
         '''
         if not hasattr(self, "answer"):
             raise ObjectiveNotSetException()
-
+        
         return self.answer
